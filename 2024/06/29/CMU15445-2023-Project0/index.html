@@ -1,0 +1,598 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="CMU15445-2023-Project0前言想要完成实验P0，推荐首先在力扣上完成习题：208. 实现 Trie (前缀树)。通过这个习题后，你将对Trie这种数据结构的功能和实现方式有一个初步的认识。此外，在P0实验开始之前，需要对C++标准中“智能指针”、“移动语义”这一概念有深入认识，否则可能像我一开始做题那样，写出来的代码全是爆红，差点被最简单的P0劝退。 然鹅，考虑到本博客是为了记录">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU15445-2023-Project0">
+<meta property="og:url" content="http://example.com/2024/06/29/CMU15445-2023-Project0/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="CMU15445-2023-Project0前言想要完成实验P0，推荐首先在力扣上完成习题：208. 实现 Trie (前缀树)。通过这个习题后，你将对Trie这种数据结构的功能和实现方式有一个初步的认识。此外，在P0实验开始之前，需要对C++标准中“智能指针”、“移动语义”这一概念有深入认识，否则可能像我一开始做题那样，写出来的代码全是爆红，差点被最简单的P0劝退。 然鹅，考虑到本博客是为了记录">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-06-29T00:53:42.000Z">
+<meta property="article:modified_time" content="2024-06-29T01:10:11.471Z">
+<meta property="article:author" content="Huhualing">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="卡耐基梅隆大学">
+<meta property="article:tag" content="C++编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+<title >CMU15445-2023-Project0</title>
+
+<!-- Favicon -->
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='apple-touch-icon' sizes='180x180' ></link>
+
+
+    <link href='/site.webmanifest' rel='manifest' ></link>
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-06-29 09:10:11"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/biancheng.png">
+    
+    
+        <div class="trm-logo-text">
+            护花<span>铃</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            CMU15445-2023-Project0
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/./img/97428443.jpeg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        护花铃
+    </h5>
+    
+        <div class="trm-label">
+            护花铃的编程与足球小站
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/HuHuaLing0326" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com/flower-protection-bell" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-gitlab"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                性别:
+            </div>
+            <div class="trm-label trm-label-light">
+                秘密
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                火星
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年龄:
+            </div>
+            <div class="trm-label trm-label-light">
+                18
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:huhualing0326@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            06/29
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            08:53
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            Huhualing
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="CMU15445-2023-Project0"><a href="#CMU15445-2023-Project0" class="headerlink" title="CMU15445-2023-Project0"></a>CMU15445-2023-Project0</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>想要完成实验P0，推荐首先在力扣上完成习题：<a target="_blank" rel="noopener" href="https://leetcode.cn/problems/implement-trie-prefix-tree/">208. 实现 Trie (前缀树)</a>。通过这个习题后，你将对Trie这种数据结构的功能和实现方式有一个初步的认识。此外，在P0实验开始之前，需要对C++标准中“智能指针”、“移动语义”这一概念有深入认识，否则可能像我一开始做题那样，写出来的代码全是爆红，差点被最简单的P0劝退。</p>
+<p>然鹅，考虑到本博客是为了记录我在做题时的思路和遇到的问题，在正式介绍P0的实现之前，我仍然想把移动语义和Trie做一个简单介绍。</p>
+<h2 id="移动语义（move-semantic）"><a href="#移动语义（move-semantic）" class="headerlink" title="移动语义（move semantic）"></a>移动语义（move semantic）</h2><h3 id="移动语义出现的背景"><a href="#移动语义出现的背景" class="headerlink" title="移动语义出现的背景"></a>移动语义出现的背景</h3><p>在移动语义出现之前，当我们需要用一个已经存在的对象创建一个新的对象时，往往要经过拷贝操作。拷贝操作分为两种，一种是浅拷贝，另一种是深拷贝。具体的操作如下图所示：</p>
+<img src="/2024/06/29/CMU15445-2023-Project0/%E6%B5%85%E6%8B%B7%E8%B4%9D%E4%B8%8E%E6%B7%B1%E6%8B%B7%E8%B4%9D.png" class="" title="浅拷贝与深拷贝"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>然而，深浅拷贝均有一定的局限性。</p>
+<p>浅拷贝指针时，并不会复制一份内存地址，只会将原先指针指向的地址复制一份交给新的指针，如左图所示。当其中一个对象的析构函数调用时，会将这份内存地址回收。另一个对象想要访问该地址空间时，就会出现异常。</p>
+<p>深拷贝的出现解决了这个问题，但又会带来另一个问题：当很多对象一经创建、拷贝就需要销毁时，大量的分配内存和回收操作会造成大量的时间开销。</p>
+<p>为了降低其中的开销，人们想到：既然这些对象一拷贝就销毁，那么为什么不能直接使用这些需要销毁的对象的内存地址空间呢？这时，移动语义就应运而生了！</p>
+<h3 id="左值引用和右值引用"><a href="#左值引用和右值引用" class="headerlink" title="左值引用和右值引用"></a>左值引用和右值引用</h3><p>在介绍移动语义之前，先将左值引用和右值引用简单地介绍一下，因为引入右值引用的主要目的之一便是实现移动语义。</p>
+<p><strong>什么是左值？</strong> 左值，就是在内存有确定存储地址、有变量名，表达式结束依然存在的值。</p>
+<p><strong>什么是左值引用？</strong> 左值引用，就是绑定到左值的引用，通过&amp;来获得左值引用。</p>
+<p><strong>什么又是右值？</strong> 右值，就是在内存没有确定存储地址、没有变量名，表达式结束就会销毁的值。</p>
+<p><strong>什么是右值引用？</strong> 右值引用，就是绑定到右值的引用，通过&amp;&amp;来获得右值引用。</p>
+<p>下列代码为使用右值引用和左值引用的示例：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> tc1 = <span class="number">12</span>;</span><br><span class="line"><span class="type">int</span> &amp;&amp; tc2 = <span class="number">12</span> * tc1;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;tc1 value and address: &quot;</span> &lt;&lt; tc1 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; &amp;tc1 &lt;&lt; endl;</span><br><span class="line">cout &lt;&lt; <span class="string">&quot;tc2 value and address: &quot;</span> &lt;&lt; tc2 &lt;&lt; <span class="string">&quot; &quot;</span> &lt;&lt; &amp;tc2 &lt;&lt; endl;</span><br></pre></td></tr></table></figure><br>以下2种情况会让编译器将对象匹配为右值引用：<br><strong>1. 一个在语句执行完毕后就会被自动销毁的临时对象</strong><br><strong>2. 由std::move标记的非const对象</strong></p>
+<h3 id="移动构造函数和移动赋值运算符"><a href="#移动构造函数和移动赋值运算符" class="headerlink" title="移动构造函数和移动赋值运算符"></a>移动构造函数和移动赋值运算符</h3><p>C++11中引入了一种新的、接收右值引用的构造函数和赋值运算符，称为移动构造函数和移动赋值运算符。这些函数中要做的工作就是转移成员数据，从而避免拷贝操作的开销，实现创建新的对象或者为一个对象赋值。下面这个例子用来展示移动构造函数和移动赋值运算符：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;utility&gt;</span></span></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">MyClass</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MyClass</span>(std::string s, <span class="type">int</span> num)</span><br><span class="line">        : <span class="built_in">str</span>(s), <span class="built_in">num</span>(num)</span><br><span class="line">    &#123;</span><br><span class="line">        arr = <span class="keyword">new</span> <span class="type">int</span>[num];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</span><br><span class="line">            arr[i] = i;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 移动构造函数</span></span><br><span class="line">    <span class="built_in">MyClass</span>(MyClass &amp;&amp;rValue) <span class="keyword">noexcept</span></span><br><span class="line">        : <span class="built_in">str</span>(rValue.str), <span class="built_in">num</span>(rValue.num)</span><br><span class="line">    &#123;</span><br><span class="line">        arr = rValue.arr;</span><br><span class="line">        rValue.arr = <span class="literal">nullptr</span>; <span class="comment">// 需要将原来对象的指针置为空，否则回收空间后造成异常</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">MyClass</span>(MyClass &amp;rValue)</span><br><span class="line">        : <span class="built_in">str</span>(rValue.str), <span class="built_in">num</span>(rValue.num)</span><br><span class="line">    &#123;</span><br><span class="line">        arr = <span class="keyword">new</span> <span class="type">int</span>[num];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</span><br><span class="line">            arr[i] = rValue.arr[i];</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    MyClass &amp;<span class="keyword">operator</span>=(MyClass &amp;myClass) <span class="keyword">noexcept</span></span><br><span class="line">    &#123;</span><br><span class="line">        str = myClass.str;</span><br><span class="line">        num = myClass.num;</span><br><span class="line">        arr = <span class="keyword">new</span> <span class="type">int</span>[num];</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</span><br><span class="line">            arr[i] = myClass.arr[i];</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 移动赋值运算符</span></span><br><span class="line">    MyClass &amp;<span class="keyword">operator</span>=(MyClass &amp;&amp;myClass) <span class="keyword">noexcept</span></span><br><span class="line">    &#123;</span><br><span class="line">        str = myClass.str;</span><br><span class="line">        myClass.str = <span class="string">&quot;&quot;</span>;</span><br><span class="line">        num = myClass.num;</span><br><span class="line">        myClass.num = <span class="number">0</span>;</span><br><span class="line">        arr = myClass.arr;</span><br><span class="line">        myClass.arr = <span class="literal">nullptr</span>;</span><br><span class="line">        <span class="keyword">return</span> *<span class="keyword">this</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">display</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        std::cout &lt;&lt; str &lt;&lt; std::endl;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; num; ++i)</span><br><span class="line">            std::cout &lt;&lt; arr[i] &lt;&lt; <span class="string">&quot; &quot;</span>;</span><br><span class="line">        std::cout &lt;&lt; &amp;arr[<span class="number">0</span>] &lt;&lt; std::endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    std::string str;</span><br><span class="line">    <span class="type">int</span> num;</span><br><span class="line">    <span class="type">int</span> *arr;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="function">MyClass <span class="title">myclass1</span><span class="params">(<span class="string">&quot;A&quot;</span>, <span class="number">10</span>)</span></span>;</span><br><span class="line">    <span class="function">MyClass <span class="title">myclass2</span><span class="params">(myclass1)</span></span>;</span><br><span class="line">    myclass1.<span class="built_in">display</span>();</span><br><span class="line">    myclass2.<span class="built_in">display</span>();</span><br><span class="line">    <span class="function">MyClass <span class="title">myclass3</span><span class="params">(std::move(myclass1))</span></span>;</span><br><span class="line">    myclass3.<span class="built_in">display</span>();</span><br><span class="line"></span><br><span class="line">    <span class="function">MyClass <span class="title">myclass4</span><span class="params">(<span class="string">&quot;B&quot;</span>, <span class="number">5</span>)</span></span>;</span><br><span class="line">    MyClass myclass5 = myclass4;</span><br><span class="line">    myclass4.<span class="built_in">display</span>();</span><br><span class="line">    myclass5.<span class="built_in">display</span>();</span><br><span class="line">    MyClass myclass6 = std::<span class="built_in">move</span>(myclass4);</span><br><span class="line">    myclass6.<span class="built_in">display</span>();</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">A</span></span><br><span class="line"><span class="comment">0 1 2 3 4 5 6 7 8 9 0x281476dae40</span></span><br><span class="line"><span class="comment">A</span></span><br><span class="line"><span class="comment">0 1 2 3 4 5 6 7 8 9 0x281476dacf0</span></span><br><span class="line"><span class="comment">A</span></span><br><span class="line"><span class="comment">0 1 2 3 4 5 6 7 8 9 0x281476dae40</span></span><br><span class="line"><span class="comment">B</span></span><br><span class="line"><span class="comment">0 1 2 3 4 0x281476da020</span></span><br><span class="line"><span class="comment">B</span></span><br><span class="line"><span class="comment">0 1 2 3 4 0x281476da070</span></span><br><span class="line"><span class="comment">B</span></span><br><span class="line"><span class="comment">0 1 2 3 4 0x281476da020</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure><br>想要移动构造函数和移动赋值运算符发挥作用，需要调用std::move函数，这个函数在<strong>“utility”</strong>头文件下被定义。</p>
+<h2 id="字典树-前缀树（Trie）"><a href="#字典树-前缀树（Trie）" class="headerlink" title="字典树/前缀树（Trie）"></a>字典树/前缀树（Trie）</h2><h3 id="字典树概述"><a href="#字典树概述" class="headerlink" title="字典树概述"></a>字典树概述</h3><p>概念：字典树（TrieTree），是一种树形结构，典型应用是用于统计，排序和保存大量的字符串（但不仅限于字符串,如01字典树）。主要思想是利用字符串的公共前缀来节约存储空间。很好地利用了串的<strong>公共前缀</strong>，节约了存储空间。字典树主要包含两种操作，<strong>插入和查找</strong>。字符串插入操作过程如下：</p>
+<img src="/2024/06/29/CMU15445-2023-Project0/%E5%AD%97%E5%85%B8%E6%A0%91%E7%9A%84%E6%8F%92%E5%85%A5%E8%BF%87%E7%A8%8B.png" class="" title="字典树的插入过程"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>上图中，我们用不同颜色的节点来表示不同的字符串。从图中可以看出，想要正确的插入和查找字符串，每一个节点至少要有两个成员：孩子指针，字符串是否结束的标志。因此，节点的数据结构如下所示：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">TrieNode</span> &#123;</span><br><span class="line">    <span class="type">char</span> children[<span class="number">26</span>];</span><br><span class="line">    <span class="type">bool</span> is_end;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure><br>插入字符串时，我们遍历字符串并取出其中的每一个字符，判断当前节点是否存在该字符对应的子节点。如果存在，将指针下移至子节点，判断下一个字符。如果不存在，创建对应的子节点后，将指针下移至子节点，判断下一个字符。</p>
+<p>查找的过程与之类似。</p>
+<p>删除字符串时，存在两种情况：第一是如果待删除的字符串的最后一个字符不是叶子节点，那么只需要将该节点的is_end字段设置为false即可。第二是如果删除的字符串的最后一个字符是叶子节点，则需要从叶子节点向上删除节点直至is_end字段为true的节点。</p>
+<h3 id="可持久化字典树-前缀树（Trie）"><a href="#可持久化字典树-前缀树（Trie）" class="headerlink" title="可持久化字典树/前缀树（Trie）"></a>可持久化字典树/前缀树（Trie）</h3><p>上述字典树不好的地方在于，一旦删除节点，就会丢失掉部分信息。而在某些情况下，我们还需要再删除之后保留之前Trie的信息。可持久化字典树的引入解决了这一个问题。</p>
+<p>可持久化 Trie 的方式和可持久化线段树的方式是相似的，即每次只修改被添加或值被修改的节点，而保留没有被改动的节点，在上一个版本的基础上连边，使最后每个版本的 Trie 树的根遍历所能分离出的 Trie 树都是完整且包含全部信息的。</p>
+<img src="/2024/06/29/CMU15445-2023-Project0/%E5%8F%AF%E6%8C%81%E4%B9%85%E5%8C%96%E5%AD%97%E5%85%B8%E6%A0%91.png" class="" title="可持久化字典树"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<h3 id="写时复制字典树-前缀树（Copy-On-Write-Trie）"><a href="#写时复制字典树-前缀树（Copy-On-Write-Trie）" class="headerlink" title="写时复制字典树/前缀树（Copy On Write Trie）"></a>写时复制字典树/前缀树（Copy On Write Trie）</h3><p>写时复制字典树与可持久化字典树非常类似，都是每次只修改被添加或值被修改的节点，而保留没有被改动的节点。但是，Copy On Write Trie不保留上一个版本的信息，也就是说，Copy On Write Trie会将未被修改的节点复制一份，然后删除原先的节点。</p>
+
+<h2 id="CMU-15445-2023Spring-Fall-P0"><a href="#CMU-15445-2023Spring-Fall-P0" class="headerlink" title="CMU_15445_2023Spring(Fall)_P0"></a>CMU_15445_2023Spring(Fall)_P0</h2><p>有了前面任务的铺垫，我们终于可以完成项目的第一个Project。这个Project是项目中最简单的一个。下面让我们一起来看看吧。</p>
+<h3 id="task1"><a href="#task1" class="headerlink" title="task1"></a>task1</h3><p>task1的任务目标是要实现一个Copy On Write Trie。完成插入，删除，取值三个函数。完成这个任务的关键在于熟悉源码中Trie.h的内容以及理解Copy On Write Trie的插入、删除、取值时的执行步骤。完成这个任务时，作者贴心地为我们增加了一定的难度。将TrieNode的节点拆分成带值(TrieNode)与不带值(TrieNode)两个类。其用意是为了让我们理解C++中父类与子类知道的继承关系以及父类类型与子类类型的相互转化。</p>
+<h3 id="task2"><a href="#task2" class="headerlink" title="task2"></a>task2</h3><p>task2的任务目标是将task1实现的Copy On Write Trie实现的三个函数进行包装，添加锁机制，实现对三个函数的并发操作。此后所有的实现均会调用包装后的函数。在这里，我们将会对C++的并发编程有一个初步了解，为后续p1的内容做铺垫。</p>
+<h3 id="task3"><a href="#task3" class="headerlink" title="task3"></a>task3</h3><p>task3的任务目的是让我们学会如何调试程序。跟着p0的实验指导书完成任务即可。<br>二更添加：真是非常可恶，2023spring和2023fall的答案是不一样的。我先写了2023fall，迁移到2023spring时想当然套了原先的值进去结果无法100分。所以各位一定要认真debug查看对应的值。</p>
+<h3 id="task4"><a href="#task4" class="headerlink" title="task4"></a>task4</h3><p>task4的任务时实现字符串大小写转换函数。这个函数基本上大一新生都会写，没有什么好说的。</p>
+<img src="/2024/06/29/CMU15445-2023-Project0/2023spring%E9%80%9A%E8%BF%87%E6%88%AA%E5%9B%BE.png" class="" title="2023spring通过截图"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<img src="/2024/06/29/CMU15445-2023-Project0/2023fall%E9%80%9A%E8%BF%87%E6%88%AA%E5%9B%BE.png" class="" title="2023fall通过截图"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/06/27/CMU15445-environment/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/CMU15445/">
+                    CMU15445
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/06/27/CMU15445-environment/" class="trm-anima-link">
+                    CMU15445-environment
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/06/27</li>
+                <li>09:30</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v7.2.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.2.2
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="CMU15445-2023-Project0"><a rel="nofollow" class="trm-toc-link" href="#CMU15445-2023-Project0"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">CMU15445-2023-Project0</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="前言"><a rel="nofollow" class="trm-toc-link" href="#前言"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">前言</span></a></li><li class="trm-toc-item trm-toc-level-2" title="移动语义（move semantic）"><a rel="nofollow" class="trm-toc-link" href="#移动语义（move-semantic）"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">移动语义（move semantic）</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="移动语义出现的背景"><a rel="nofollow" class="trm-toc-link" href="#移动语义出现的背景"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">移动语义出现的背景</span></a></li><li class="trm-toc-item trm-toc-level-3" title="左值引用和右值引用"><a rel="nofollow" class="trm-toc-link" href="#左值引用和右值引用"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">左值引用和右值引用</span></a></li><li class="trm-toc-item trm-toc-level-3" title="移动构造函数和移动赋值运算符"><a rel="nofollow" class="trm-toc-link" href="#移动构造函数和移动赋值运算符"><span class="trm-toc-number">1.2.3.</span> <span class="trm-toc-text">移动构造函数和移动赋值运算符</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="字典树&#x2F;前缀树（Trie）"><a rel="nofollow" class="trm-toc-link" href="#字典树-前缀树（Trie）"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">字典树&#x2F;前缀树（Trie）</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="字典树概述"><a rel="nofollow" class="trm-toc-link" href="#字典树概述"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">字典树概述</span></a></li><li class="trm-toc-item trm-toc-level-3" title="可持久化字典树&#x2F;前缀树（Trie）"><a rel="nofollow" class="trm-toc-link" href="#可持久化字典树-前缀树（Trie）"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">可持久化字典树&#x2F;前缀树（Trie）</span></a></li><li class="trm-toc-item trm-toc-level-3" title="写时复制字典树&#x2F;前缀树（Copy On Write Trie）"><a rel="nofollow" class="trm-toc-link" href="#写时复制字典树-前缀树（Copy-On-Write-Trie）"><span class="trm-toc-number">1.3.3.</span> <span class="trm-toc-text">写时复制字典树&#x2F;前缀树（Copy On Write Trie）</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="CMU_15445_2023Spring(Fall)_P0"><a rel="nofollow" class="trm-toc-link" href="#CMU-15445-2023Spring-Fall-P0"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">CMU_15445_2023Spring(Fall)_P0</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="task1"><a rel="nofollow" class="trm-toc-link" href="#task1"><span class="trm-toc-number">1.4.1.</span> <span class="trm-toc-text">task1</span></a></li><li class="trm-toc-item trm-toc-level-3" title="task2"><a rel="nofollow" class="trm-toc-link" href="#task2"><span class="trm-toc-number">1.4.2.</span> <span class="trm-toc-text">task2</span></a></li><li class="trm-toc-item trm-toc-level-3" title="task3"><a rel="nofollow" class="trm-toc-link" href="#task3"><span class="trm-toc-number">1.4.3.</span> <span class="trm-toc-text">task3</span></a></li><li class="trm-toc-item trm-toc-level-3" title="task4"><a rel="nofollow" class="trm-toc-link" href="#task4"><span class="trm-toc-number">1.4.4.</span> <span class="trm-toc-text">task4</span></a></li></ol></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.2"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.2.2"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
