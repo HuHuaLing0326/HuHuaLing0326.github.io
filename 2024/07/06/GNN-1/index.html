@@ -7,16 +7,27 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/tags/C-%E7%BC%96%E7%A8%8B/index.html">
+<meta name="description" content="GNN第一课图与图神经网络如下是一个简单的图：  图的基本组成：  顶点：顶点由一个个特征向量进行表示 边：点之间的联系（有不同的类型），边也可以由特征向量表示 图的全局属性  无论事情多么复杂，利用图神经网络的目的就是整合特征。 传统的神经网络（如CV、NLP等），输入的格式一定是要固定的，但是，在实际场景中很多情况不能满足要求，例如分子的组成，对于这些输入形式不规则的数据，就需要图神经网络（G">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GNN-1">
+<meta property="og:url" content="http://example.com/2024/07/06/GNN-1/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="GNN第一课图与图神经网络如下是一个简单的图：  图的基本组成：  顶点：顶点由一个个特征向量进行表示 边：点之间的联系（有不同的类型），边也可以由特征向量表示 图的全局属性  无论事情多么复杂，利用图神经网络的目的就是整合特征。 传统的神经网络（如CV、NLP等），输入的格式一定是要固定的，但是，在实际场景中很多情况不能满足要求，例如分子的组成，对于这些输入形式不规则的数据，就需要图神经网络（G">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-07-06T01:23:06.000Z">
+<meta property="article:modified_time" content="2024-07-06T07:10:35.891Z">
 <meta property="article:author" content="Huhualing">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="Python编程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
 
 
-<title >Hexo</title>
+<title >GNN-1</title>
 
 <!-- Favicon -->
 
@@ -59,7 +70,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":false,"isHome":false,"postUpdate":"2024-07-06 15:13:30"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-07-06 15:10:35"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
@@ -219,10 +230,10 @@
                     <!-- banner title -->
                     <div class="trm-banner-text ">
                         <div class="trm-label trm-mb-20">
-                            The article archive
+                            NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            云间连下榻，<br>天上接行杯。
+                            GNN-1
                         </h1>
 
                         
@@ -232,7 +243,7 @@
                                 </li>
                                 <li>
                                     <span>
-                                        tags
+                                        2024
                                     </span>
                                 </li>
                             </ul>
@@ -392,125 +403,132 @@
             
             <div class="trm-page-content col-lg-8">
                 <div id="trm-content" class="trm-content">
-                    <div class="row">
-    <div class="col-lg-12">
-        <div class="trm-card">
-            <div style="padding: 0 20px;">
-                
-                    <ul class="trm-tag-list" itemprop="keywords"><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/C-%E7%BC%96%E7%A8%8B/" rel="tag">C++编程</a><span class="tag-list-count">3</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/Python%E7%BC%96%E7%A8%8B/" rel="tag">Python编程</a><span class="tag-list-count">1</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/%E5%8D%A1%E8%80%90%E5%9F%BA%E6%A2%85%E9%9A%86%E5%A4%A7%E5%AD%A6/" rel="tag">卡耐基梅隆大学</a><span class="tag-list-count">3</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/%E6%95%B0%E6%8D%AE%E5%BA%93/" rel="tag">数据库</a><span class="tag-list-count">3</span></li><li class="trm-tag-list-item"><a class="tag-list-link" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/" rel="tag">深度学习</a><span class="tag-list-count">1</span></li></ul>
-                
-            </div>
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            07/06
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            09:23
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            Huhualing
         </div>
     </div>
 </div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="GNN第一课"><a href="#GNN第一课" class="headerlink" title="GNN第一课"></a>GNN第一课</h1><h2 id="图与图神经网络"><a href="#图与图神经网络" class="headerlink" title="图与图神经网络"></a>图与图神经网络</h2><p>如下是一个简单的图：</p>
+<img src="/2024/07/06/GNN-1/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84%E5%9B%BE.png" class="" title="一个简单的图"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>图的基本组成：</p>
+<ul>
+<li>顶点：顶点由一个个特征向量进行表示</li>
+<li>边：点之间的联系（有不同的类型），边也可以由特征向量表示</li>
+<li>图的全局属性</li>
+</ul>
+<p>无论事情多么复杂，利用图神经网络的目的就是整合特征。</p>
+<p>传统的神经网络（如CV、NLP等），输入的格式一定是要固定的，但是，在实际场景中很多情况不能满足要求，例如分子的组成，对于这些输入形式不规则的数据，就需要图神经网络（GNN）来解决问题。</p>
+<p>GNN的应用领域：</p>
+<ul>
+<li>推荐系统</li>
+<li>知识图谱</li>
+<li>化学、医疗</li>
+<li>道路交通领域</li>
+</ul>
+<p>Graph级别任务：任务可以自己设计，例如分子是否有环路等，基于整个图进行分类或者预测。</p>
+<p>Node和Edge级别：预测这个点、这条边的行为等。</p>
+<h2 id="图的邻接矩阵与聚合操作"><a href="#图的邻接矩阵与聚合操作" class="headerlink" title="图的邻接矩阵与聚合操作"></a>图的邻接矩阵与聚合操作</h2><p>图中的邻接矩阵表达形式并不是N*N的矩阵，而是保存source和target，如：[[1, 0], [2, 0], [4, 3]]。</p>
+<p>每个点的特征如何更新（消息传递）：一旦节点和边的转化完成，图就可在节点之间执行消息传递。这个过程也被称为近邻聚合（Neighbourhood Aggregation），因为其涉及到围绕给定节点，通过有向边从周围节点推送消息（即嵌入）。点的更新不仅要考虑到自身的特征，也要考虑到邻居的特征。</p>
+<img src="/2024/07/06/GNN-1/%E5%9B%BE%E7%9A%84%E7%89%B9%E5%BE%81%E8%81%9A%E5%90%88.png" class="" title="图的特征聚合"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>图的消息传递方式有很多种，可以根据具体的任务自己设置，例如：</p>
+<ul>
+<li>结合邻居与自身信息：$m_i=Sum({W_j \times x_j:j \in N_i})$</li>
+<li>选择最大的点的特征：$m_i=Max({W_j \times x_j:j \in N_i})$</li>
+</ul>
+<p>图的聚合操作就可以相当于一个全连接层。</p>
+<p>GNN也可以由很多层，GNN的本质就是更新各个部分的特征，其中输入是特征，输出也是特征，邻接矩阵也是不会变的。通过多层GNN得到每个点最好的特征。</p>
+<h2 id="图卷积（GCN）"><a href="#图卷积（GCN）" class="headerlink" title="图卷积（GCN）"></a>图卷积（GCN）</h2><p>图中常见任务：</p>
+<ul>
+<li>节点分类：对每一个节点进行预测，不同点是否有连接预测。</li>
+<li>整个图分类、部分图分类等</li>
+<li>不同子图是否相似，异常检测等。</li>
+</ul>
+<p>GCN归根结底还是要完成特征提取操作，只不过输入对象不是固定格式。通常输入GCN两个东西就行：1. 各节点的输入特征；2. 网络结构图</p>
+<p>半监督学习不需要全部的标签，只有少量标签也能训练，计算损失时也只用有标签的，半监督学习也是GCN的优势。</p>
+<p>GCN的基本思想：针对一个节点，计算它的特征；平均其邻居特征（包括自身）后传入神经网络。</p>
+<p>GCN和卷积类似，GCN也可以做很多层，每一层输入的还是节点特征，然后将当前特征与网络结构图继续传入下层就可以不断算下去了。不过GCN可以不用做深层的，一般情况仅需两三层即可。</p>
+<p>图中基本组成：</p>
+<ul>
+<li>G：图</li>
+<li>A：图的邻接矩阵</li>
+<li>D：各节点的度</li>
+<li>F：各节点的特征</li>
+</ul>
+<p>特征计算方法：邻接矩阵与特征矩阵进行乘法操作，表示聚合邻居信息。</p>
+<p>上述计算方法只考虑了邻居对节点的影响，没有考虑本节点自身特征的影响，因此可以将邻接矩阵上的对角线的值设置为1。</p>
+<p>然而，这样计算仍然存在问题，算出的值会很大，将度矩阵考虑进去，对度矩阵求逆并与上述结果相乘，得到平均值。这部操作相当于对特征进行归一化。</p>
+<p>在邻接矩阵的左边乘上一个度矩阵，将会对行进行一个归一化，右边乘一个度矩阵会对列进行归一化。但是这样做乘法将会将一个值做了两次归一化。因此，做乘法前将度矩阵求逆并开方，然后再做乘法。</p>
+<p>当图中一个节点度数非常大，而另一个与之相连的节点度数非常小时，度数小的节点将会大量继承度数大的节点，计算出来的特征会有很大的差别。对于行和列分别进行一次度矩阵乘法，可以解决上述问题，因为考虑了两个节点的度数。</p>
+<img src="/2024/07/06/GNN-1/GCN%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F2.png" class="" title="GCN计算公式"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<img src="/2024/07/06/GNN-1/GCN%E8%AE%A1%E7%AE%97%E5%85%AC%E5%BC%8F.png" class="" title="GCN计算公式2"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>GCN的缺点：第一，GCN需要将整个图放到内存和显存，这将非常耗内存和显存，处理不了大图；第二，GCN在训练时需要知道整个图的结构信息(包括待预测的节点), 这在现实某些任务中也不能实现(比如用今天训练的图模型预测明天的数据，那么明天的节点是拿不到的)。</p>
 
-<!-- history -->
+</article>
+    
+    
 
-<div class="row">
+</div>
+<div class="trm-post-next-prev row">
     <div class="col-lg-12">
         <!-- title -->
         <h5 class="trm-title-with-divider">
-            
-                C++编程
-            
-            <span data-number="01"></span>
+            其他文章
+            <span data-number="02"></span>
         </h5>
     </div>
-    <div class="col-lg-12">
-        <!-- timeline -->
-        <div class="trm-timeline">
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/07/01/CMU15445-2023-Project1/" class="trm-cover-frame trm-anima-link">
             
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/07/01/CMU15445-2023-Project1/" class="trm-anima-link">
-                                        CMU15445-2023-Project1
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/01</li>
-                                        <li class="trm-accent-color">11:27</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/CMU15445/">
+                    CMU15445
+                </a>
             </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/06/29/CMU15445-2023-Project0/" class="trm-anima-link">
-                                        CMU15445-2023-Project0
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">06/29</li>
-                                        <li class="trm-accent-color">08:53</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/06/27/CMU15445-environment/" class="trm-anima-link">
-                                        CMU15445-environment
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">06/27</li>
-                                        <li class="trm-accent-color">09:30</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
+            <h5>
+                <a href="/2024/07/01/CMU15445-2023-Project1/" class="trm-anima-link">
+                    CMU15445-2023-Project1
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/07/01</li>
+                <li>11:27</li>
+                
+                
+            </ul>
         </div>
-        <!-- timeline end -->
     </div>
 </div>
+    
+</div>
 
-<!-- history end -->
-
-
-    <div class="trm-pagination">
-        <span class="page-number current">1</span>
-    </div>
-
-
+    
 
 
 
@@ -552,9 +570,29 @@
 
             
 
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="GNN第一课"><a rel="nofollow" class="trm-toc-link" href="#GNN第一课"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">GNN第一课</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="图与图神经网络"><a rel="nofollow" class="trm-toc-link" href="#图与图神经网络"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">图与图神经网络</span></a></li><li class="trm-toc-item trm-toc-level-2" title="图的邻接矩阵与聚合操作"><a rel="nofollow" class="trm-toc-link" href="#图的邻接矩阵与聚合操作"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">图的邻接矩阵与聚合操作</span></a></li><li class="trm-toc-item trm-toc-level-2" title="图卷积（GCN）"><a rel="nofollow" class="trm-toc-link" href="#图卷积（GCN）"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">图卷积（GCN）</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
             
 <div class="trm-fixed-container">
     
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
     
     
     <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
@@ -589,6 +627,10 @@
     
 
     <!-- 评论插件 -->
+    
+        
+
+        
     
 
 		
