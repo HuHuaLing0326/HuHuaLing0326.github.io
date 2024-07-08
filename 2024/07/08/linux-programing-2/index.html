@@ -1,0 +1,990 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="2、文件I&#x2F;O系统调用：由操作系统实现并提供给外部应用程序的编程接口，应用程序同系统之间数据交换的桥梁。  2.1、open&#x2F;close函数函数原型：123int open(const char *pathname,int flags);int open(const char *pathname,int flags,mode_t mold);int close(int fd);open函数：  使">
+<meta property="og:type" content="article">
+<meta property="og:title" content="linux-programing-2">
+<meta property="og:url" content="http://example.com/2024/07/08/linux-programing-2/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="2、文件I&#x2F;O系统调用：由操作系统实现并提供给外部应用程序的编程接口，应用程序同系统之间数据交换的桥梁。  2.1、open&#x2F;close函数函数原型：123int open(const char *pathname,int flags);int open(const char *pathname,int flags,mode_t mold);int close(int fd);open函数：  使">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-07-08T02:09:01.000Z">
+<meta property="article:modified_time" content="2024-07-08T02:17:05.325Z">
+<meta property="article:author" content="Huhualing">
+<meta property="article:tag" content="C&#x2F;C++编程">
+<meta property="article:tag" content="Linux操作系统">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+<title >linux-programing-2</title>
+
+<!-- Favicon -->
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='apple-touch-icon' sizes='180x180' ></link>
+
+
+    <link href='/site.webmanifest' rel='manifest' ></link>
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-07-08 10:17:05"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/biancheng.png">
+    
+    
+        <div class="trm-logo-text">
+            护花<span>铃</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/categories/" target="">
+                    分类
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/tags/" target="">
+                    标签
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            linux-programing-2
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2024
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/./img/97428443.jpeg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        护花铃
+    </h5>
+    
+        <div class="trm-label">
+            护花铃的编程与足球小站
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/HuHuaLing0326" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com/flower-protection-bell" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-gitlab"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                性别:
+            </div>
+            <div class="trm-label trm-label-light">
+                秘密
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                地址:
+            </div>
+            <div class="trm-label trm-label-light">
+                火星
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                年龄:
+            </div>
+            <div class="trm-label trm-label-light">
+                18
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                职业:
+            </div>
+            <div class="trm-label trm-label-light">
+                学生
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向1:
+            </div>
+            <div class="trm-label trm-label-light">
+                隐私保护
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向2:
+            </div>
+            <div class="trm-label trm-label-light">
+                图学习
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向3:
+            </div>
+            <div class="trm-label trm-label-light">
+                C++程序设计
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向4:
+            </div>
+            <div class="trm-label trm-label-light">
+                足球运动
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:huhualing0326@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            07/08
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            10:09
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            Huhualing
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="2、文件I-O"><a href="#2、文件I-O" class="headerlink" title="2、文件I/O"></a>2、文件I/O</h1><p>系统调用：由操作系统实现并提供给外部应用程序的编程接口，应用程序同系统之间数据交换的桥梁。</p>
+<img src="/2024/07/08/linux-programing-2/hello-world%E6%89%93%E5%8D%B0%E5%9C%A8%E5%B1%8F%E5%B9%95.png" class="" title="hello-world打印在屏幕"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<h2 id="2-1、open-close函数"><a href="#2-1、open-close函数" class="headerlink" title="2.1、open/close函数"></a>2.1、open/close函数</h2><p>函数原型：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">open</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname,<span class="type">int</span> flags)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">open</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname,<span class="type">int</span> flags,<span class="type">mode_t</span> mold)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">close</span><span class="params">(<span class="type">int</span> fd)</span>;</span><br></pre></td></tr></table></figure><br>open函数：</p>
+<ul>
+<li>使用时需要包含的头文件：fcntl.h、sys/types.h、sys/stat.h</li>
+<li>返回值：返回文件描述符（整数）或者返回-1（错误）并设置errno的值。</li>
+<li><p>形参参数：</p>
+<ul>
+<li>pathname：路径名</li>
+<li><p>flags：打开文件的操作，包含三种</p>
+<ul>
+<li>O_RDONLY：只读</li>
+<li>O_WRONLY：只写</li>
+<li>O_RDRW：读写<br>flag还可以以按位或的方式，包含可选模式组合，包括如下可选模式：</li>
+<li>O_APPEND：追加</li>
+<li>O_TRUNC：丢弃已有内容</li>
+<li>O_CREAT：按参数mode给出的访问模式创建文件</li>
+<li>O_EXCL：与O_CREAT一起使用，确保调用者创建出文件</li>
+<li>O_NONBLOCK：将非阻塞特性加入文件</li>
+</ul>
+</li>
+<li><p>mold：使用带有O_CREAT标志的open调用创建文件时，必须使用有三个参数格式的open调用。</p>
+<ul>
+<li>S_IRUSR：读，文件属主</li>
+<li>S_IWUSR：写，文件属主</li>
+<li>S_IXUSR：执行，文件属主</li>
+<li>S_IRGRP：读，文件所属组</li>
+<li>S_IWGRP：写，文件所属组</li>
+<li>S_IXGRP：执行，文件所属组</li>
+<li>S_IROTH：读，其他用户</li>
+<li>S_IWOTH：写，其他用户</li>
+<li>S_IXOTH：执行，其他用户<br>如：open(“myfle.txt”,O_CREAT,S_IRUSR|S_IXOTH);<br>当然，直接用8进制数表示mold会更简单。</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>close函数：</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：返回0（调用成功）或者返回-1（调用错误）</li>
+<li><p>形参参数：</p>
+<ul>
+<li>fd：文件描述符</li>
+</ul>
+</li>
+</ul>
+<p>umask参数：<br>umask时一个系统变量，创建文件时，指定文件访问权限，权限同时受umask的影响。文件权限 = mode &amp; ~umask。umask需使用fcntl.h。<br>对于root用户，系统默认的umask值是0022；对于普通用户，系统默认的umask值是0002。</p>
+<p>open函数常见错误：</p>
+<ul>
+<li>打开的文件不存在</li>
+<li>以写的方式打开只读文件</li>
+<li>以只写的方式打开目录</li>
+</ul>
+<p>open函数出错后会设置errno的值(errno.h中)，我们可以使用strerror(errno)得到出错的具体信息。</p>
+<h2 id="2-2、read-write函数"><a href="#2-2、read-write函数" class="headerlink" title="2.2、read/write函数"></a>2.2、read/write函数</h2><p>每一个进程都有一个与之相关的文件描述符，它们是一些小值整数，我们可以通过这些文件描述符来访问打开的文件。<br>一般地，一个程序开始运行时，会自动打开3个文件描述符：<br>0——–标准输入———-stdin<br>1——–标准输出———-stdout<br>2——–标准错误———-stderr</p>
+<p>函数原型：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">size_t</span> <span class="title function_">write</span><span class="params">(<span class="type">int</span> fildes,<span class="type">const</span> <span class="type">void</span> *buf,<span class="type">size_t</span> nbytes)</span>;</span><br><span class="line"><span class="type">size_t</span> <span class="title function_">read</span><span class="params">(<span class="type">int</span> fildes,<span class="type">void</span> *buf,<span class="type">size_t</span> nbytes)</span>;</span><br></pre></td></tr></table></figure><br>write函数：</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：size_t 是标准 C 库中定义的一个数据类型，实际上就是 unsigned int。表示实际写入到文件中的字节数。</li>
+<li><p>形参参数：</p>
+<ul>
+<li>fildes：文件描述符，内核利用文件描述符来访问文件，它是一个非负的整数，当打开现存文件或者新建一个文件时，都会返回一个文件描述符。</li>
+<li>buf：缓冲区指针。</li>
+<li>nbytes：把缓冲区buf中的前nbytes字节写入到与文件描述符flides有关的文件中。</li>
+</ul>
+</li>
+</ul>
+<p>read函数：</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：size_t 是标准 C 库中定义的一个数据类型，实际上就是 unsigned int。表示实际从文件读到的字节数。</li>
+<li><p>形参参数：</p>
+<ul>
+<li>fildes：文件描述符，内核利用文件描述符来访问文件，它是一个非负的整数，当打开现存文件或者新建一个文件时，都会返回一个文件描述符。</li>
+<li>buf：缓冲区指针。</li>
+<li>nbytes：从与文件描述符flides相关联的文件中读取前nbytes字节的内容，并且写入到数据区buf中。</li>
+</ul>
+</li>
+</ul>
+<p>作业：使用read和write实现cp命令<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>** argv)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(argc != <span class="number">3</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;error instruction!!!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">else</span></span><br><span class="line">    &#123;</span><br><span class="line">        <span class="type">int</span> stfid,tafid;</span><br><span class="line">        stfid = open(argv[<span class="number">1</span>],O_RDONLY);</span><br><span class="line">        <span class="keyword">if</span>(stfid == - <span class="number">1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;read file error!!!\n&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        tafid = open(argv[<span class="number">2</span>],O_RDWR|O_CREAT|O_TRUNC,<span class="number">0644</span>);</span><br><span class="line">        <span class="keyword">if</span>(tafid == <span class="number">-1</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="built_in">printf</span>(<span class="string">&quot;create file error!!!\n&quot;</span>);</span><br><span class="line">            <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="type">const</span> <span class="type">int</span> buf_size;</span><br><span class="line">        <span class="type">char</span> buf[buf_size];</span><br><span class="line">        <span class="type">size_t</span> readnum = <span class="number">0</span>;</span><br><span class="line">        <span class="keyword">while</span>((readnum = read(stfid,buf,buf_size)) != <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="keyword">if</span>(readnum &lt; <span class="number">0</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                <span class="built_in">printf</span>(<span class="string">&quot;read buf error&quot;</span>);</span><br><span class="line">                <span class="keyword">break</span>;</span><br><span class="line">            &#125;</span><br><span class="line">            write(tafid,buf,readnum);</span><br><span class="line">        &#125;</span><br><span class="line">        close(tafid);</span><br><span class="line">        close(stfid);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>read、write函数常被称为无缓冲函数，它们不使用用户级缓冲区。而fputc、fputs等函数可以使用，因此在一次写入相同数据的情况下，read、write需要多次从用户态和内核态切换，造成速度下降。</p>
+<h2 id="2-3、文件描述符、阻塞和非阻塞"><a href="#2-3、文件描述符、阻塞和非阻塞" class="headerlink" title="2.3、文件描述符、阻塞和非阻塞"></a>2.3、文件描述符、阻塞和非阻塞</h2><p>文件描述符<br>kernel区中有许多进程控制块（PCB），PCB中存在一个指针指向文件描述符表，文件描述符表中存在许多指向文件结构体的指针。文件描述符的值是表中可用的最小的。</p>
+<img src="/2024/07/08/linux-programing-2/%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6.png" class="" title="文件描述符"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>阻塞与非阻塞：文件的属性<br>产生阻塞的场景：读设备文件、读网络文件。（读常规文件无阻塞）<br>终端文件：/dev/tty<br>阻塞方式读终端输入的信息：</p>
+<p><strong>阻塞(Blocking IO)是指</strong>：一旦应用程序调用API接口，应用程序的线程就会被卡住，一直到IO操作完成，这个API函数才返回，这时应用程序的线程才解除阻塞状态，可以继续向下执行。</p>
+<p><strong>非阻塞(Non-blocking IO)是指</strong>：应用程序调用API接口，如果IO数据未准备好，则API直接返回失败；如果IO数据准备好了，那么应用程序会被阻塞，直至IO完成，API返回，应用程序解除阻塞，继续执行。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">10</span>];</span><br><span class="line">    <span class="type">int</span> n = read(STDIN_FILENO,buf,<span class="number">10</span>);</span><br><span class="line">    <span class="keyword">if</span>(n &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;read STDIN_FILENO&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    write(STDOUT_FILENO,buf,n);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用read读无数据的非阻塞文件，会返回-1并且errno被设置为EAGAIN或者EWOULDBLOCK<br>非阻塞方式读终端输入的信息：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">10</span>];</span><br><span class="line">    <span class="type">int</span> fd = open(<span class="string">&quot;/dev/tty&quot;</span>,O_RDONLY|O_NONBLOCK),n;</span><br><span class="line">    <span class="keyword">if</span>(fd &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;open /dev/tty&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        n = read(fd,buf,<span class="number">10</span>);</span><br><span class="line">        <span class="keyword">if</span>(n &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">if</span>(errno != EAGAIN)</span><br><span class="line">          &#123;</span><br><span class="line">            perror(<span class="string">&quot;read /dev/tty&quot;</span>);</span><br><span class="line">            <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">          &#123;</span><br><span class="line">            write(STDOUT_FILENO,<span class="string">&quot;try again\n&quot;</span>,<span class="built_in">strlen</span>(<span class="string">&quot;try again\n&quot;</span>));</span><br><span class="line">            sleep(<span class="number">2</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">          <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    write(STDOUT_FILENO,buf,n);</span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="2-4、fcntl、lseek函数和传入传出参数"><a href="#2-4、fcntl、lseek函数和传入传出参数" class="headerlink" title="2.4、fcntl、lseek函数和传入传出参数"></a>2.4、fcntl、lseek函数和传入传出参数</h2><p>函数原型：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">fcntl</span><span class="params">(<span class="type">int</span> fd, <span class="type">int</span> cmd)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fcntl</span><span class="params">(<span class="type">int</span> fd, <span class="type">int</span> cmd, <span class="type">long</span> arg)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fcntl</span><span class="params">(<span class="type">int</span> fd, <span class="type">int</span> cmd ,<span class="keyword">struct</span> flock* lock)</span>;</span><br><span class="line"><span class="type">off_t</span> <span class="title function_">lseek</span><span class="params">(<span class="type">int</span> filedes, <span class="type">off_t</span> offset, <span class="type">int</span> whence)</span> ;</span><br></pre></td></tr></table></figure><br>fcntl函数：fcntl系统调用可以用来对已打开的文件描述符进行各种控制操作以改变已打开文件的的各种属性</p>
+<ul>
+<li>使用时需要包含的头文件：fcntl.h、unistd.h</li>
+<li>返回值：int，与命令有关。如果出错，所有命令都返回-1，如果成功则返回某个其他值。下列三个命 令有特定返回值：F_DUPFD,F_GETFD,F_GETFL以及F_GETOWN。第一个返回新的文件描述符，第二个返回相应标志，最后一个返回一个正的进程ID或负的进程组ID。</li>
+<li><p>形参参数：</p>
+<ul>
+<li>fd：文件描述符</li>
+<li>cmd:<ul>
+<li>cmd=F_DUPFD：复制一个现有的描述符</li>
+<li>cmd=F_GETFD或F_SETFD：获得/设置文件描述符标记</li>
+<li>cmd=F_GETFL或F_SETFL：获得/设置文件状态标记（目前重点）</li>
+<li>cmd=F_GETOWN或F_SETOWN：获得/设置异步I/O所有权</li>
+<li>cmd=F_GETLK,F_SETLK或F_SETLKW：获得/设置记录锁<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> buf[<span class="number">10</span>];</span><br><span class="line">    <span class="type">int</span> flag, n;</span><br><span class="line">    flag = fcntl(STDIN_FILENO,F_GETFL);</span><br><span class="line">    <span class="keyword">if</span>(flag == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;fcntl error!!!\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    flag |= O_NONBLOCK;</span><br><span class="line">    <span class="type">int</span> ret = fcntl(STDIN_FILENO,F_SETFL,flag);</span><br><span class="line">    <span class="keyword">if</span>(ret == <span class="number">-1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;fcntl error&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">while</span>(<span class="number">1</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        n = read(STDIN_FILENO,buf,<span class="number">10</span>);</span><br><span class="line">        <span class="keyword">if</span>(n &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">          <span class="keyword">if</span>(errno != EAGAIN)</span><br><span class="line">          &#123;</span><br><span class="line">              perror(<span class="string">&quot;read /dev/tty&quot;</span>);</span><br><span class="line">              <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">          &#125;</span><br><span class="line">          <span class="keyword">else</span></span><br><span class="line">          &#123;</span><br><span class="line">              write(STDOUT_FILENO,<span class="string">&quot;try again\n&quot;</span>,<span class="built_in">strlen</span>(<span class="string">&quot;try again\n&quot;</span>));</span><br><span class="line">              sleep(<span class="number">2</span>);</span><br><span class="line">          &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">else</span></span><br><span class="line">            <span class="keyword">break</span>;</span><br><span class="line">    &#125;</span><br><span class="line">    write(STDOUT_FILENO,buf,n);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>lseek函数：对文件描述符的读写指针进行设置</p>
+<ul>
+<li>使用时需要包含的头文件：sys/types.h、unistd.h</li>
+<li>返回值：off_t，从文件头到文件指针被设置处的字节偏移值，失败返回 -1</li>
+<li><p>形参参数：</p>
+<ul>
+<li>filedes：文件描述符</li>
+<li>offset：偏移量，正数是向后偏移，负数向前偏移</li>
+<li><p>whence：定义偏移值的用法</p>
+<ul>
+<li>SEEK_SET:将文件指针偏移到传入字节数处(文件头开始偏移)</li>
+<li>SEEK_CUR:将文件指针偏移到当前位置加上传入字节数处(当前位置开始偏移)</li>
+<li>SEEK_END:将文件指针偏移到文件末尾加上传入字节数处(作为拓展作用，必须再执行一次写操作)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">char</span> msg[] = <span class="string">&quot;new test\n&quot;</span>;</span><br><span class="line">    <span class="type">int</span> fd,n,ls;</span><br><span class="line">    fd = open(<span class="string">&quot;./hello.txt&quot;</span>,O_RDWR|O_CREAT,<span class="number">0644</span>);</span><br><span class="line">    <span class="keyword">if</span>(fd &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;open file error\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    lseek(fd,<span class="number">10</span>,SEEK_CUR);</span><br><span class="line">    write(fd,msg,<span class="built_in">strlen</span>(msg));</span><br><span class="line">    <span class="type">char</span> ch;</span><br><span class="line">    lseek(fd,<span class="number">0</span>,SEEK_SET); <span class="comment">// 不加入此行，则文件内容指针在文件最后，后续读取不出任何内容</span></span><br><span class="line">    <span class="keyword">while</span>((n = read(fd,&amp;ch,<span class="number">1</span>)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(n &lt; <span class="number">0</span>)</span><br><span class="line">        &#123;</span><br><span class="line">          perror(<span class="string">&quot;read error!!!\n&quot;</span>);</span><br><span class="line">          <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">        &#125;</span><br><span class="line">        write(STDOUT_FILENO,&amp;ch,n);</span><br><span class="line">    &#125;</span><br><span class="line">    close(fd);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>拓展应用场景：使用lseek获取和拓展文件大小，但是不正规</p>
+<p><strong>传入传出参数</strong></p>
+<ul>
+<li>传入参数：<ol>
+<li>指针作为函数参数</li>
+<li>通常有const关键字修饰</li>
+<li>指针指向有效区域，在函数内部做读操作</li>
+</ol>
+</li>
+<li><p>传出参数：</p>
+<ol>
+<li>指针作为函数参数</li>
+<li>在函数调用之前，指针指向的空间可以无意义但必须有效</li>
+<li>在函数内部做写操作</li>
+<li>函数调用结束后，充当函数返回值</li>
+</ol>
+</li>
+<li><p>传入传出参数</p>
+<ol>
+<li>指针作为函数参数</li>
+<li>在函数调用之前，指针指向的空间要有实际意义</li>
+<li>在函数内部先做读操作，再做写操作</li>
+<li>函数调用结束后，充当函数返回值</li>
+</ol>
+</li>
+</ul>
+<p>传入传出参数示例：strtok函数：</p>
+<p>函数原型<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">char</span> *<span class="title function_">strtok</span><span class="params">(<span class="type">char</span> *str, <span class="type">const</span> <span class="type">char</span> *delim)</span>;</span><br><span class="line"><span class="type">char</span> *__cdecl <span class="title function_">strtok_s</span><span class="params">(<span class="type">char</span> *_String, <span class="type">const</span> <span class="type">char</span> *_Delimiter, <span class="type">char</span> **_Context)</span>;</span><br></pre></td></tr></table></figure><br>strtok函数：分割字符串</p>
+<ul>
+<li>使用时需要包含的头文件：string.h</li>
+<li>返回值：返回被分解的第一个子字符串，如果没有可检索的字符串，则返回一个空指针。</li>
+<li><p>形参参数：</p>
+<ul>
+<li>str：要被分解成一组小字符串的字符串。</li>
+<li>delim：包含分隔符的 C 字符串。</li>
+<li><p>whence：定义偏移值的用法</p>
+<ul>
+<li>SEEK_SET:将文件指针偏移到传入字节数处(文件头开始偏移)</li>
+<li>SEEK_CUR:将文件指针偏移到当前位置加上传入字节数处(当前位置开始偏移)</li>
+<li>SEEK_END:将文件指针偏移到文件末尾加上传入字节数处(作为拓展作用，必须再执行一次写操作)</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>strtok()函数接收两个传入参数，将_String中保存的字符串（待处理字符串），按照_Delimiter中的字符作为分隔符进行分割。如果_String为空，则函数内部保存的SAVE_PTR指针在下一次调用中将作为起始位置。</p>
+<p>其实这就说明在函数strtok()内部使用了一个静态变量SAVE_PTR指针，用以记录分割一次之后_String中下一个字符串的位置。这种方法导致了一个问题，就是strtok()函数是线程不安全的（因为其函数内部使用到了静态存储区）。</p>
+<p>除此之外，从函数的定义，第一个传入参数_String定义为char*而不是const char*，就说明strtok()函数不保证不修改传入数据的内容。实际上，第一个参数_String传进来的字符串，是会被strtok()函数所修改的，因此调用strtok()函数的时候应当注意。</p>
+<p>strtok_s()函数增加了一个参数_Context，这个参数就是相当于strtok()函数中内部定义的静态SAVE_PTR指针，用来传递对字符串_String的处理进行到了哪里。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"> </span><br><span class="line"><span class="type">char</span> <span class="built_in">string</span>[] = <span class="string">&quot;A string\tof ,,tokens\nand some  more tokens&quot;</span>;</span><br><span class="line"><span class="type">char</span> seps[]   = <span class="string">&quot; ,\t\n&quot;</span>;</span><br><span class="line"><span class="type">char</span> *token=<span class="literal">NULL</span>;</span><br><span class="line"> </span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">void</span>)</span>&#123;</span><br><span class="line"> </span><br><span class="line">	<span class="built_in">printf</span>( <span class="string">&quot;Tokens:\n&quot;</span> );</span><br><span class="line">    token = strtok( <span class="built_in">string</span>, seps);</span><br><span class="line">	<span class="keyword">while</span>(token !=<span class="literal">NULL</span>)&#123;</span><br><span class="line">         <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,token);</span><br><span class="line">		 token=strtok(<span class="literal">NULL</span>,seps);<span class="comment">//strtok第一个参数传入NULL，使用之前保存的SAVE_PTR定位下一个待处理的字符的位置</span></span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="2-5、文件存储与文件系统"><a href="#2-5、文件存储与文件系统" class="headerlink" title="2.5、文件存储与文件系统"></a>2.5、文件存储与文件系统</h2><p>inode：索引节点，本质为结构体，存储文件的属性信息。如：权限、类型、大小、时间、用户、盘块位置等。也叫文件属性管理结构，大多数inode都存储在磁盘上。少量常用的inode会被缓存在内存中</p>
+<p>dentry：目录项，本质为结构体，重要成员有文件名和inode。而文件内容(data)保存在磁盘盘块中。<br>文件创建硬链接时，有相同的inode和磁盘存储区域，但是有不同的dentry。</p>
+<p>磁盘进行格式化的时候，会被分成三个存储区域，分别是超级块、索引节点区和数据块区。</p>
+<ul>
+<li>超级块，用来存储文件系统的详细信息，比如块个数、块大小、空闲块等等。</li>
+<li>索引节点区，用来存储索引节点；</li>
+<li>数据块区，用来存储文件或目录数据；</li>
+</ul>
+<p>我们不可能把超级块和索引节点区全部加载到内存，这样内存肯定撑不住，所以只有当需要使用的时候，才将其加载进内存，它们加载进内存的时机是不同的：</p>
+<ul>
+<li>超级块：当文件系统挂载时进入内存；</li>
+<li>索引节点区：当文件被访问时进入内存；</li>
+</ul>
+<img src="/2024/07/08/linux-programing-2/%E6%96%87%E4%BB%B6%E5%AD%98%E5%82%A8%E7%BB%93%E6%9E%84.png" class="" title="文件存储结构"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<h2 id="2-6、stat、lstat和fstat函数"><a href="#2-6、stat、lstat和fstat函数" class="headerlink" title="2.6、stat、lstat和fstat函数"></a>2.6、stat、lstat和fstat函数</h2><p>函数原型<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">stat</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="keyword">struct</span> stat *buf)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">fstat</span><span class="params">(<span class="type">int</span> filedes, <span class="keyword">struct</span> stat *buf)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">lstat</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path, <span class="keyword">struct</span> stat *buf)</span>;</span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">stat</span>&#123;</span></span><br><span class="line">    <span class="type">mode_t</span> st_mode; <span class="comment">//(文件保护模式)文件类型和权限信息 结构体详解请参考此处</span></span><br><span class="line">    <span class="type">ino_t</span> st_ino; <span class="comment">//文件结点号</span></span><br><span class="line">    <span class="type">dev_t</span> st_dev; <span class="comment">//文件所在设备的文件系统标识号 device number (file system)</span></span><br><span class="line">    <span class="type">dev_t</span> st_rdev; <span class="comment">//文件所表示的特殊设备文件的设备标识 device number for special files</span></span><br><span class="line">    <span class="type">nlink_t</span> st_nlink; <span class="comment">//符号链接数</span></span><br><span class="line">    <span class="type">uid_t</span> st_uid; <span class="comment">//文件用户标识 用户ID</span></span><br><span class="line">    <span class="type">gid_t</span> st_gid; <span class="comment">//文件用户组标识 组ID</span></span><br><span class="line">    <span class="type">off_t</span> st_size; <span class="comment">// 总大小，字节为单位 size in bytes,for regular files</span></span><br><span class="line">    <span class="type">time_t</span> st_st_atime; <span class="comment">//文件内容最后访问的时间</span></span><br><span class="line">    <span class="type">time_t</span> st_mtime; <span class="comment">//文件内容最后修改时间</span></span><br><span class="line">    <span class="type">time_t</span> st_ctime; <span class="comment">//文件结构最后状态改变时间</span></span><br><span class="line">    <span class="type">blksize_t</span> st_blksize; <span class="comment">// 文件系统的最优I/O块大小 best I/O block size</span></span><br><span class="line">    <span class="type">blkcnt_t</span> st_blocks; <span class="comment">//分配给文件的块的数量，512字节为1单元 number of disk blocks allocated</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure><br>stat函数返回与此命名文件有关的信息结构，fstat函数获取已在描述符fields上打开文件的有关信息，lstat函数类似于stat但是当命名的文件是一个符号链接时，lstat返回该符号链接的有关信息，而不是由该符号链接引用文件的信息。</p>
+<ul>
+<li>使用时需要包含的头文件：sys/types.h、sys/stat.h、unistd.h</li>
+<li><p>返回值：成功执行时，返回0。失败返回-1，errno被设为以下的某个值</p>
+<ul>
+<li>EBADF： 文件描述词无效</li>
+<li>EFAULT： 地址空间不可访问</li>
+<li>ELOOP： 遍历路径时遇到太多的符号连接</li>
+<li>ENAMETOOLONG：文件路径名太长</li>
+<li>ENOENT：路径名的部分组件不存在，或路径名是空字串</li>
+<li>ENOMEM：内存不足</li>
+<li>ENOTDIR：路径名的部分组件不是目录</li>
+</ul>
+</li>
+<li><p>形参参数：</p>
+<ul>
+<li>path：文件路径名。</li>
+<li>filedes：文件描述词。</li>
+<li>buf：是以上结构体的指针</li>
+</ul>
+</li>
+</ul>
+<p>stat用来判断没有打开的文件,而fstat用来判断打开的文件。我们使用最多的属性是st_mode。通过着属性我们可以判断给定的文件是一个普通文件还是一个目录、连接等等.可以使用下面几个宏来判断。</p>
+<ul>
+<li>S_ISLNK(st_mode):是否是一个软连接</li>
+<li>S_ISREG是否是一个常规文件</li>
+<li>S_ISDIR是否是一个目录</li>
+<li>S_ISCHR是否是一个字符设备</li>
+<li>S_ISBLK是否是一个块设备</li>
+<li>S_ISFIFO是否是一个管道文件</li>
+<li>S_ISSOCK是否是一个SOCKET文件</li>
+</ul>
+<p>stat穿透：stat是会穿透符号链接的，意思是判断的就是“本尊”的类型，要想不穿透符号链接，就要用lstat函数。</p>
+<h2 id="2-7、link、unlink和隐式回收"><a href="#2-7、link、unlink和隐式回收" class="headerlink" title="2.7、link、unlink和隐式回收"></a>2.7、link、unlink和隐式回收</h2><p>Linux 的链接分为两种：硬链接、软链接！</p>
+<p><strong>硬链接：</strong> 硬链接实际上是为文件建一个别名，链接文件和原文件实际上是同一个文件。可以通过ls -i来查看一下，这两个文件的inode号是同一个，说明它们是同一个文件。</p>
+<p><strong>软链接：</strong> 通过软链接建立的链接文件与原文件并不是同一个文件，相当于原文件的快捷方式。具体理解的话，链接文件内存储的是原文件的inode，也就是说是用来指向原文件文件，这两个文件的inode是不一样的。</p>
+<p><strong>复制：</strong> 相当于将原文件进行一个拷贝，为另一个全新的文件，与原文件没有关系了。修改任何一个都不会影响另一个。</p>
+<p>函数原型<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">link</span> <span class="params">(<span class="type">const</span> <span class="type">char</span> * oldpath, <span class="type">const</span> <span class="type">char</span> * newpath)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">unlink</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>link函数：为已经存在的文件创建一个新的硬链接，当成功创建了一个硬链接后，inode号的数量加1</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：成功，返回0；失败，返回-1，并且将errno设置错误码。</li>
+<li><p>形参参数：</p>
+<ul>
+<li>oldpath：原始文件名</li>
+<li>newpath：新的硬链接名</li>
+</ul>
+</li>
+</ul>
+<p>unlink函数：移除一个链接（删除一个文件名），如果此链接是指向文件的最后一个链接，还将移除文件本身。</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：成功，返回0；失败，返回-1，并且将errno设置错误码。</li>
+<li><p>形参参数：</p>
+<ul>
+<li>pathname：原始文件路径</li>
+</ul>
+</li>
+</ul>
+<p>Linux下删除文件机制：不断将st_nlink减1，直到为0为止。无目录项的文件将会被操作系统择机释放。因此，我们删除文件，只是让文件具备了被释放的条件。要等到所有打开该文件的进程关闭该文件，系统才会挑时间将文件释放掉。</p>
+<p>下述程序展示了unlink的释放时机，当程序发生错误而退出时，临时文件被保存了下来，因此，一旦创建临时文件，就需要使用unlink将其删除以避免错误。</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;fcntl.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">()</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="type">int</span> fd,ret;</span><br><span class="line">    <span class="type">char</span> * p[<span class="number">2</span>];</span><br><span class="line">    p[<span class="number">0</span>] = <span class="string">&quot;hello world 11111\n&quot;</span>;</span><br><span class="line">    p[<span class="number">1</span>] = <span class="string">&quot;this is my world222\n&quot;</span>;</span><br><span class="line">    </span><br><span class="line">    fd = open(<span class="string">&quot;./temp.txt&quot;</span>,O_RDWR|O_CREAT|O_TRUNC,<span class="number">0644</span>);</span><br><span class="line">    <span class="keyword">if</span>(fd &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;open error!!!\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    ret = write(fd,p[<span class="number">0</span>],<span class="built_in">strlen</span>(p[<span class="number">0</span>]));</span><br><span class="line">    <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;write error!!!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;p1 has written!!!\n&quot;</span>);</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    ret = write(fd,p[<span class="number">1</span>],<span class="built_in">strlen</span>(p[<span class="number">1</span>]));</span><br><span class="line">    <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;write error!!!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;p2 has written!!!\n&quot;</span>);</span><br><span class="line"></span><br><span class="line">    <span class="type">int</span> *ptr = <span class="literal">NULL</span>;</span><br><span class="line">    *ptr = <span class="number">0</span>;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;please enter anykey!!!\n&quot;</span>);</span><br><span class="line">    getchar();</span><br><span class="line"></span><br><span class="line">    close(fd);</span><br><span class="line">    ret = unlink(<span class="string">&quot;./temp.txt&quot;</span>);</span><br><span class="line">    <span class="keyword">if</span>(ret &lt; <span class="number">0</span>)</span><br><span class="line">    &#123;</span><br><span class="line">        perror(<span class="string">&quot;unlink error!!!\n&quot;</span>);</span><br><span class="line">        <span class="built_in">exit</span>(<span class="number">1</span>);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 解决方法：把上述7行内容移到open之后</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>隐式回收：当进程结束时，所有该进程打开的文件会被关闭，申请的内存空间会被释放，系统这一特性被称为隐式回收。</p>
+<h2 id="2-8、文件、目录和权限"><a href="#2-8、文件、目录和权限" class="headerlink" title="2.8、文件、目录和权限"></a>2.8、文件、目录和权限</h2><p>目录里的内容：目录项</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th>类型</th>
+<th>r</th>
+<th>w</th>
+<th>x</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>文件</td>
+<td>文件内容可被查看，如cat、less</td>
+<td>文件内容可被修改，如vi、&gt;</td>
+<td>可以运行产生一个进程</td>
+</tr>
+<tr>
+<td>目录</td>
+<td>目录可被浏览，如ls、tree</td>
+<td>可以创建、删除、修改文件，如mv、touch</td>
+<td>可被进入，如cd</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>函数原型<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">chdir</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *path)</span>;</span><br><span class="line"><span class="type">char</span> *<span class="title function_">getcwd</span><span class="params">(<span class="type">char</span> *buf, <span class="type">size_t</span> size)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">mkdir</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname, <span class="type">mode_t</span> mode)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">rmdir</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *pathname)</span>;</span><br><span class="line">DIR *<span class="title function_">opendir</span><span class="params">(<span class="type">const</span> <span class="type">char</span> *name)</span>;</span><br><span class="line"><span class="keyword">struct</span> dirent *<span class="title function_">readdir</span><span class="params">(DIR *dirp)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">closedir</span><span class="params">(DIR *dirp)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>chdir函数：修改当前进程的路径，相当于cd 修改当前工作目录，改变程序中打开的路径</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：成功，返回0；失败，返回-1，并且将errno设置错误码。</li>
+<li><p>形参参数：</p>
+<ul>
+<li>path：目录名</li>
+</ul>
+</li>
+</ul>
+<p>getcwd函数：获取当前进程的工作目录</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：成功指针buf，如果路径长度大于size,则会返回NULL,错误代码为ERANGE</li>
+<li><p>形参参数：</p>
+<ul>
+<li>buf：当前工作目录的绝对路径复制到参数buffer所指的内存空间中</li>
+<li>size：buf的空间大小</li>
+</ul>
+</li>
+</ul>
+<p>mkdir函数：创建目录</p>
+<ul>
+<li>使用时需要包含的头文件：sys/stat.h、sys/types.h</li>
+<li>返回值：成功，返回0；失败，返回-1，并且将errno设置错误码。</li>
+<li><p>形参参数：</p>
+<ul>
+<li>pathname：创建一个以参数pathname命名的目录</li>
+<li>mode：定义新创建目录的权限</li>
+</ul>
+</li>
+</ul>
+<p>rmdir函数：删除一个空目录，目录必须为空</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：成功，返回0；失败，返回-1</li>
+<li><p>形参参数：</p>
+<ul>
+<li>pathname：删除一个以参数pathname命名的目录</li>
+</ul>
+</li>
+</ul>
+<p>opendir函数：打开一个目录，并返回指向该目录的句柄</p>
+<ul>
+<li>使用时需要包含的头文件：dirent.h、sys/types.h</li>
+<li>返回值：成功将返回指向该目录的句柄，一个 DIR 指针（其实质是一个结构体指针），其作用类似于open函数返回的文件描述符fd；失败，返回NULL</li>
+<li><p>形参参数：</p>
+<ul>
+<li>name：指定需要打开的目录路径名，可以是绝对路径，也可以是相对路径</li>
+</ul>
+</li>
+</ul>
+<p>readdir函数：打开一个目录，并返回指向该目录的句柄</p>
+<ul>
+<li>使用时需要包含的头文件：dirent.h、sys/types.h</li>
+<li>返回值：成功则返回下个目录进入点. 有错误发生或读取到目录文件尾则返回NULL</li>
+<li><p>形参参数：</p>
+<ul>
+<li>dirp：目录流</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">struct</span> <span class="title">dirent</span></span></span><br><span class="line"><span class="class">&#123;</span></span><br><span class="line">    <span class="type">ino_t</span> d_ino; <span class="comment">//d_ino 此目录进入点的inode</span></span><br><span class="line">    <span class="type">ff_t</span> d_off; <span class="comment">//d_off 目录文件开头至此目录进入点的位移</span></span><br><span class="line">    <span class="type">signed</span> <span class="type">short</span> <span class="type">int</span> d_reclen; <span class="comment">//d_reclen _name 的长度, 不包含NULL 字符</span></span><br><span class="line">    <span class="type">unsigned</span> <span class="type">char</span> d_type; <span class="comment">//d_type d_name 所指的文件类型</span></span><br><span class="line">    <span class="type">char</span> d_name[<span class="number">256</span>];  <span class="comment">//d_name 文件名</span></span><br><span class="line">&#125;;</span><br></pre></td></tr></table></figure>
+<p>closedir函数：关闭一个目录流并释放相关资源</p>
+<ul>
+<li>使用时需要包含的头文件：dirent.h、sys/types.h</li>
+<li>返回值：成功，返回0；失败，返回-1</li>
+<li><p>形参参数：</p>
+<ul>
+<li>dirp：目录流</li>
+</ul>
+</li>
+</ul>
+<p>DIR结构体类似于FILE，是一个内部结构<br>dirent不仅仅指向目录，还指向目录中的具体文件</p>
+<blockquote>
+<p>练习：递归遍历目录</p>
+</blockquote>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/types.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;sys/stat.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;errno.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;dirent.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;unistd.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdlib.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;string.h&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="type">void</span> <span class="title function_">seeDir</span><span class="params">(<span class="type">const</span> <span class="type">char</span>* dirname)</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="keyword">if</span>(dirname == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">stat</span> <span class="title">buf</span>;</span></span><br><span class="line">    <span class="type">int</span> result;</span><br><span class="line">    result = lstat(dirname,&amp;buf);</span><br><span class="line">    <span class="keyword">if</span>(S_ISREG(buf.st_mode))</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;\n%s contains:\n&quot;</span>,dirname);</span><br><span class="line">    DIR *thisdir = opendir(dirname);</span><br><span class="line">    <span class="keyword">if</span>(thisdir == <span class="literal">NULL</span>)</span><br><span class="line">        <span class="keyword">return</span>;</span><br><span class="line">    <span class="class"><span class="keyword">struct</span> <span class="title">dirent</span> *<span class="title">dirs</span> =</span> <span class="literal">NULL</span>;</span><br><span class="line">    <span class="type">char</span> temp[<span class="number">256</span>];</span><br><span class="line">    <span class="keyword">while</span>((dirs = readdir(thisdir)))</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(dirs-&gt;d_name,<span class="string">&quot;.&quot;</span>) == <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">        <span class="keyword">if</span>(<span class="built_in">strcmp</span>(dirs-&gt;d_name,<span class="string">&quot;..&quot;</span>) == <span class="number">0</span>)</span><br><span class="line">                <span class="keyword">continue</span>;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;%s\n&quot;</span>,dirs-&gt;d_name);</span><br><span class="line">        <span class="built_in">strcpy</span>(temp,dirname);</span><br><span class="line">        seeDir(<span class="built_in">strcat</span>(<span class="built_in">strcat</span>(temp,<span class="string">&quot;/&quot;</span>),dirs-&gt;d_name));</span><br><span class="line">    &#125;</span><br><span class="line">    closedir(thisdir);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="type">int</span> <span class="title function_">main</span><span class="params">(<span class="type">int</span> argc,<span class="type">char</span>* argv[])</span></span><br><span class="line">&#123;</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;process start:&quot;</span>);</span><br><span class="line">    seeDir(argv[<span class="number">1</span>]);</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="2-8、重定向"><a href="#2-8、重定向" class="headerlink" title="2.8、重定向"></a>2.8、重定向</h3><p>函数原型：<br><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="type">int</span> <span class="title function_">dup</span><span class="params">(<span class="type">int</span> oldfd)</span>;</span><br><span class="line"><span class="type">int</span> <span class="title function_">dup2</span><span class="params">(<span class="type">int</span> oldfd, <span class="type">int</span> newfd)</span>;</span><br></pre></td></tr></table></figure></p>
+<p>dup函数：复制一个现存的文件描述符</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：新的文件描述符</li>
+<li>形参参数：<ul>
+<li>oldfd：已有的文件描述符</li>
+</ul>
+</li>
+</ul>
+<p>dup2函数：复制一个现存的文件描述符</p>
+<ul>
+<li>使用时需要包含的头文件：unistd.h</li>
+<li>返回值：如果出错就返回-1，否则返回的就是newfd</li>
+<li>形参参数：<ul>
+<li>oldfd：已有的文件描述符</li>
+<li>newfd：新的文件描述符</li>
+</ul>
+</li>
+</ul>
+<p>当调用dup函数时，内核在进程中创建一个新的文件描述符，此描述符是当前可用文件描述符的最小数值，这个文件描述符指向oldfd所拥有的文件表项。</p>
+<p>dup2和dup的区别就是可以用newfd参数指定新描述符的数值，如果newfd已经打开，则先将其关闭。如果newfd等于oldfd，则dup2返回newfd, 而不关闭它。dup2函数返回的新文件描述符同样与参数oldfd共享同一文件表项。</p>
+<img src="/2024/07/08/linux-programing-2/dup%E4%B8%8E%E6%96%87%E4%BB%B6%E6%8F%8F%E8%BF%B0%E7%AC%A6.png" class="" title="dup与文件描述符"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/07/08/linux-programing-1/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">
+                    Linux系统编程
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/07/08/linux-programing-1/" class="trm-anima-link">
+                    linux_programing-1
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/07/08</li>
+                <li>10:00</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v7.2.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.2.2
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="2、文件I&#x2F;O"><a rel="nofollow" class="trm-toc-link" href="#2、文件I-O"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">2、文件I&#x2F;O</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="2.1、open&#x2F;close函数"><a rel="nofollow" class="trm-toc-link" href="#2-1、open-close函数"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">2.1、open&#x2F;close函数</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2.2、read&#x2F;write函数"><a rel="nofollow" class="trm-toc-link" href="#2-2、read-write函数"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">2.2、read&#x2F;write函数</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2.3、文件描述符、阻塞和非阻塞"><a rel="nofollow" class="trm-toc-link" href="#2-3、文件描述符、阻塞和非阻塞"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">2.3、文件描述符、阻塞和非阻塞</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2.4、fcntl、lseek函数和传入传出参数"><a rel="nofollow" class="trm-toc-link" href="#2-4、fcntl、lseek函数和传入传出参数"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">2.4、fcntl、lseek函数和传入传出参数</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2.5、文件存储与文件系统"><a rel="nofollow" class="trm-toc-link" href="#2-5、文件存储与文件系统"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">2.5、文件存储与文件系统</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2.6、stat、lstat和fstat函数"><a rel="nofollow" class="trm-toc-link" href="#2-6、stat、lstat和fstat函数"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">2.6、stat、lstat和fstat函数</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2.7、link、unlink和隐式回收"><a rel="nofollow" class="trm-toc-link" href="#2-7、link、unlink和隐式回收"><span class="trm-toc-number">1.7.</span> <span class="trm-toc-text">2.7、link、unlink和隐式回收</span></a></li><li class="trm-toc-item trm-toc-level-2" title="2.8、文件、目录和权限"><a rel="nofollow" class="trm-toc-link" href="#2-8、文件、目录和权限"><span class="trm-toc-number">1.8.</span> <span class="trm-toc-text">2.8、文件、目录和权限</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="2.8、重定向"><a rel="nofollow" class="trm-toc-link" href="#2-8、重定向"><span class="trm-toc-number">1.8.1.</span> <span class="trm-toc-text">2.8、重定向</span></a></li></ol></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.2"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.2.2"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+</body>
+
+</html>
