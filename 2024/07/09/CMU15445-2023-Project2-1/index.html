@@ -7,25 +7,30 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta name="description" content="1、gcc编译器、动态库制作、gdb调试与makefile1.1、gcc编译器gcc编译可执行程序4步骤：预处理—&gt;编译—&gt;汇编—&gt;链接  预处理（参数：gcc -E）(hello.c—&gt;hello.i)：展开宏和头文件+替换条件编译+删除注释、空行和空白 编译（参数：gcc -S）(hello.i—&gt;hello.s)：检查语法规范，消耗时间和系统资源最多 汇编（参数">
+<meta name="description" content="CMU15445-2023-Project2.1CMU15445-2023的Project2内容过于丰富，因此将Project2的部分拆分为三篇博客进行讲解。2.1的内容主要集中在树、二叉树、二叉排序树和平衡二叉树这几个数据结构上。 树与二叉树树“树”是一种“非线性的数据结构”，什么是“非线性的数据结构”？在实际场景中，常常存在着一对多，甚至是多对多的情况。想象一下，一根树枝可以分叉出很多树枝、树">
 <meta property="og:type" content="article">
-<meta property="og:title" content="linux-programing-1">
-<meta property="og:url" content="http://example.com/2024/07/08/linux-programing-1/index.html">
+<meta property="og:title" content="CMU15445-2023-Project2.1">
+<meta property="og:url" content="http://example.com/2024/07/09/CMU15445-2023-Project2-1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="1、gcc编译器、动态库制作、gdb调试与makefile1.1、gcc编译器gcc编译可执行程序4步骤：预处理—&gt;编译—&gt;汇编—&gt;链接  预处理（参数：gcc -E）(hello.c—&gt;hello.i)：展开宏和头文件+替换条件编译+删除注释、空行和空白 编译（参数：gcc -S）(hello.i—&gt;hello.s)：检查语法规范，消耗时间和系统资源最多 汇编（参数">
+<meta property="og:description" content="CMU15445-2023-Project2.1CMU15445-2023的Project2内容过于丰富，因此将Project2的部分拆分为三篇博客进行讲解。2.1的内容主要集中在树、二叉树、二叉排序树和平衡二叉树这几个数据结构上。 树与二叉树树“树”是一种“非线性的数据结构”，什么是“非线性的数据结构”？在实际场景中，常常存在着一对多，甚至是多对多的情况。想象一下，一根树枝可以分叉出很多树枝、树">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/img/404.jpg">
 <meta property="og:image" content="http://example.com/img/404.jpg">
-<meta property="article:published_time" content="2024-07-08T02:00:29.000Z">
-<meta property="article:modified_time" content="2024-07-08T02:18:59.367Z">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2024-07-09T02:20:57.000Z">
+<meta property="article:modified_time" content="2024-07-12T08:46:41.098Z">
 <meta property="article:author" content="Huhualing">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="卡耐基梅隆大学">
 <meta property="article:tag" content="C&#x2F;C++编程">
-<meta property="article:tag" content="Linux操作系统">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="http://example.com/img/404.jpg">
 
 
-<title >linux-programing-1</title>
+<title >CMU15445-2023-Project2.1</title>
 
 <!-- Favicon -->
 
@@ -68,7 +73,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-07-08 10:18:59"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-07-12 16:46:41"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
@@ -231,7 +236,7 @@
                             NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            linux-programing-1
+                            CMU15445-2023-Project2.1
                         </h1>
 
                         
@@ -405,13 +410,13 @@
     <div class="col-sm-4">
         <div class="trm-card trm-label trm-label-light text-center">
             <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
-            07/08
+            07/09
         </div>
     </div>
     <div class="col-sm-4">
         <div class="trm-card trm-label trm-label-light text-center">
             <i class="iconfont far fa-clock trm-icon"></i><br>
-            10:00
+            10:20
         </div>
     </div>
     <div class="col-sm-4">
@@ -423,118 +428,95 @@
 </div>
 <div class="trm-card ">
     <article id="article-container" class="trm-publication">
-    <h1 id="1、gcc编译器、动态库制作、gdb调试与makefile"><a href="#1、gcc编译器、动态库制作、gdb调试与makefile" class="headerlink" title="1、gcc编译器、动态库制作、gdb调试与makefile"></a>1、gcc编译器、动态库制作、gdb调试与makefile</h1><h2 id="1-1、gcc编译器"><a href="#1-1、gcc编译器" class="headerlink" title="1.1、gcc编译器"></a>1.1、gcc编译器</h2><p>gcc编译可执行程序4步骤：预处理—&gt;编译—&gt;汇编—&gt;链接</p>
+    <h1 id="CMU15445-2023-Project2-1"><a href="#CMU15445-2023-Project2-1" class="headerlink" title="CMU15445-2023-Project2.1"></a>CMU15445-2023-Project2.1</h1><p>CMU15445-2023的Project2内容过于丰富，因此将Project2的部分拆分为三篇博客进行讲解。2.1的内容主要集中在树、二叉树、二叉排序树和平衡二叉树这几个数据结构上。</p>
+<h2 id="树与二叉树"><a href="#树与二叉树" class="headerlink" title="树与二叉树"></a>树与二叉树</h2><h3 id="树"><a href="#树" class="headerlink" title="树"></a>树</h3><p>“树”是一种“非线性的数据结构”，什么是“非线性的数据结构”？在实际场景中，常常存在着一对多，甚至是多对多的情况。想象一下，一根树枝可以分叉出很多树枝、树叶，我们也可以将“非线性的数据结构”理解成一种一对多的关系，而不是像一条线一样，按顺序排列的一对一关系。下面的例子就符合树形结构。</p>
+<img src="/2024/07/09/CMU15445-2023-Project2-1/%E7%94%9F%E6%B4%BB%E4%B8%AD%E7%9A%84%E6%A0%91%E7%BB%93%E6%9E%84%E4%BA%8B%E4%BE%8B.png" class="" title="生活中的树结构事例"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>在数据结构中，树的定义为：树是一种非线性的数据结构，它是由n（n&gt;=0）个有限节点组成一个具有层次关系的集合。</p>
 <ul>
-<li>预处理（参数：gcc -E）(hello.c—&gt;hello.i)：展开宏和头文件+替换条件编译+删除注释、空行和空白</li>
-<li>编译（参数：gcc -S）(hello.i—&gt;hello.s)：检查语法规范，消耗时间和系统资源最多</li>
-<li>汇编（参数：gcc -c）(hello.s—&gt;hello.o)：将汇编指令翻译成机器指令</li>
-<li>链接（无参数）(hello.o—&gt;a.out)：数据段合并，数据地址回填</li>
+<li>当n=0时，树就是一棵空树；</li>
+<li>如果树为非空，那么就会有两种情况：一种，就是n=1的时候，有且只有唯一一个称为根/树根（Root）的特殊节点；另一种就是，当n&gt;1时，除根节点外，其余节点可以分为 m（m&gt;0）个互不相交的有限集T1、T2、…、Tm，其中每个集合自身又是一棵树，它们叫做根的子树，因此，树是递归定义的。上图中节点A就是树根/根节点。</li>
+<li>注意，一棵树可以只有树根而没有其他节点。 </li>
 </ul>
-<p>gcc编译常用参数：</p>
+<p>树的特点：</p>
 <ul>
-<li>-I：指定头文件所在目录位置</li>
-<li>-c：只做预处理、编译、汇编</li>
-<li>-S：只做预处理、编译</li>
-<li>-E：只做预处理</li>
-<li>-g：编译时添加调试文件，不加编译出的可执行文件无法调试</li>
-<li>-On：添加编译优化级，n取0-3，默认是2级</li>
-<li>-Wall：提示所有的警告信息</li>
-<li>-D：向程序中“动态”注册宏定义，代码调试信息过多时可以实现代码的开关</li>
+<li>树的定义是递归的，是一种递归的数据结构</li>
+<li>树在逻辑结构上属于非线性结构</li>
+<li>树的根节点没有前驱结点，除根节点以外的所有结点有且只有一个前驱结点</li>
+<li>树的叶结点没有后继结点，除叶结点以外的所有结点都有一个或多个后继结点</li>
 </ul>
-<h2 id="1-2、静态库和动态库"><a href="#1-2、静态库和动态库" class="headerlink" title="1.2、静态库和动态库"></a>1.2、静态库和动态库</h2><p>静态库是在可执行程序运行前就已经加入到执行码中，成为可执行程序一部分，动态库（又叫做共享库）是在可执行程序启动时加入到可执行程序中，可被多个可执行程序共享使用。而多个程序使用一个静态库时，会创建多个副本。</p>
-<p>建议开发共享库，便于维护和更新。</p>
-<p>静态库：对空间要求较低，对时间要求较高的核心程序中<br>动态库：对空间要求较高，对时间要求较低</p>
-<blockquote>
-<p>静态库</p>
-</blockquote>
-<p>静态库制作及使用步骤：</p>
+<p>对于树而言，有“高度”、“深度”、“层”三个概念比较相似，容易混淆。它们的定义如下：</p>
+<ul>
+<li>节点的高度：节点的高度 = 节点到叶子节点到<font color=red>最长路径</font>的长度</li>
+<li>节点的深度：节点的高度 = 根节点到这个节点所经历的路径的长度</li>
+<li>节点的层数：节点的层数 = 节点的深度 + 1</li>
+</ul>
+<h3 id="二叉树"><a href="#二叉树" class="headerlink" title="二叉树"></a>二叉树</h3><p>二叉树是n（n≥0）个节点的有限集合，该集合或者为空集（即n=0，叫做空二叉树），或者由一个根节点和两个互不相交的该根节点的左子树和右子树构成，左子树和右子树又分别是一棵二叉树。</p>
+<p>二叉树的特点是每个节点最多有两棵子树（左子树和右子树），这意味着每个节点的度（节点拥有子树的个数）都不大于2。此外，二叉树有左右之分，其次序不能随意颠倒，这表明二叉树是一棵有序树。</p>
+<p>下面是一个二叉树的例子：</p>
+<img src="/2024/07/09/CMU15445-2023-Project2-1/%E4%BA%8C%E5%8F%89%E6%A0%91%E5%AE%9E%E4%BE%8B.png" class="" title="二叉树实例"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>二叉树有一些特殊的形态，例如满二叉树、完全二叉树、斜树。</p>
+<p>一个二叉树，如果每一个层的结点数都达到最大值，则这个二叉树就是满二叉树。也就是说，如果一个二叉树的层数为K，且结点总数是$2^{k}-1$，则它就是满二叉树。</p>
+<p>因此满二叉树有如下特点：</p>
 <ol>
-<li>将 .c 生成 .o 文件</li>
-<li>使用ar工具制作静态库<br>使用ar命令创建，命名要求以lib开头，.a结尾。<br> ar rcs libmylib.a file1.o</li>
-<li>编译静态库到可执行文件中<br>gcc test.c lib库名.a -o test.out</li>
+<li>所有的分支节点都存在左子树和右子树（非叶节点的度一定是2）。</li>
+<li>所有的叶子都在同一层上（这也意味着叶节点只能出现在最下一层）。</li>
+<li>不存在度为非0和非2的节点。</li>
 </ol>
-<p>一个工程中的静态库应该包含如下文件夹：inc  lib  resource，因此需要gcc的常用参数指定文件夹位置</p>
-<blockquote>
-<p>动态库</p>
-</blockquote>
-<p>1）地址回填与数据段合并发生在链接阶段，当链接后main的首地址确定后，就会进行地址回填；<br>2）而动态库函数地址的确定是发生在运行时，只有动态库被加载后，该动态库函数的地址才会确定，也叫延时调用。 两者是不一样的。<br>3）至于地址回填与动态库函数的确定地址的区别，你可以认为地址回填只是大概的回填main的首地址，真正的地址仍要等待动态库被加载到内存时才确认。</p>
-<img src="/2024/07/08/linux-programing-1/%E5%86%85%E5%AD%98%E4%B8%AD%E7%9A%84%E6%95%B0%E6%8D%AE%E6%AE%B5.png" class="" title="内存中的数据段"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
-<p>链接阶段，代码段text和只读数据rodata段合并，data段和bss段合并。</p>
-<p>动态库制作及使用步骤：</p>
+<img src="/2024/07/09/CMU15445-2023-Project2-1/%E6%BB%A1%E4%BA%8C%E5%8F%89%E6%A0%91.png" class="" title="满二叉树"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>对于深度为K的，有n个结点的二叉树，当且仅当其每一个结点都与深度为K的满二叉树中编号从1至n的结点一一对应时称之为完全二叉树。 也就是说，完全二叉树除了最后一层，前面每一层都是满的，最后一层必须从左向右排列。也就是说，如果一个节点没有左孩子，就不可以有右孩子。</p>
+<p>完全二叉树有如下特点： </p>
 <ol>
-<li>将 .c 生成 .o 文件（生成与位置无关的代码 -fPIC）</li>
-<li>使用gcc -shared 制作动态库<br>gcc -shared -o lib库名.so add.o sub.o div.o</li>
-<li>编译可执行程序时指定所使用的动态库。-l：指定库名 -L：指定库路径</li>
+<li>叶节点都在最底下两层。</li>
+<li>最后一层的叶节点都靠左侧排列（左侧连续），并且除最后一层，其他层的节点个数都要达到最大。</li>
+<li>倒数第二层如果有叶节点，则叶节点都靠右侧排列（右侧连续）。 </li>
+<li>如果节点度为1，则该节点只有左子树，不可以只有右子树。而且最多只有一个度为1的节点。</li>
 </ol>
-<img src="/2024/07/08/linux-programing-1/%E5%8A%A8%E6%80%81%E5%BA%93%E5%88%B6%E4%BD%9C%E4%B8%AD%E7%9A%84%E9%94%99%E8%AF%AF.png" class="" title="动态库制作中的错误"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
-<p>错误原因：动态链接器报错</p>
-<ul>
-<li>链接器：工作于链接阶段，.out文件生成前，工作时需要 -l -L 的支持</li>
-<li>动态链接器：工作于程序运行阶段，工作室需要提供动态库所在目录位置，<ul>
-<li>使用命令 export LD_LIBRARY_PATH=./lib 导出环境变量来改变。（临时生效）</li>
-<li>将动态库路径写入 .bashrc（永久生效）</li>
-<li>拷贝自定义动态库到/lib（标准c库所在路径）</li>
-<li>配置文件<br>1、sudo vim /etc/ld.so.conf<br>2、写入动态库绝对路径<br>3、sudo ldconfig -v 使配置文件生效</li>
-</ul>
-</li>
-</ul>
-<h2 id="1-3、gdb调试器"><a href="#1-3、gdb调试器" class="headerlink" title="1.3、gdb调试器"></a>1.3、gdb调试器</h2><p>使用gdb命令即可启动gdb，实现调试程序，基本的调试命令如下：</p>
-<ul>
-<li>list/l：列出源码，list 1表示从第一行列出源码</li>
-<li>quit：退出gdb</li>
-<li>break/b：设置断点，如 b 13 表示在第十三行设置断点</li>
-<li>next/n：执行下一条指令（越过函数）</li>
-<li>step/s：执行下一条指令（进入函数）</li>
-<li>run/r：向下执行程序</li>
-<li>print/p：打印变量的值</li>
-<li>backtrace/bt：栈跟踪</li>
-<li>continue：继续执行断点后续指令</li>
-</ul>
-<p>其他的一些指令：</p>
-<ul>
-<li>finish：结束当前函数调用</li>
-<li>run：查找段错误位置</li>
-<li>set args：设置main函数命令行参数</li>
-<li>info b：查看断点信息表</li>
-<li>b 20 if i = 5：设置条件断点</li>
-<li>ptype：查看变量类型</li>
-<li>run 字串1 字串2…：设置main函数命令行参数</li>
-<li>bt：列出当前程序存活的栈帧</li>
-<li>frame：切换栈帧</li>
-<li>display/undisplay：设置/取消跟踪变量</li>
-</ul>
-<h2 id="1-4、makefile项目管理"><a href="#1-4、makefile项目管理" class="headerlink" title="1.4、makefile项目管理"></a>1.4、makefile项目管理</h2><p>makefile脚本文件的用途：</p>
-<ul>
-<li>项目代码编译管理</li>
-<li>节省编译项目时间</li>
-<li>一次编写终身受益</li>
-<li>操作实例文件：add.c sub.c mul.c div.c main.c</li>
-</ul>
-<p>基本原则</p>
+<p>满二叉树是一种特殊的完全二叉树，满二叉树一定是一棵完全二叉树，但完全二叉树不一定是满二叉树。</p>
+<img src="/2024/07/09/CMU15445-2023-Project2-1/%E5%AE%8C%E5%85%A8%E4%BA%8C%E5%8F%89%E6%A0%91.png" class="" title="完全二叉树"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<h2 id="二叉排序树与平衡二叉树"><a href="#二叉排序树与平衡二叉树" class="headerlink" title="二叉排序树与平衡二叉树"></a>二叉排序树与平衡二叉树</h2><h3 id="二叉排序树"><a href="#二叉排序树" class="headerlink" title="二叉排序树"></a>二叉排序树</h3><p>二叉排序树（Binary Sort Tree），又称二叉查找树（Binary Search Tree），亦称二叉搜索树。是数据结构中的一类。在一般情况下，查询效率比链表结构要高。</p>
+<p>二叉排序树或者是一棵空树，或者是具有下列性质的二叉树：</p>
 <ol>
-<li>若想生成目标，检查规则中的依赖条件是否存在，如不存在，则寻找是否有规则来生成该依赖条件</li>
-<li>检查规则中的目标是否需要更新，必须先检查它的所有依赖，依赖中有任一个被更新，则目标必须更新</li>
+<li>若左子树不空，则左子树上所有结点的值均小于它的根结点的值；</li>
+<li>若右子树不空，则右子树上所有结点的值均大于它的根结点的值；</li>
+<li>左、右子树也分别为二叉排序树；</li>
 </ol>
-<p>makefile规则：<br>  命名：makefile、Makefile<br>  目标：依赖条件<br>  （一个tab缩进）命令</p>
+<font color=blue>对二叉排序树执行中序遍历，得到的序列结果一定有序。</font>
+
+<img src="/2024/07/09/CMU15445-2023-Project2-1/%E4%BA%8C%E5%8F%89%E6%8E%92%E5%BA%8F%E6%A0%91.png" class="" title="二叉排序树"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>二叉排序树的查找步骤：</p>
+<ol>
+<li>若根结点的关键字值等于查找的关键字，成功。</li>
+<li>否则，若小于根结点的关键字值，递归查左子树。若大于根结点的关键字值，递归查右子树。</li>
+<li>若子树为空仍未找到，查找不成功。</li>
+</ol>
+<p>二叉排序树的插入删除步骤：</p>
+<ol>
+<li>若二叉树为空。则首先单独生成根结点。</li>
+<li>否则首先执行查找算法，找出被插结点的双亲结点。</li>
+<li>判断被插结点是其双亲结点的左、右儿子。将被插结点作为叶子结点插入。</li>
+</ol>
+<font color=red>注意：新插入的结点总是叶子结点。</font>
+
+<p>在二叉排序树删去一个结点，分三种情况讨论：</p>
+<ol>
+<li>若p结点为叶子结点，即PL(左子树)和PR(右子树)均为空树。由于删去叶子结点不破坏整棵树的结构，则可以直接删除此子结点。</li>
+<li>若p结点只有左子树PL或右子树PR，此时只要令PL或PR直接成为其双亲结点f的左子树（当p是左子树）或右子树（当p是右子树）即可，作此修改也不破坏二叉排序树的特性。</li>
+<li>若p结点的左子树和右子树均不空。在删去p之后，为保持其它元素之间的相对位置不变，可按中序遍历保持有序进行调整：令p的直接前驱（或直接后继）替代p，然后再从二叉排序树中删去它的直接前驱（或直接后继），即让p的左子树的最右节点（或右子树的最左节点）s替代p，再将原s的左子树根节点（或右子树根节点）替代原s。</li>
+</ol>
+<h3 id="平衡二叉树（AVL树）"><a href="#平衡二叉树（AVL树）" class="headerlink" title="平衡二叉树（AVL树）"></a>平衡二叉树（AVL树）</h3><p>二叉排序树在大部分情况下，都能保证查找、插入和删除的时间复杂度为O(logn)，但是当输入的序列本来就有序的时候，二叉排序树退化成了一个线性表，其插入和删除的复杂的都为O(n)。</p>
+<p>平衡二叉树的提出就是为了解决上述的问题。在插入时，通过计算每一个节点的平衡因子，对平衡因子的绝对值大于1的节点加以旋转操作；AVL树保证了查找、插入和删除的时间复杂度均为O(logn)。</p>
+<p>节点平衡因子 = 节点左子树的树高 - 节点右子树的树高<br>节点左旋：将一个节点逆时针旋转，使得节点成为其原先右孩子的左孩子，如有冲突，“冲突的左孩子变成右孩子”<br>节点右旋：将一个节点顺时针旋转，使得节点成为其原先左孩子的右孩子，如有冲突，“冲突的右孩子变成左孩子”</p>
+<p>节点左旋和右旋操作应当分情况讨论，有如下四种情况：</p>
 <ul>
-<li>分析各个目标和依赖之间的关系，目标的时间必须晚于依赖条件时间，否则更新目录</li>
-<li>依赖条件如果不存在，寻找新的规则去产生依赖<br>ALL：指定makefile的终极目标</li>
+<li>LL型失衡：失衡节点的平衡因子为2，失衡节点左孩子的平衡因子为1。失衡节点右旋</li>
+<li>RR型失衡：失衡节点的平衡因子为-2，失衡节点右孩子的平衡因子为-1。失衡节点左旋</li>
+<li>LR型失衡：失衡节点的平衡因子为2，失衡节点左孩子的平衡因子为-1。失衡节点左孩子左旋，失衡节点右旋</li>
+<li>RL型失衡：失衡节点的平衡因子为-2，失衡节点右孩子的平衡因子为1。失衡节点右孩子右旋，失衡节点左旋</li>
 </ul>
-<p>makefile的两个函数：</p>
-<ul>
-<li>wildcard<br>  src = $(wildcard *.c)<br>找到当前目录下所有后缀为.c的文件，把文件名组合成列表赋值给src</li>
-<li>patsubst<br>obj = $(patsubst %.c,%.o $(src))<br>把src变量里所有后缀为.c的文件替换为.o</li>
-</ul>
-<p>clean：在makefile文件时使用clean命令删除已生成的文件，建议使用make clean -n命令。-n命令表示模拟删除但是不真实删除。防止删除错误。<br>如：-rm -rf *.o a.out （此处 -rm 中的 - 表示出错依然执行）<br><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">chen@ubuntu:~/Desktop/cstudy/part1/maketest$ make</span><br><span class="line">gcc -c div1.c -o div1.o</span><br><span class="line">gcc -c mul.c -o mul.o</span><br><span class="line">gcc -c hello.c -o hello.o</span><br><span class="line">gcc -c add.c -o add.o</span><br><span class="line">gcc -c sub.c -o sub.o</span><br><span class="line">gcc div1.o mul.o hello.o add.o sub.o -o a.out</span><br><span class="line">chen@ubuntu:~/Desktop/cstudy/part1/maketest$ ./a.out</span><br><span class="line">10 + 5 = 15</span><br><span class="line">10 - 5 = 5</span><br><span class="line">10 * 5 = 50</span><br><span class="line">10 / 5 = 2</span><br><span class="line">chen@ubuntu:~/Desktop/cstudy/part1/maketest$ make clean -n</span><br><span class="line"><span class="built_in">rm</span> -rf div1.o mul.o hello.o add.o sub.o a.out</span><br><span class="line">chen@ubuntu:~/Desktop/cstudy/part1/maketest$ <span class="built_in">ls</span></span><br><span class="line">add.c  add.o  a.out  div1.c  div1.o  hello.c  hello.o  makefile  mul.c  mul.o  sub.c  sub.o</span><br></pre></td></tr></table></figure></p>
-<p>makefile的三个自动变量：</p>
-<ul>
-<li>$@<br>在规则的==命令==中表示规则中的目标</li>
-<li>$&lt;<br>在规则的==命令==中表示规则中的第一个依赖条件，如果将该变量应用于模式规则中，它可将依赖条件列表中的依赖依次取出，套用模式规则。</li>
-<li>$^<br>在规则的==命令==中表示规则中的所有依赖条件</li>
-</ul>
-<p>模式规则：<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="section">%.o:%.c</span></span><br><span class="line">  gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span></span><br></pre></td></tr></table></figure><br>静态模式规则：指定模式规则给哪个命令用<br><figure class="highlight makefile"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">$(obj)</span>:%.o:%.c</span><br><span class="line">    gcc -c <span class="variable">$&lt;</span> -o <span class="variable">$@</span> </span><br></pre></td></tr></table></figure></p>
-<p>当目录中存在文件名为clean等的文件时，存在的文件会干扰make指令判断。因此要求使用 .PHONY 生成伪目标，不管条件满足与否，命令都要执行。</p>
-<p>当需要添加如 -I -l -L等指令时，</p>
+<p>若插入节点后多个节点失衡，调整距离插入节点最近的失衡节点，即可保证树平衡。</p>
+<p>以下为一个平衡二叉树的构建过程：</p>
+<img src="/2024/07/09/CMU15445-2023-Project2-1/%E5%B9%B3%E8%A1%A1%E4%BA%8C%E5%8F%89%E6%A0%91%E7%9A%84%E6%9E%84%E5%BB%BA%E8%BF%87%E7%A8%8B.png" class="" title="平衡二叉树的构建过程"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>平衡二叉树的删除过程与二叉排序树一样，只是删除后需要对节点检查是否平衡，若不平衡则需要对节点进行调整。注意：删除过程中可能需要多次调整节点，才能保证树的平衡。</p>
 
 </article>
     
@@ -549,6 +531,38 @@
             <span data-number="02"></span>
         </h5>
     </div>
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/07/09/CMU15445-2023-Project2-2/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/CMU15445/">
+                    CMU15445
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/07/09/CMU15445-2023-Project2-2/" class="trm-anima-link">
+                    CMU15445-2023-Project2.2
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/07/09</li>
+                <li>13:37</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
     
         <div class="col-lg-6">
     <div class="trm-blog-card trm-scroll-animation">
@@ -574,38 +588,6 @@
             <ul class="trm-card-data trm-label">
                 <li>24/07/08</li>
                 <li>10:09</li>
-                
-                
-            </ul>
-        </div>
-    </div>
-</div>
-    
-    
-        <div class="col-lg-6">
-    <div class="trm-blog-card trm-scroll-animation">
-        <a href="/2024/07/07/GNN-3/" class="trm-cover-frame trm-anima-link">
-            
-            
-                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
-            
-        </a>
-        
-        <div class="trm-card-descr">
-            <div class="trm-label trm-category trm-mb-20">
-                <a href=" /categories/%E5%9B%BE%E7%A5%9E%E7%BB%8F%E7%BD%91%E7%BB%9C/">
-                    图神经网络
-                </a>
-            </div>
-            <h5>
-                <a href="/2024/07/07/GNN-3/" class="trm-anima-link">
-                    GNN-3
-                </a>
-            </h5>
-            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
-            <ul class="trm-card-data trm-label">
-                <li>24/07/07</li>
-                <li>09:13</li>
                 
                 
             </ul>
@@ -665,7 +647,7 @@
 				</span>
       </div>
       <div class="trm-post-toc-content">
-        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="1、gcc编译器、动态库制作、gdb调试与makefile"><a rel="nofollow" class="trm-toc-link" href="#1、gcc编译器、动态库制作、gdb调试与makefile"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">1、gcc编译器、动态库制作、gdb调试与makefile</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="1.1、gcc编译器"><a rel="nofollow" class="trm-toc-link" href="#1-1、gcc编译器"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">1.1、gcc编译器</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1.2、静态库和动态库"><a rel="nofollow" class="trm-toc-link" href="#1-2、静态库和动态库"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">1.2、静态库和动态库</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1.3、gdb调试器"><a rel="nofollow" class="trm-toc-link" href="#1-3、gdb调试器"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">1.3、gdb调试器</span></a></li><li class="trm-toc-item trm-toc-level-2" title="1.4、makefile项目管理"><a rel="nofollow" class="trm-toc-link" href="#1-4、makefile项目管理"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">1.4、makefile项目管理</span></a></li></ol></li></ol>
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="CMU15445-2023-Project2.1"><a rel="nofollow" class="trm-toc-link" href="#CMU15445-2023-Project2-1"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">CMU15445-2023-Project2.1</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="树与二叉树"><a rel="nofollow" class="trm-toc-link" href="#树与二叉树"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">树与二叉树</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="树"><a rel="nofollow" class="trm-toc-link" href="#树"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">树</span></a></li><li class="trm-toc-item trm-toc-level-3" title="二叉树"><a rel="nofollow" class="trm-toc-link" href="#二叉树"><span class="trm-toc-number">1.1.2.</span> <span class="trm-toc-text">二叉树</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="二叉排序树与平衡二叉树"><a rel="nofollow" class="trm-toc-link" href="#二叉排序树与平衡二叉树"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">二叉排序树与平衡二叉树</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="二叉排序树"><a rel="nofollow" class="trm-toc-link" href="#二叉排序树"><span class="trm-toc-number">1.2.1.</span> <span class="trm-toc-text">二叉排序树</span></a></li><li class="trm-toc-item trm-toc-level-3" title="平衡二叉树（AVL树）"><a rel="nofollow" class="trm-toc-link" href="#平衡二叉树（AVL树）"><span class="trm-toc-number">1.2.2.</span> <span class="trm-toc-text">平衡二叉树（AVL树）</span></a></li></ol></li></ol></li></ol>
       </div>
     </div>
 
