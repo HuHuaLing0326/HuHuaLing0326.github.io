@@ -7,16 +7,23 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/2024/07/index.html">
+<meta name="description" content="CMU15445-2023-Project2.3CMU15445-2023的Project2内容过于丰富，因此将Project2的部分拆分为三篇博客进行讲解。2.3的内容聚焦在CMU15445 Project2 的B+树和可扩展哈希表（Extendible Hash Table）这几个关键数据结构的具体实现上。 CMU15445-2023-Spring Project2Project2 需要为 B">
+<meta property="og:type" content="article">
+<meta property="og:title" content="CMU15445-2023-Project2.3">
+<meta property="og:url" content="http://example.com/2024/08/26/CMU15445-2023-Project2-3/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="CMU15445-2023-Project2.3CMU15445-2023的Project2内容过于丰富，因此将Project2的部分拆分为三篇博客进行讲解。2.3的内容聚焦在CMU15445 Project2 的B+树和可扩展哈希表（Extendible Hash Table）这几个关键数据结构的具体实现上。 CMU15445-2023-Spring Project2Project2 需要为 B">
 <meta property="og:locale">
+<meta property="article:published_time" content="2024-08-26T00:37:51.000Z">
+<meta property="article:modified_time" content="2024-09-09T02:58:24.290Z">
 <meta property="article:author" content="Huhualing">
+<meta property="article:tag" content="数据库">
+<meta property="article:tag" content="卡耐基梅隆大学">
+<meta property="article:tag" content="C&#x2F;C++编程">
 <meta name="twitter:card" content="summary">
 
 
-<title >Hexo</title>
+<title >CMU15445-2023-Project2.3</title>
 
 <!-- Favicon -->
 
@@ -59,7 +66,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":false,"isHome":false,"postUpdate":"2024-09-09 11:11:05"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-09-09 10:58:24"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
@@ -219,10 +226,10 @@
                     <!-- banner title -->
                     <div class="trm-banner-text ">
                         <div class="trm-label trm-mb-20">
-                            The article archive
+                            NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            云间连下榻，<br>天上接行杯。
+                            CMU15445-2023-Project2.3
                         </h1>
 
                         
@@ -232,7 +239,7 @@
                                 </li>
                                 <li>
                                     <span>
-                                        archives
+                                        2024
                                     </span>
                                 </li>
                             </ul>
@@ -392,255 +399,132 @@
             
             <div class="trm-page-content col-lg-8">
                 <div id="trm-content" class="trm-content">
-                    <div class="row">
-    <div class="col-lg-12">
-        <div class="trm-card">
-            <div style="padding: 0 20px;">
-                
-                    <ul class="trm-tag-list"><li class="trm-tag-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">（14）</span></li></ul>
-                
-            </div>
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            08/26
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            08:37
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            Huhualing
         </div>
     </div>
 </div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="CMU15445-2023-Project2-3"><a href="#CMU15445-2023-Project2-3" class="headerlink" title="CMU15445-2023-Project2.3"></a>CMU15445-2023-Project2.3</h1><p>CMU15445-2023的Project2内容过于丰富，因此将Project2的部分拆分为三篇博客进行讲解。2.3的内容聚焦在CMU15445 Project2 的B+树和可扩展哈希表（Extendible Hash Table）这几个关键数据结构的具体实现上。</p>
+<h2 id="CMU15445-2023-Spring-Project2"><a href="#CMU15445-2023-Spring-Project2" class="headerlink" title="CMU15445-2023-Spring Project2"></a>CMU15445-2023-Spring Project2</h2><p>Project2 需要为 Bustub 实现 B+ 树索引。拆分为两个部分：</p>
+<ul>
+<li><p>Checkpoint1:</p>
+<ul>
+<li><p>Task #1 - B+Tree Pages：实现三个页面类的一些函数。</p>
+</li>
+<li><p>Task #2a - B+Tree Insertion and Search for Single Values：实现查找算法与插入算法。</p>
+</li>
+</ul>
+</li>
+<li><p>Checkpoint2: 多线程实现</p>
+<ul>
+<li><p>Task #2b - B+Tree Deletions：实现删除算法。</p>
+</li>
+<li><p>Task #3 - An Iterator for Leaf Scans：实现迭代器的设计，这个其实ckp1就可以完成了，ckp1的测试也需要用到迭代器。</p>
+</li>
+<li><p>Task #4 - Concurrent Index：使用 ReadPageGuard 和 WritePageGuard，完成并发控制。如果在之前的实现中就已经采用，那么完成前面的内容也就完成了Task4</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="参考资料："><a href="#参考资料：" class="headerlink" title="参考资料："></a>参考资料：</h3><p>B站视频：数据结构合集 - B+树（BV：BV1bs421u7pY）<br>B站视频：09_索引_B+树_新增_查询（BV：BV1Fk4y1t71k）<br>B站视频：10_索引_B+树_删除（BV：BV1YL411C7Pu）<br>B站视频：07-B+树索引 [中文讲解] CMU-15445 数据库内核（BV：BV1Bg411w7kW）</p>
+<h2 id="CMU15445-2023-Fall-Project2"><a href="#CMU15445-2023-Fall-Project2" class="headerlink" title="CMU15445-2023-Fall Project2"></a>CMU15445-2023-Fall Project2</h2>
+</article>
+    
+    
 
-<!-- history -->
-
-<div class="row">
+</div>
+<div class="trm-post-next-prev row">
     <div class="col-lg-12">
         <!-- title -->
         <h5 class="trm-title-with-divider">
-            
-                2024 年的归档
-            
-            <span data-number="01"></span>
+            其他文章
+            <span data-number="02"></span>
         </h5>
     </div>
-    <div class="col-lg-12">
-        <!-- timeline -->
-        <div class="trm-timeline">
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/09/09/linux-programing-3/" class="trm-cover-frame trm-anima-link">
             
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/07/09/CMU15445-2023-Project2-2/" class="trm-anima-link">
-                                        CMU15445-2023-Project2.2
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/09</li>
-                                        <li class="trm-accent-color">13:37</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/Linux%E7%B3%BB%E7%BB%9F%E7%BC%96%E7%A8%8B/">
+                    Linux系统编程
+                </a>
             </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/07/09/CMU15445-2023-Project2-1/" class="trm-anima-link">
-                                        CMU15445-2023-Project2.1
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/09</li>
-                                        <li class="trm-accent-color">10:20</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/07/08/linux-programing-2/" class="trm-anima-link">
-                                        linux-programing-2
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/08</li>
-                                        <li class="trm-accent-color">10:09</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/07/08/linux-programing-1/" class="trm-anima-link">
-                                        linux-programing-1
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/08</li>
-                                        <li class="trm-accent-color">10:00</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/07/07/GNN-3/" class="trm-anima-link">
-                                        GNN-3
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/07</li>
-                                        <li class="trm-accent-color">09:13</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/07/06/GNN-2/" class="trm-anima-link">
-                                        GNN-2
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/06</li>
-                                        <li class="trm-accent-color">19:27</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/07/06/GNN-1/" class="trm-anima-link">
-                                        GNN-1
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/06</li>
-                                        <li class="trm-accent-color">09:23</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/07/01/CMU15445-2023-Project1/" class="trm-anima-link">
-                                        CMU15445-2023-Project1
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">07/01</li>
-                                        <li class="trm-accent-color">11:27</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
+            <h5>
+                <a href="/2024/09/09/linux-programing-3/" class="trm-anima-link">
+                    linux-programing-3
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/09/09</li>
+                <li>10:58</li>
+                
+                
+            </ul>
         </div>
-        <!-- timeline end -->
     </div>
 </div>
-
-<!-- history end -->
-
-
-    <div class="trm-pagination">
-        <span class="page-number current">1</span>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/07/09/CMU15445-2023-Project2-2/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/CMU15445/">
+                    CMU15445
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/07/09/CMU15445-2023-Project2-2/" class="trm-anima-link">
+                    CMU15445-2023-Project2.2
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/07/09</li>
+                <li>13:37</li>
+                
+                
+            </ul>
+        </div>
     </div>
+</div>
+    
+</div>
 
-
+    
 
 
 
@@ -682,9 +566,29 @@
 
             
 
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="CMU15445-2023-Project2.3"><a rel="nofollow" class="trm-toc-link" href="#CMU15445-2023-Project2-3"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">CMU15445-2023-Project2.3</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="CMU15445-2023-Spring Project2"><a rel="nofollow" class="trm-toc-link" href="#CMU15445-2023-Spring-Project2"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">CMU15445-2023-Spring Project2</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="参考资料："><a rel="nofollow" class="trm-toc-link" href="#参考资料："><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">参考资料：</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="CMU15445-2023-Fall Project2"><a rel="nofollow" class="trm-toc-link" href="#CMU15445-2023-Fall-Project2"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">CMU15445-2023-Fall Project2</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
             
 <div class="trm-fixed-container">
     
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
     
     
     <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
@@ -719,6 +623,10 @@
     
 
     <!-- 评论插件 -->
+    
+        
+
+        
     
 
 		
