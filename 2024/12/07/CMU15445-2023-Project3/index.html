@@ -7,18 +7,25 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="CMU15445-2023-Project3前言P3的任务让大家第一次清晰的知道一条sql代码是如何运行起来并且实现相应功能的。项目的说明书中对 BusTub 的结构进行了说明：  火山模型火山模型是数据库界已经很成熟的解释计算模型，该计算模型将关系代数中每一种操作抽象为一个操作算子 Operator，将整个 SQL 构建成一个 Operator 树，从根节点到叶子结点自上而下地递归调用 next">
 <meta property="og:type" content="article">
 <meta property="og:title" content="CMU15445-2023-Project3">
 <meta property="og:url" content="http://example.com/2024/12/07/CMU15445-2023-Project3/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="CMU15445-2023-Project3前言P3的任务让大家第一次清晰的知道一条sql代码是如何运行起来并且实现相应功能的。项目的说明书中对 BusTub 的结构进行了说明：  火山模型火山模型是数据库界已经很成熟的解释计算模型，该计算模型将关系代数中每一种操作抽象为一个操作算子 Operator，将整个 SQL 构建成一个 Operator 树，从根节点到叶子结点自上而下地递归调用 next">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
 <meta property="article:published_time" content="2024-12-07T06:10:11.000Z">
-<meta property="article:modified_time" content="2024-12-07T06:10:55.027Z">
+<meta property="article:modified_time" content="2024-12-30T08:52:59.845Z">
 <meta property="article:author" content="Huhualing">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="卡耐基梅隆大学">
 <meta property="article:tag" content="C&#x2F;C++编程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
 
 
 <title >CMU15445-2023-Project3</title>
@@ -64,7 +71,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-12-07 14:10:55"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-12-30 16:52:59"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
@@ -419,7 +426,50 @@
 </div>
 <div class="trm-card ">
     <article id="article-container" class="trm-publication">
-    
+    <h1 id="CMU15445-2023-Project3"><a href="#CMU15445-2023-Project3" class="headerlink" title="CMU15445-2023-Project3"></a>CMU15445-2023-Project3</h1><h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>P3的任务让大家第一次清晰的知道一条sql代码是如何运行起来并且实现相应功能的。项目的说明书中对 BusTub 的结构进行了说明：</p>
+<img src="/2024/12/07/CMU15445-2023-Project3/project-structure.svg" class="" title="project-structure"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<h2 id="火山模型"><a href="#火山模型" class="headerlink" title="火山模型"></a>火山模型</h2><p>火山模型是数据库界已经很成熟的解释计算模型，该计算模型将关系代数中每一种操作抽象为一个操作算子 Operator，将整个 SQL 构建成一个 Operator 树，从根节点到叶子结点自上而下地递归调用 next() 函数。调用完 next() 函数后，下层的数据就如同火山中的岩浆一样，一层层的向上“喷发”，最后在最上层的算子中得到所有的结果并返回。</p>
+<p>假如有以下SQL语句：<br><figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">SELECT</span> Id, Name, Age, (Age <span class="operator">-</span> <span class="number">30</span>) <span class="operator">*</span> <span class="number">50</span> <span class="keyword">AS</span> Bonus</span><br><span class="line"><span class="keyword">FROM</span> People</span><br><span class="line"><span class="keyword">WHERE</span> Age <span class="operator">&gt;</span> <span class="number">30</span></span><br></pre></td></tr></table></figure><br>对应的火山模型操作树为：<br><img src="/2024/12/07/CMU15445-2023-Project3/%E7%81%AB%E5%B1%B1%E6%A8%A1%E5%9E%8B%E6%A0%91.png" class="" title="火山模型树"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<p>可以看出火山模型的优点在于：简单，每个 Operator 可以单独抽象实现、不需要关心其他 Operator 的逻辑。</p>
+<p>火山模型也有缺点：每次都是计算一个 tuple（Tuple-at-a-time），这样会造成多次调用 next ，也就是造成大量的虚函数调用，这样会造成 CPU 的利用率不高。</p>
+<p>项目开始前，还要在这里普及一下BusTub的定义：</p>
+<ul>
+<li>元组（Tuple）代表一个表的一行数据</li>
+<li>模式（Schema）代表一个表</li>
+<li>值（Value）代表一个元组内某一列的值</li>
+<li>记录标识（RID）每一个RID和一个Tuple相对应，标记一个Tuple</li>
+</ul>
+<p>此外，与BusTub数据库中表有关的数据结构及其相互关系如下，大家可以看源代码深入了解：<br><img src="/2024/12/07/CMU15445-2023-Project3/%E6%95%B0%E6%8D%AE%E5%BA%93%E8%A1%A8%E7%9B%B8%E5%85%B3%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84.jpg" class="" title="数据库表相关数据结构"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+<h2 id="Task-1"><a href="#Task-1" class="headerlink" title="Task 1"></a>Task 1</h2><p>Task 1 的任务名叫 Access Method Executors，需要我们完成基础的增删改查操作。项目代码已经给出了 project 和 filter 算子的书写方法，我们可以仿照这两个算子实现其他的算子。</p>
+<h3 id="SeqScan-算子"><a href="#SeqScan-算子" class="headerlink" title="SeqScan 算子"></a>SeqScan 算子</h3><p>最简单最下层的算子，负责从表中找出满足要求的元组。实现逻辑如下：</p>
+<ol>
+<li>在 Init() 中实现获取表以及表的迭代器功能</li>
+<li>依次调整迭代器指向的元组，对每一个元组进行判断<ol>
+<li>这个元组是否被删除</li>
+<li>是否满足过滤条件</li>
+</ol>
+</li>
+<li>将满足条件的元组用传出参数返回，并返回true表示调用该算子成功</li>
+<li>若迭代到末尾仍没有满足条件的元组，则传出nullptr，返回false表示失败</li>
+</ol>
+<h3 id="Insert-amp-Delete-amp-Update-算子"><a href="#Insert-amp-Delete-amp-Update-算子" class="headerlink" title="Insert &amp; Delete &amp; Update 算子"></a>Insert &amp; Delete &amp; Update 算子</h3><p>这三个算子用于数据写入和删除和更新，它们的 Next 函数只会被调用一次，返回受影响的行数。从这三个算子开始，此后需完成的算子中对数据的迭代均通过下层算子的 next() 函数完成。</p>
+<p>Insert/Delete 的实现逻辑如下：</p>
+<ol>
+<li>在 Init() 中实现获取表和表的索引</li>
+<li>依次从 next() 函数中得到下层算子的元组<ol>
+<li>将这个元组插入/删除到表中</li>
+<li>更新表的索引</li>
+<li>更新影响的行数信息</li>
+</ol>
+</li>
+<li>将受影响的行数封装成一个Tuple，从传出参数返回，同时函数返回true 表示插入成功</li>
+<li>若插入失败，则传出nullptr，返回false表示失败</li>
+</ol>
+<p>更新索引的逻辑如下：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">for</span> (IndexInfo *index_info : indexes_info_) &#123;</span><br><span class="line">    index_info-&gt;index_-&gt;<span class="built_in">InsertEntry</span>(</span><br><span class="line">    todo_tuple.<span class="built_in">KeyFromTuple</span>(table_info_-&gt;schema_, index_info-&gt;key_schema_, index_info-&gt;index_-&gt;<span class="built_in">GetKeyAttrs</span>()),</span><br><span class="line">    insert_tuple_rid.<span class="built_in">value</span>(), <span class="literal">nullptr</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (IndexInfo *index_info : indexes_info_) &#123;</span><br><span class="line">    index_info-&gt;index_-&gt;<span class="built_in">DeleteEntry</span>(</span><br><span class="line">    todo_tuple.<span class="built_in">KeyFromTuple</span>(table_info_-&gt;schema_, index_info-&gt;key_schema_, index_info-&gt;index_-&gt;<span class="built_in">GetKeyAttrs</span>()),</span><br><span class="line">    emit_rid, <span class="literal">nullptr</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>Update算子可以<font color=red>通过先删除，再插入</font>的方式实现，其中删除时为了保证数据可恢复，用逻辑删除即可。</p>
+<h2 id="Task-2"><a href="#Task-2" class="headerlink" title="Task 2"></a>Task 2</h2><h2 id="Task-3"><a href="#Task-3" class="headerlink" title="Task 3"></a>Task 3</h2><h2 id="Task-4"><a href="#Task-4" class="headerlink" title="Task 4"></a>Task 4</h2><h2 id="通过截图"><a href="#通过截图" class="headerlink" title="通过截图"></a>通过截图</h2><img src="/2024/12/07/CMU15445-2023-Project3/CMU15445-2023Fall%E5%AE%8C%E6%88%90%E6%88%AA%E5%9B%BE.png" class="" title="CMU15445-2023Fall完成截图"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<h2 id="参考文献"><a href="#参考文献" class="headerlink" title="参考文献"></a>参考文献</h2><p>[1] CHEN 的博客 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/679864362">https://zhuanlan.zhihu.com/p/679864362</a><br>[2] 快跑啊啊的博客 <a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/674080359">https://zhuanlan.zhihu.com/p/674080359</a><br>[3] 焚风的博客 <a target="_blank" rel="noopener" href="https://www.cnblogs.com/fenfeng9/p/18038863">https://www.cnblogs.com/fenfeng9/p/18038863</a><br>[4] 项目说明书 <a target="_blank" rel="noopener" href="https://15445.courses.cs.cmu.edu/fall2023/project3/">https://15445.courses.cs.cmu.edu/fall2023/project3/</a></p>
+
 </article>
     
     
@@ -541,8 +591,24 @@
 
             
 
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="CMU15445-2023-Project3"><a rel="nofollow" class="trm-toc-link" href="#CMU15445-2023-Project3"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">CMU15445-2023-Project3</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="前言"><a rel="nofollow" class="trm-toc-link" href="#前言"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">前言</span></a></li><li class="trm-toc-item trm-toc-level-2" title="火山模型"><a rel="nofollow" class="trm-toc-link" href="#火山模型"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">火山模型</span></a></li><li class="trm-toc-item trm-toc-level-2" title="Task 1"><a rel="nofollow" class="trm-toc-link" href="#Task-1"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">Task 1</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="SeqScan 算子"><a rel="nofollow" class="trm-toc-link" href="#SeqScan-算子"><span class="trm-toc-number">1.3.1.</span> <span class="trm-toc-text">SeqScan 算子</span></a></li><li class="trm-toc-item trm-toc-level-3" title="Insert &amp; Delete &amp; Update 算子"><a rel="nofollow" class="trm-toc-link" href="#Insert-amp-Delete-amp-Update-算子"><span class="trm-toc-number">1.3.2.</span> <span class="trm-toc-text">Insert &amp; Delete &amp; Update 算子</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="Task 2"><a rel="nofollow" class="trm-toc-link" href="#Task-2"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">Task 2</span></a></li><li class="trm-toc-item trm-toc-level-2" title="Task 3"><a rel="nofollow" class="trm-toc-link" href="#Task-3"><span class="trm-toc-number">1.5.</span> <span class="trm-toc-text">Task 3</span></a></li><li class="trm-toc-item trm-toc-level-2" title="Task 4"><a rel="nofollow" class="trm-toc-link" href="#Task-4"><span class="trm-toc-number">1.6.</span> <span class="trm-toc-text">Task 4</span></a></li><li class="trm-toc-item trm-toc-level-2" title="通过截图"><a rel="nofollow" class="trm-toc-link" href="#通过截图"><span class="trm-toc-number">1.7.</span> <span class="trm-toc-text">通过截图</span></a></li><li class="trm-toc-item trm-toc-level-2" title="参考文献"><a rel="nofollow" class="trm-toc-link" href="#参考文献"><span class="trm-toc-number">1.8.</span> <span class="trm-toc-text">参考文献</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
             
 <div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
     
     
         <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
@@ -612,6 +678,21 @@
 
 
 
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
 </body>
 
 </html>
