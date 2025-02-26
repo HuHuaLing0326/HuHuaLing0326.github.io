@@ -14,13 +14,15 @@
 <meta property="og:site_name" content="Hexo">
 <meta property="og:description" content="CMU15445-2023-Project2.2CMU15445-2023的Project2内容过于丰富，因此将Project2的部分拆分为三篇博客进行讲解。2.2的内容主要集中在红黑树、B树、B+树和可扩展哈希表（Extendible Hash Table）这几个关键的数据结构上。 红黑树红黑树是另外一种平衡二叉搜索树，只是平衡的定义和保持平衡的策略与AVL树不一样。 红黑树具有以下性质：  红">
 <meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/404.jpg">
 <meta property="article:published_time" content="2024-07-09T05:37:03.000Z">
-<meta property="article:modified_time" content="2024-12-06T07:32:36.303Z">
+<meta property="article:modified_time" content="2025-02-26T06:06:27.062Z">
 <meta property="article:author" content="Huhualing">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="卡耐基梅隆大学">
 <meta property="article:tag" content="C&#x2F;C++编程">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
 
 
 <title >CMU15445-2023-Project2.2</title>
@@ -66,7 +68,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2024-12-06 15:32:36"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-02-26 14:06:27"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
@@ -467,7 +469,7 @@
 </ul>
 <font color=red>当s节点为红色时，将兄父变色，父节点朝双黑节点旋转。旋转完成后，保持双黑根据调整后的树的情况继续调整。</font>
 
-<h2 id="B-B-树"><a href="#B-B-树" class="headerlink" title="B/B-树"></a>B/B-树</h2><p>上述的数据结构通常都是将数据加载到内存进行处理，由于内存的存储容量限制，它们能处理的数据量通常不会很大。当遇到大量数据时，内存将无法存放。只能将数据存储在硬盘中。处理数据时，需要将数据分批次调入到内存中进行处理。由于计算机对内存的访问比硬盘快得多，而对树进行访问时访问次数和树高正相关。为了降低树高从而降低访问次数，人们提出了B树。</p>
+<h2 id="B树"><a href="#B树" class="headerlink" title="B树"></a>B树</h2><p>上述的数据结构通常都是将数据加载到内存进行处理，由于内存的存储容量限制，它们能处理的数据量通常不会很大。当遇到大量数据时，内存将无法存放。只能将数据存储在硬盘中。处理数据时，需要将数据分批次调入到内存中进行处理。由于计算机对内存的访问比硬盘快得多，而对树进行访问时访问次数和树高正相关。为了降低树高从而降低访问次数，人们提出了B树。</p>
 <font color=green>B树是一个多叉平衡搜索树。B树包括带有元素的内部节点和不带元素的空节点外部节点。内部节点的最后一层节点叫做叶子节点。</font>
 
 
@@ -511,7 +513,46 @@
 <font color=blue>在B+树中，非叶节点不含有该关键字对应记录的存储地址，可以使一个磁盘块包含更多个关键字，使得B+树的阶更大，树高更矮，读磁盘的次数更少，查找更快。</font>
 
 <p>关于B+树的插入、删除和查找操作，将在2-3节详细说明。</p>
-<h2 id="可扩展哈希表（Extendible-Hash-Table）"><a href="#可扩展哈希表（Extendible-Hash-Table）" class="headerlink" title="可扩展哈希表（Extendible Hash Table）"></a>可扩展哈希表（Extendible Hash Table）</h2>
+<h2 id="可扩展哈希表（Extendible-Hash-Table）"><a href="#可扩展哈希表（Extendible-Hash-Table）" class="headerlink" title="可扩展哈希表（Extendible Hash Table）"></a>可扩展哈希表（Extendible Hash Table）</h2><p>Extendible Hash Table 属于动态哈希的一种，可以用于实现索引。</p>
+<p>在开始解说算法前，我们先进行一些规则的约定。</p>
+<ul>
+<li>目录叫 Directory， 桶叫 bucket，bucket。在 directory 的序号叫 index。</li>
+<li>每一个 bucket 的空间指向一个 page，存在多个 bucket 公用同一个 page 的情况。</li>
+<li>扩容叫 grow，收缩叫 shrink。</li>
+<li>初始的 GlobalDepth=0 ，且只有一个 Bucket，该 bucket 的 LocalDepth=0，index=0。</li>
+<li>假设 GlobalDepth 为 n，那么当前的directory必定有 2^n 个 entry。</li>
+<li>假设 LocalDepth 为 n，在当前的 bucket 之下，每个元素的 key 的低 n 位都是相同的。</li>
+<li>GlobalDepth 表示根据 key 的最后多少位从 directory 选择 bucket</li>
+<li>对于一个bucket来说，如果当前的 GlobalDepth 等于 LocalDepth，那说明这个bucket只有一个指针指向它。</li>
+<li>如果当前的 GlobalDepth 大于 LocalDepth，必定不止一个指针指向它。</li>
+<li>计算当前bucket有几个指针指向它的公式是 2^(GlobalDepth - LocalDepth)</li>
+</ul>
+<p>我们现在以序列 13，16，20，11，9，10，7 为例，讲解可扩展哈希表的扩容与收缩过程</p>
+<img src="/2024/07/09/CMU15445-2023-Project2-2/Extendible_Hash_Table%E6%8F%92%E5%85%A5%E8%BF%87%E7%A8%8B.png" class="" title="Extendible_Hash_Table插入过程"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>由上图可知，可扩展哈希表的插入过程如下：</p>
+<ol>
+<li>根据 GlobalDepth 计算 key 的 Hash 值，得到 Directory 页面</li>
+<li>根据 Directory 页面的指针，得到 Bucket 页面</li>
+<li>尝试在 Bucket 页面插入，插入成功则结束，如果页面已满，按照如下顺序分裂页面<ol>
+<li>若该 Bucket 页面的 LocalDepth 小于 GlobalDepth，代表该 Bucket 同时被多个指针指向；<ol>
+<li>从 Directory 中找出一个合适的指针指向新页面ß</li>
+<li>旧页面的 LocalDepth 加 1 并复制给新页面</li>
+<li>将旧页面中的所有元素合理的分配到两个页面中</li>
+<li>插入新元素</li>
+</ol>
+</li>
+<li>若该 Bucket 页面的 LocalDepth 等于 GlobalDepth，代表该 Bucket 仅仅被一个指针指向；<ol>
+<li>GlobalDepth 加 1，同时 Directory 页面的数量增加 1 倍</li>
+<li>旧页面的 LocalDepth 加 1 并复制给新页面；</li>
+<li>根据原先 Directory 的标号，计算得到新的 Directory 标号</li>
+<li>将计算得到的标号对应的 Directory 页面指针指向新的页面</li>
+<li>将旧页面中的所有元素合理的分配到两个页面中</li>
+<li>插入新元素</li>
+</ol>
+</li>
+</ol>
+</li>
+</ol>
 
 </article>
     
@@ -642,7 +683,7 @@
 				</span>
       </div>
       <div class="trm-post-toc-content">
-        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="CMU15445-2023-Project2.2"><a rel="nofollow" class="trm-toc-link" href="#CMU15445-2023-Project2-2"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">CMU15445-2023-Project2.2</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="红黑树"><a rel="nofollow" class="trm-toc-link" href="#红黑树"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">红黑树</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="被删除节点没有孩子且是黑节点的情况"><a rel="nofollow" class="trm-toc-link" href="#被删除节点没有孩子且是黑节点的情况"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">被删除节点没有孩子且是黑节点的情况</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="B&#x2F;B-树"><a rel="nofollow" class="trm-toc-link" href="#B-B-树"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">B&#x2F;B-树</span></a></li><li class="trm-toc-item trm-toc-level-2" title="B+树"><a rel="nofollow" class="trm-toc-link" href="#B-树"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">B+树</span></a></li><li class="trm-toc-item trm-toc-level-2" title="可扩展哈希表（Extendible Hash Table）"><a rel="nofollow" class="trm-toc-link" href="#可扩展哈希表（Extendible-Hash-Table）"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">可扩展哈希表（Extendible Hash Table）</span></a></li></ol></li></ol>
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="CMU15445-2023-Project2.2"><a rel="nofollow" class="trm-toc-link" href="#CMU15445-2023-Project2-2"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">CMU15445-2023-Project2.2</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="红黑树"><a rel="nofollow" class="trm-toc-link" href="#红黑树"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">红黑树</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="被删除节点没有孩子且是黑节点的情况"><a rel="nofollow" class="trm-toc-link" href="#被删除节点没有孩子且是黑节点的情况"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">被删除节点没有孩子且是黑节点的情况</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="B树"><a rel="nofollow" class="trm-toc-link" href="#B树"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">B树</span></a></li><li class="trm-toc-item trm-toc-level-2" title="B+树"><a rel="nofollow" class="trm-toc-link" href="#B-树"><span class="trm-toc-number">1.3.</span> <span class="trm-toc-text">B+树</span></a></li><li class="trm-toc-item trm-toc-level-2" title="可扩展哈希表（Extendible Hash Table）"><a rel="nofollow" class="trm-toc-link" href="#可扩展哈希表（Extendible-Hash-Table）"><span class="trm-toc-number">1.4.</span> <span class="trm-toc-text">可扩展哈希表（Extendible Hash Table）</span></a></li></ol></li></ol>
       </div>
     </div>
 
