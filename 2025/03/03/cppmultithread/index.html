@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="C&#x2F;C++多线程开发第一章：并发基本概念及实现、进程与线程的基本概念并发、进程与线程的基本概念综述并发(concurrency)：指在同一时刻只能有一条指令执行，但多个进程指令被快速的轮换执行，使得在宏观上具有多个进程同时执行的效果，但在微观上并不是同时执行的，只是把时间分成若干段，使多个进程快速交替的执行。  并发的上下文切换需要时间开销用于操作系统保存切换时的各种状态和执行进度，切换回来时需要">
+<meta property="og:type" content="article">
+<meta property="og:title" content="C&#x2F;C++多线程开发">
+<meta property="og:url" content="http://example.com/2025/03/03/cppmultithread/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="C&#x2F;C++多线程开发第一章：并发基本概念及实现、进程与线程的基本概念并发、进程与线程的基本概念综述并发(concurrency)：指在同一时刻只能有一条指令执行，但多个进程指令被快速的轮换执行，使得在宏观上具有多个进程同时执行的效果，但在微观上并不是同时执行的，只是把时间分成若干段，使多个进程快速交替的执行。  并发的上下文切换需要时间开销用于操作系统保存切换时的各种状态和执行进度，切换回来时需要">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2025-03-03T01:11:19.000Z">
+<meta property="article:modified_time" content="2025-03-03T09:14:04.311Z">
+<meta property="article:author" content="Huhualing">
+<meta property="article:tag" content="C&#x2F;C++编程">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+<title >C/C++多线程开发</title>
+
+<!-- Favicon -->
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='apple-touch-icon' sizes='180x180' ></link>
+
+
+    <link href='/site.webmanifest' rel='manifest' ></link>
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-03-03 17:14:04"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/biancheng.png">
+    
+    
+        <div class="trm-logo-text">
+            护花<span>铃</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/archives/" target="">
+                    归档
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/categories/" target="">
+                    分类
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/my-resume/" target="">
+                    个人简历
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/./img/ninguang.jpg">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            C/C++多线程开发
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2025
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/./img/97428443.jpeg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        护花铃
+    </h5>
+    
+        <div class="trm-label">
+            护花铃的编程与足球小站
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/HuHuaLing0326" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com/flower-protection-bell" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-gitlab"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                职业:
+            </div>
+            <div class="trm-label trm-label-light">
+                学生
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向1:
+            </div>
+            <div class="trm-label trm-label-light">
+                隐私保护
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向2:
+            </div>
+            <div class="trm-label trm-label-light">
+                C++程序设计
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向3:
+            </div>
+            <div class="trm-label trm-label-light">
+                足球运动
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:huhualing0326@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            03/03
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            09:11
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            Huhualing
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="C-C-多线程开发"><a href="#C-C-多线程开发" class="headerlink" title="C/C++多线程开发"></a>C/C++多线程开发</h1><h2 id="第一章：并发基本概念及实现、进程与线程的基本概念"><a href="#第一章：并发基本概念及实现、进程与线程的基本概念" class="headerlink" title="第一章：并发基本概念及实现、进程与线程的基本概念"></a>第一章：并发基本概念及实现、进程与线程的基本概念</h2><h3 id="并发、进程与线程的基本概念综述"><a href="#并发、进程与线程的基本概念综述" class="headerlink" title="并发、进程与线程的基本概念综述"></a>并发、进程与线程的基本概念综述</h3><font color=red>并发(concurrency)：指在同一时刻只能有一条指令执行，但多个进程指令被快速的轮换执行，使得在宏观上具有多个进程同时执行的效果，但在微观上并不是同时执行的，只是把时间分成若干段，使多个进程快速交替的执行。</font>
+
+<p>并发的上下文切换需要时间开销用于操作系统保存切换时的各种状态和执行进度，切换回来时需要复原</p>
+<p>并行(parallel)：指在同一时刻，有多条指令在多个处理器上同时执行。</p>
+<p>进程(Process)：是一个具有独立功能的程序关于某个数据集合的一次运行活动。它可以申请和拥有系统资源，是一个动态的概念，是一个活动的实体。它不只是程序的代码，还包括当前的活动，通过程序计数器的值和处理寄存器的内容来表示。可执行程序运行起来了，就创建了一个进程。</p>
+<p>线程(thread)：是操作系统能够进行运算调度的最小单位。它被包含在进程之中，是进程中的实际运作单位（用来执行代码）。一条线程指的是进程中一个单一顺序的控制流，一个进程中可以并发多个线程，每条线程并行执行不同的任务。</p>
+<font color=red>一个进程都有一个主线程，每个进程中只能有一个主线程。进程产生后这个主线程随着进程启动。我们可以通过编码创建多个其他线程。进程执行完成的标志是主线程执行完毕，如果主线程执行完毕，一般情况下其余未完成的子线程也会被操作系统终止。</font>
+
+<p>线程不是越多越好，每个线程需要一个独立的堆栈空间，线程太多有时会降低效率。线程创建数量需要在实际项目中不断调整优化。</p>
+<img src="/2025/03/03/cppmultithread/%E5%90%8C%E4%B8%80%E8%BF%9B%E7%A8%8B%E5%A4%9A%E4%B8%AA%E7%BA%BF%E7%A8%8B.png" class="" title="同一进程多个线程"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<h3 id="并发的实现方法"><a href="#并发的实现方法" class="headerlink" title="并发的实现方法"></a>并发的实现方法</h3><p>并发的实现方法：</p>
+<ul>
+<li><p>通过多个进程实现并发</p>
+<ul>
+<li>进程之间通信：同一电脑上可以用管道、文件、消息队列、共享内存，不同电脑上可以用socket通信</li>
+</ul>
+</li>
+<li><p>在单独的进程中，创建多个线程实现并发</p>
+<ul>
+<li>线程是轻量级进程，每个线程有独立的运行路径，但是一个进程的所有线程共享地址空间</li>
+<li>全局变量、指针、引用都可以在线程之间传递。多线程开销远远小于多进程</li>
+<li>共享内存又带来了新问题，如数据一致性问题</li>
+</ul>
+</li>
+</ul>
+<img src="/2025/03/03/cppmultithread/%E5%A4%9A%E8%BF%9B%E7%A8%8B%E5%92%8C%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%B9%B6%E5%8F%91.png" class="" title="多进程和多线程并发"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>C++11新标准后，C++语言本身增加了对多线程的支持，意味着可移植性（跨平台）。后续内容将会记录C++11新标准多线程程序写法。</p>
+<h2 id="第二章：多线程开发基础"><a href="#第二章：多线程开发基础" class="headerlink" title="第二章：多线程开发基础"></a>第二章：多线程开发基础</h2><blockquote>
+<p>线程创建、线程启动</p>
+</blockquote>
+<p>创建线程方法1：多线程开发头文件：thread，多线程开发类：thread，函数作为可调用对象</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 自己创建的线程要从函数开始运行</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">myprint</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程开始执行了&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;我的线程正在执行&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程执行结束了&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Hello, World!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="function">thread <span class="title">mytobj</span><span class="params">(myprint)</span></span>;</span><br><span class="line">    mytobj.<span class="built_in">join</span>();</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Hello, World! Over!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<p>如果主线程执行完毕了，但是子线程没有执行完毕，这样的程序是不合格的。一个书写良好的程序应该是主线程等待子线程执行完毕后自己才能最终退出</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">myprint1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程1开始执行了&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;我的线程1正在执行&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程1执行结束了&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">myprint2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程2开始执行了&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;我的线程2正在执行&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程2执行结束了&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Hello, World!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="function">thread <span class="title">mytobj1</span><span class="params">(myprint1)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">mytobj2</span><span class="params">(myprint2)</span></span>;</span><br><span class="line">    <span class="comment">// mytobj1.join(); // 主线程阻塞在这里等待子线程执行，当子线程执行完毕，join()返回，主线程继续执行</span></span><br><span class="line">    <span class="comment">// mytobj2.join();</span></span><br><span class="line"></span><br><span class="line">    mytobj1.<span class="built_in">detach</span>(); <span class="comment">// 主线程不阻塞，子线程独立执行，一旦detach之后，这个子线程对象就会失去和主线程的关联，这个子线程回驻留在后台运行，detach后无法join</span></span><br><span class="line">    mytobj2.<span class="built_in">detach</span>(); <span class="comment">// 由运行时库负责清理线程相关的资源</span></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Hello, World! Over!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">/* Hello, World!</span></span><br><span class="line"><span class="comment">我的线程1开始执行了</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1正在执行</span></span><br><span class="line"><span class="comment">我的线程1执行结束了</span></span><br><span class="line"><span class="comment">Hello, World! Over!!</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">以上为错误输出，线程2未打印主线程即终止，线程2被运行时库接管</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>joinable：判断是否可以成功使用join()或者detach()，返回 true 或 false</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">myprint1</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程1开始执行了&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;我的线程1正在执行&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程1执行结束了&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">myprint2</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程2开始执行了&quot;</span> &lt;&lt; endl;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;我的线程2正在执行&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;我的线程2执行结束了&quot;</span> &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Hello, World!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="function">thread <span class="title">mytobj1</span><span class="params">(myprint1)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">mytobj2</span><span class="params">(myprint2)</span></span>;</span><br><span class="line">    <span class="comment">// mytobj1.join(); // 主线程阻塞在这里等待子线程执行，当子线程执行完毕，join()返回，主线程继续执行</span></span><br><span class="line">    <span class="comment">// mytobj2.join();</span></span><br><span class="line">    <span class="keyword">if</span>(mytobj1.<span class="built_in">joinable</span>()) &#123;</span><br><span class="line">        mytobj1.<span class="built_in">detach</span>(); <span class="comment">// 主线程不阻塞，子线程独立执行，一旦detach之后，这个子线程对象就会失去和主线程的关联，这个子线程回驻留在后台运行</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(mytobj2.<span class="built_in">joinable</span>()) &#123;</span><br><span class="line">        mytobj2.<span class="built_in">detach</span>(); <span class="comment">// 由运行时库接管，运行时库会在线程函数执行完毕后自动释放线程资源</span></span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">if</span>(!mytobj1.<span class="built_in">joinable</span>()) &#123;</span><br><span class="line">       cout &lt;&lt; <span class="string">&quot;mytobj1线程已经分离&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Hello, World! Over!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<p>创建线程方法2：用类作为可调用对象，需要重载()方法<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TA</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="comment">// 不能带参数</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;From TA: Start!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;From TA: &quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;From TA: Over!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">((TA()))</span></span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Start!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">10</span>; i++) &#123;</span><br><span class="line">        cout &lt;&lt; <span class="string">&quot;From main: &quot;</span> &lt;&lt; i &lt;&lt; endl;</span><br><span class="line">    &#125;</span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Over!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></p>
+<p>经典错误代码：类和类的引用来自主线程，主线程执行完毕但是子线程未执行完。主线程的值已经被回收，子线程的打印产生不可预料的结果</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">TA</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">TA</span>(<span class="type">int</span> &amp;i): <span class="built_in">m_i</span>(i) &#123;&#125;</span><br><span class="line">    <span class="comment">// 不能带参数</span></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">operator</span><span class="params">()</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span><br><span class="line">            cout &lt;&lt; <span class="string">&quot;From TA: &quot;</span> &lt;&lt; m_i &lt;&lt; endl;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> &amp;m_i;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> myi=<span class="number">6</span>;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">((TA(myi)))</span></span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Start!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    t1.<span class="built_in">detach</span>();</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Over!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<p>疑问：子线程的类来自主线程，detach调用后，主线程被销毁时类的对象应该也被销毁，从而子线程应该是不可执行，为什么子线程仍然可以执行？</p>
+<p>解答：对象虽然不在了，但是对象实际上是复制而非引用到子线程中的，所以主线程执行完后，子线程依旧可以执行。所以只要类对象里面没有引用、指针等，则不会产生问题。</p>
+<p>证明方式：编写拷贝构造函数，输出拷贝构造函数有关内容即可</p>
+<p>创建线程方法3：用Lambda表达式作为可调用对象<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> myi=<span class="number">6</span>;</span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">([] &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">        <span class="keyword">for</span> (<span class="type">int</span> i = <span class="number">0</span>; i &lt; <span class="number">100</span>; i++) &#123;</span></span></span><br><span class="line"><span class="params"><span class="function">            cout &lt;&lt; <span class="string">&quot;From t1: &quot;</span> &lt;&lt; i &lt;&lt; endl;</span></span></span><br><span class="line"><span class="params"><span class="function">        &#125;</span></span></span><br><span class="line"><span class="params"><span class="function">    &#125;)</span></span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Start!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    t1.<span class="built_in">detach</span>();</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Over!!&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>线程传参</p>
+</blockquote>
+<ol>
+<li>传递临时对象作为线程参数</li>
+<li>传递类对象、智能指针作为线程参数</li>
+<li>类的成员函数用来创建线程，如何传递线程参数</li>
+</ol>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 不稳定代码</span></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">threadFunction</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; i, <span class="type">char</span>* pmybuf)</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Thread &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; says: &quot;</span> &lt;&lt; pmybuf &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">threadFunction2</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; i, string pmybuf)</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Thread &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; says: &quot;</span> &lt;&lt; pmybuf &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">// 一：传递临时对象作为线程参数</span></span><br><span class="line">    <span class="type">int</span> mvar = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> &amp;mvary = mvar;</span><br><span class="line">    <span class="type">char</span> mybuf[] = <span class="string">&quot;Hello from main&quot;</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 不稳定代码</span></span><br><span class="line">    <span class="function">thread <span class="title">t1</span><span class="params">(threadFunction1, mvary, mybuf)</span></span>;</span><br><span class="line">    t1.<span class="built_in">join</span>();</span><br><span class="line">    <span class="function">thread <span class="title">t2</span><span class="params">(threadFunction1, mvary, mybuf)</span></span>;</span><br><span class="line">    t2.<span class="built_in">join</span>();</span><br><span class="line"></span><br><span class="line">    <span class="comment">// 稳定代码</span></span><br><span class="line">    <span class="function">thread <span class="title">t3</span><span class="params">(threadFunction1, mvary, string(mybuf))</span></span>;</span><br><span class="line">    t3.<span class="built_in">join</span>();</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Main Over&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<p>要避免的陷阱：</p>
+<ul>
+<li><p>使用 detach 时，若主线程先执行完，传递的参数会被回收从而出现错误</p>
+<ul>
+<li>分析认为，i 并不是 mvar 的引用，实际是值传递，即使主线程detach了子线程，子线程中用 i 仍然安全。但是 pmybuf 并不安全，指针在 detach 子线程时绝对有问题。因此仍然不建议这样书写代码</li>
+</ul>
+</li>
+<li><p>传参数出现使用类型转换时，存在主线程执行完毕，对象被回收后才发生类型转换的可能性。</p>
+<ul>
+<li>在创建线程的同时构造临时对象的方法传递参数是可行的。</li>
+</ul>
+</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> mi;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">A</span>(<span class="type">int</span> mi) : <span class="built_in">mi</span>(mi) &#123;cout &lt;&lt; <span class="string">&quot;调用类型转换构造函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; endl;&#125;;</span><br><span class="line">    <span class="built_in">A</span>(<span class="type">const</span> A&amp; a) : <span class="built_in">mi</span>(a.mi) &#123;cout &lt;&lt; <span class="string">&quot;调用拷贝构造函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; endl;&#125;;</span><br><span class="line">    ~<span class="built_in">A</span>()&#123;cout &lt;&lt; <span class="string">&quot;调用析构函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; endl;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">threadFunction</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; i, <span class="type">const</span> A&amp; pmybuf)</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Thread &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; says: &quot;</span> &lt;&lt; &amp;pmybuf &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> mvar = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> &amp;mvary = mvar;</span><br><span class="line">    <span class="type">char</span> mybuf[] = <span class="string">&quot;Hello from main&quot;</span>;</span><br><span class="line">    <span class="type">int</span> second = <span class="number">12</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function">thread <span class="title">t2</span><span class="params">(threadFunction, mvary, A(second))</span></span>;</span><br><span class="line">    <span class="comment">// t1.join();</span></span><br><span class="line">    t2.<span class="built_in">detach</span>();</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Main Over&quot;</span> &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure>
+<p>结论：</p>
+<ul>
+<li>使用detach时，若传递简单类型参数，建议都是值传递，不用引用。</li>
+<li>使用detach时，如果传递类对象，避免隐式类型转换。全部都在创建线程这一行构造临时对象，然后在函数参数里用引用来接，否则系统还会构造一次对象。</li>
+<li>建议不使用 detach，这样就不存在局部变量失效导致线程对内存的非法引用问题。</li>
+</ul>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;   </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="keyword">mutable</span> <span class="type">int</span> mi;</span><br><span class="line">    <span class="built_in">A</span>(<span class="type">int</span> mi) : <span class="built_in">mi</span>(mi) &#123;cout &lt;&lt; <span class="string">&quot;调用类型转换构造函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; endl;&#125;;</span><br><span class="line">    <span class="built_in">A</span>(<span class="type">const</span> A&amp; a) : <span class="built_in">mi</span>(a.mi) &#123;cout &lt;&lt; <span class="string">&quot;调用拷贝构造函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; endl;&#125;;</span><br><span class="line">    ~<span class="built_in">A</span>()&#123;cout &lt;&lt; <span class="string">&quot;调用析构函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; endl;&#125;;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setMi</span><span class="params">(<span class="type">int</span> mi)</span> </span>&#123;<span class="keyword">this</span>-&gt;mi = mi;&#125;;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getMi</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> mi;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">threadFunction</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; i, <span class="type">const</span> A&amp; pmybuf)</span> </span>&#123;</span><br><span class="line">    pmybuf.mi = <span class="number">100</span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Thread &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; says: &quot;</span> &lt;&lt; &amp;pmybuf &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> mvar = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> &amp;mvary = mvar;</span><br><span class="line">    <span class="type">char</span> mybuf[] = <span class="string">&quot;Hello from main&quot;</span>;</span><br><span class="line">    <span class="type">int</span> second = <span class="number">12</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// thread t2(threadFunction, mvary, second);</span></span><br><span class="line">    <span class="comment">// t2.detach();</span></span><br><span class="line">    <span class="function">A <span class="title">a</span><span class="params">(second)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">t2</span><span class="params">(threadFunction, mvary, a)</span></span>;</span><br><span class="line">    t2.<span class="built_in">detach</span>();</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Main Over&quot;</span> &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; <span class="string">&quot; a.mi = &quot;</span> &lt;&lt; a.<span class="built_in">getMi</span>() &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">调用类型转换构造函数 0xffffffffea68 thread_id = 281474842417920</span></span><br><span class="line"><span class="comment">调用拷贝构造函数 0xaaaaaaad36c8 thread_id = 281474842417920</span></span><br><span class="line"><span class="comment">Main Over thread_id = 281474842417920 a.mi = 12</span></span><br><span class="line"><span class="comment">调用析构函数 0xffffffffea68</span></span><br><span class="line"><span class="comment">Thread 1 says: 0xaaaaaaad36c8 thread_id = 281474836263264</span></span><br><span class="line"><span class="comment">调用析构函数 0xaaaaaaad36c8</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>在线程内修改值不会影响到 main 函数，因此需要传递指针或者引用。传递类对象、智能指针作为线程参数时，使用std::ref函数。此时引用可以不用 const 且属性成员可以不用 mutable。</p>
+<p>当使用类的成员函数来创建线程时，我们用如下方法传递参数：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;   </span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="type">int</span> mi;</span><br><span class="line">    <span class="built_in">A</span>(<span class="type">int</span> mi) : <span class="built_in">mi</span>(mi) &#123;cout &lt;&lt; <span class="string">&quot;调用类型转换构造函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; endl;&#125;;</span><br><span class="line">    <span class="built_in">A</span>(<span class="type">const</span> A&amp; a) : <span class="built_in">mi</span>(a.mi) &#123;cout &lt;&lt; <span class="string">&quot;调用拷贝构造函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; endl;&#125;;</span><br><span class="line">    ~<span class="built_in">A</span>()&#123;cout &lt;&lt; <span class="string">&quot;调用析构函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; endl;&#125;;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">setMi</span><span class="params">(<span class="type">int</span> mi)</span> </span>&#123;<span class="keyword">this</span>-&gt;mi = mi;&#125;;</span><br><span class="line">    <span class="function"><span class="type">int</span> <span class="title">getMi</span><span class="params">()</span> </span>&#123;<span class="keyword">return</span> mi;&#125;;</span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">thread_work</span><span class="params">(<span class="type">int</span> a)</span> </span>&#123;cout &lt;&lt; <span class="string">&quot;Thread says: &quot;</span> &lt;&lt; a &lt;&lt; endl;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">threadFunction</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; i, A&amp; pmybuf)</span> </span>&#123;</span><br><span class="line">    pmybuf.mi = <span class="number">100</span>;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Thread &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; says: &quot;</span> &lt;&lt; &amp;pmybuf &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; <span class="string">&quot; pmybuf.mi = &quot;</span> &lt;&lt; pmybuf.<span class="built_in">getMi</span>() &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    </span><br><span class="line">    <span class="type">int</span> mvar = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> &amp;mvary = mvar;</span><br><span class="line">    <span class="type">char</span> mybuf[] = <span class="string">&quot;Hello from main&quot;</span>;</span><br><span class="line">    <span class="type">int</span> second = <span class="number">12</span>;</span><br><span class="line">    <span class="function">A <span class="title">a</span><span class="params">(second)</span></span>;</span><br><span class="line">    <span class="function">thread <span class="title">t2</span><span class="params">(&amp;A::thread_work, std::ref(a), <span class="number">15</span>)</span></span>;</span><br><span class="line">    <span class="comment">// t2.join();</span></span><br><span class="line">    t2.<span class="built_in">detach</span>();</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Main Over&quot;</span> &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; <span class="string">&quot; a.mi = &quot;</span> &lt;&lt; a.<span class="built_in">getMi</span>() &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>线程id、临时对象构造时机捕获</p>
+</blockquote>
+<p>线程id是一个数字，每个线程都对应一个数字，而且每个线程对应的数字不相同。线程id可以用C++标准库里的函数来获取：std::this_thread::get_id()</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;iostream&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;thread&gt;</span></span></span><br><span class="line"><span class="keyword">using</span> <span class="keyword">namespace</span> std;</span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">A</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="type">int</span> mi;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">A</span>(<span class="type">int</span> mi) : <span class="built_in">mi</span>(mi) &#123;cout &lt;&lt; <span class="string">&quot;调用类型转换构造函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; endl;&#125;;</span><br><span class="line">    <span class="built_in">A</span>(<span class="type">const</span> A&amp; a) : <span class="built_in">mi</span>(a.mi) &#123;cout &lt;&lt; <span class="string">&quot;调用拷贝构造函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; endl;&#125;;</span><br><span class="line">    ~<span class="built_in">A</span>()&#123;cout &lt;&lt; <span class="string">&quot;调用析构函数 &quot;</span> &lt;&lt; <span class="keyword">this</span> &lt;&lt; endl;&#125;;</span><br><span class="line">&#125;;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">void</span> <span class="title">threadFunction</span><span class="params">(<span class="type">const</span> <span class="type">int</span>&amp; i, <span class="type">const</span> A&amp; pmybuf)</span> </span>&#123;</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Thread &quot;</span> &lt;&lt; i &lt;&lt; <span class="string">&quot; says: &quot;</span> &lt;&lt; &amp;pmybuf &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; endl;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span> </span>&#123;</span><br><span class="line">    <span class="type">int</span> mvar = <span class="number">1</span>;</span><br><span class="line">    <span class="type">int</span> &amp;mvary = mvar;</span><br><span class="line">    <span class="type">char</span> mybuf[] = <span class="string">&quot;Hello from main&quot;</span>;</span><br><span class="line">    <span class="type">int</span> second = <span class="number">12</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// thread t2(threadFunction, mvary, second);</span></span><br><span class="line">    <span class="comment">// t2.detach();</span></span><br><span class="line"></span><br><span class="line">    <span class="function">thread <span class="title">t2</span><span class="params">(threadFunction, mvary, A(second))</span></span>;</span><br><span class="line">    t2.<span class="built_in">detach</span>();</span><br><span class="line">    cout &lt;&lt; <span class="string">&quot;Main Over&quot;</span> &lt;&lt; <span class="string">&quot; thread_id = &quot;</span> &lt;&lt; this_thread::<span class="built_in">get_id</span>() &lt;&lt; endl;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;  </span><br><span class="line"></span><br><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment">调用类型转换构造函数 0xfffff7a0e7a0 thread_id = 281474836263264</span></span><br><span class="line"><span class="comment">Thread 1 says: 0xfffff7a0e7a0 thread_id = 281474836263264</span></span><br><span class="line"><span class="comment">调用析构函数 0xfffff7a0e7a0</span></span><br><span class="line"><span class="comment">Main Over thread_id = 281474842417920</span></span><br><span class="line"><span class="comment"></span></span><br><span class="line"><span class="comment">调用类型转换构造函数 0xffffffffea68 thread_id = 281474842417920</span></span><br><span class="line"><span class="comment">调用拷贝构造函数 0xaaaaaaad36c8 thread_id = 281474842417920</span></span><br><span class="line"><span class="comment">Thread 1 says: 0xaaaaaaad36c8 thread_id = 281474836263264</span></span><br><span class="line"><span class="comment">调用析构函数 0xaaaaaaad36c8</span></span><br><span class="line"><span class="comment">调用析构函数 0xffffffffea68</span></span><br><span class="line"><span class="comment">Main Over thread_id = 281474842417920</span></span><br><span class="line"><span class="comment">*/</span></span><br></pre></td></tr></table></figure>
+<p>上述结果说明，隐式转换时是在子线程中完成的，但是显示转换时构造对象时是在主线程中完成的</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2024/12/25/CMU15445-2023-Project4/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/./img/cmu15445.png">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/CMU15445/">
+                    CMU15445
+                </a>
+            </div>
+            <h5>
+                <a href="/2024/12/25/CMU15445-2023-Project4/" class="trm-anima-link">
+                    CMU15445-2023-Project4
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>24/12/25</li>
+                <li>11:10</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v7.2.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.2.2
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="C&#x2F;C++多线程开发"><a rel="nofollow" class="trm-toc-link" href="#C-C-多线程开发"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">C&#x2F;C++多线程开发</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="第一章：并发基本概念及实现、进程与线程的基本概念"><a rel="nofollow" class="trm-toc-link" href="#第一章：并发基本概念及实现、进程与线程的基本概念"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">第一章：并发基本概念及实现、进程与线程的基本概念</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-3" title="并发、进程与线程的基本概念综述"><a rel="nofollow" class="trm-toc-link" href="#并发、进程与线程的基本概念综述"><span class="trm-toc-number">1.1.1.</span> <span class="trm-toc-text">并发、进程与线程的基本概念综述</span></a></li><li class="trm-toc-item trm-toc-level-3" title="并发的实现方法"><a rel="nofollow" class="trm-toc-link" href="#并发的实现方法"><span class="trm-toc-number">1.1.2.</span> <span class="trm-toc-text">并发的实现方法</span></a></li></ol></li><li class="trm-toc-item trm-toc-level-2" title="第二章：多线程开发基础"><a rel="nofollow" class="trm-toc-link" href="#第二章：多线程开发基础"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">第二章：多线程开发基础</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.2"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.2.2"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
