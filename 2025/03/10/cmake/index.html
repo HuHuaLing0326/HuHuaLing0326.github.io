@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="Cmake 保姆型教程学习（Linux 平台）Cmake 引入CMake 是个一个开源的跨平台自动化建构系统，用来管理软件建置的程序，并不依赖于某特定编译器，并可支持多层目录、多个应用程序与多个函数库。 CMake 通过使用简单的配置文件 CMakeLists.txt，自动生成不同平台的构建文件（如 Makefile、Ninja 构建文件、Visual Studio 工程文件等），简化了项目的编译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Cmake 保姆型教程学习（Linux 平台）">
+<meta property="og:url" content="http://example.com/2025/03/10/cmake/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="Cmake 保姆型教程学习（Linux 平台）Cmake 引入CMake 是个一个开源的跨平台自动化建构系统，用来管理软件建置的程序，并不依赖于某特定编译器，并可支持多层目录、多个应用程序与多个函数库。 CMake 通过使用简单的配置文件 CMakeLists.txt，自动生成不同平台的构建文件（如 Makefile、Ninja 构建文件、Visual Studio 工程文件等），简化了项目的编译">
+<meta property="og:locale">
+<meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="article:published_time" content="2025-03-10T07:20:32.000Z">
+<meta property="article:modified_time" content="2025-03-11T02:06:49.863Z">
+<meta property="article:author" content="Huhualing">
+<meta property="article:tag" content="C&#x2F;C++编程">
+<meta property="article:tag" content="Cmake">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/img/404.jpg">
+
+
+<title >Cmake 保姆型教程学习（Linux 平台）</title>
+
+<!-- Favicon -->
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='apple-touch-icon' sizes='180x180' ></link>
+
+
+    <link href='/site.webmanifest' rel='manifest' ></link>
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-03-11 10:06:49"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/biancheng.png">
+    
+    
+        <div class="trm-logo-text">
+            护花<span>铃</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/categories/" target="">
+                    分类
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/my-resume/" target="">
+                    个人简历
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            Cmake 保姆型教程学习（Linux 平台）
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2025
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/./img/ningguang4.jpeg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        护花铃
+    </h5>
+    
+        <div class="trm-label">
+            护花铃的编程与足球小站
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/HuHuaLing0326" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com/flower-protection-bell" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-gitlab"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                职业:
+            </div>
+            <div class="trm-label trm-label-light">
+                学生
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向1:
+            </div>
+            <div class="trm-label trm-label-light">
+                隐私保护
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向2:
+            </div>
+            <div class="trm-label trm-label-light">
+                C++程序设计
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向3:
+            </div>
+            <div class="trm-label trm-label-light">
+                足球运动
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:huhualing0326@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            03/10
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            15:20
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            Huhualing
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="Cmake-保姆型教程学习（Linux-平台）"><a href="#Cmake-保姆型教程学习（Linux-平台）" class="headerlink" title="Cmake 保姆型教程学习（Linux 平台）"></a>Cmake 保姆型教程学习（Linux 平台）</h1><h2 id="Cmake-引入"><a href="#Cmake-引入" class="headerlink" title="Cmake 引入"></a>Cmake 引入</h2><p>CMake 是个一个开源的跨平台自动化建构系统，用来管理软件建置的程序，并不依赖于某特定编译器，并可支持多层目录、多个应用程序与多个函数库。</p>
+<p>CMake 通过使用简单的配置文件 CMakeLists.txt，自动生成不同平台的构建文件（如 Makefile、Ninja 构建文件、Visual Studio 工程文件等），简化了项目的编译和构建过程。Cmake 比 Makefile 更加简便高级。</p>
+<p>CMake 本身不是构建工具，而是生成构建系统的工具，它生成的构建系统可以使用不同的编译器和工具链。</p>
+<p>CMake 的作用和优势</p>
+<ul>
+<li>跨平台支持：CMake 支持多种操作系统和编译器，使得同一份构建配置可以在不同的环境中使用。</li>
+<li>简化配置：通过 CMakeLists.txt 文件，用户可以定义项目结构、依赖项、编译选项等，无需手动编写复杂的构建脚本。</li>
+<li>自动化构建：CMake 能够自动检测系统上的库和工具，减少手动配置的工作量。</li>
+<li>灵活性：支持多种构建类型和配置（如 Debug、Release），并允许用户自定义构建选项和模块</li>
+</ul>
+<img src="/2025/03/10/cmake/Cmake%E6%B5%81%E7%A8%8B.png" class="" title="Cmake流程"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<p>上图蓝色紫色表示使用 makefile 编写文件</p>
+<h2 id="Cmake-简单命令与使用"><a href="#Cmake-简单命令与使用" class="headerlink" title="Cmake 简单命令与使用"></a>Cmake 简单命令与使用</h2><p>注释行和注释块：</p>
+<p>CMake 使用 # 进行 <font color=red>行注释</font>，可以放在任意位置。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 这是一个 CMakeLists.txt 文件</span></span><br><span class="line">cmake_minimun_required(VERSION <span class="number">3.0</span>.<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<p>CMake 使用 #[[ ]] 进行 <font color=red>块注释</font>，可以放在任意位置。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[ 这是一个 CMakeLists.txt 文件</span></span><br><span class="line"><span class="comment">    这是一个 CMakeLists.txt 文件</span></span><br><span class="line"><span class="comment">    这是一个 CMakeLists.txt 文件 ]]</span></span><br><span class="line"></span><br><span class="line">cmake_minimun_required(VERSION <span class="number">3.0</span>.<span class="number">0</span>)</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>cmake_minimun_required：指定使用等 cmake 最低版本</p>
+<ul>
+<li>可选，非必须，如果不加可能会有警告</li>
+</ul>
+</li>
+<li><p>project：定义工程名称，并指定工程的版本、工程描述、web主页地址、支持的语言。如果不需要可以忽略，只需指出工程名称即可。</p>
+</li>
+</ul>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#[[ 这是一个 CMakeLists.txt 文件</span></span><br><span class="line"><span class="comment">    这是一个 CMakeLists.txt 文件</span></span><br><span class="line"><span class="comment">    这是一个 CMakeLists.txt 文件 ]]</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">project</span>(&lt;<span class="keyword">PROJECT</span>-NAME&gt; [&lt;language-name&gt;...])</span><br><span class="line"><span class="keyword">project</span>(&lt;<span class="keyword">PROJECT</span>-NAME&gt;</span><br><span class="line">        [VERSION &lt;major&gt;[.&lt;minor&gt;[.&lt;patch&gt;[.&lt;tweak&gt;]]]]</span><br><span class="line">        [DESCRIPTION &lt;<span class="keyword">project</span>-description-<span class="keyword">string</span>&gt;]</span><br><span class="line">        [HOMEPAGE_URL &lt;<span class="keyword">project</span>-url-<span class="keyword">string</span>&gt;]</span><br><span class="line">        [LANGUAGES &lt;language-name&gt;])</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>add_executable：定义工程可能会生成一个可执行程序</p>
+<ul>
+<li>可执行程序名和项目名没有任何关系</li>
+<li>源文件名字可以是一个或者多个，多个需要用空格或分号间隔<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_executable</span>(可执行程序名 源文件名称)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+</li>
+<li><p>执行 CMake 命令</p>
+</li>
+</ul>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># cmake 命令原型</span></span><br><span class="line"><span class="comment"># cmake CMakeLists.txt文件路径</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>cmake 中 set 的使用</p>
+</blockquote>
+<p>在上面的例子中一共提供了5个源文件，假设这五个源文件需要反复被使用，每次都直接将它们的名字写出来确实是很麻烦，此时我们就需要定义一个变量，将文件名对应的字符串存储起来，在cmake里定义变量需要使用 set。</p>
+<p>set 中的值默认情况下都是 string，对于其他类型需要做对应的转换。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># SET 指令的语法是：</span></span><br><span class="line"><span class="comment"># [] 中的参数为可选项, 如不需要可以不写</span></span><br><span class="line"><span class="keyword">SET</span>(VAR [VALUE] [CACHE TYPE DOCSTRING [FORCE]])</span><br></pre></td></tr></table></figure>
+<p>VAR：变量名<br>VALUE：变量值</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> (SRC_LIST main.cpp add.cpp sub.cpp mul.cpp div.cpp)</span><br><span class="line"><span class="keyword">add_executable</span>(app <span class="variable">$&#123;SRC_LIST&#125;</span>)</span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>指定使用的 C++ 标准</p>
+</blockquote>
+<p>在编写C++程序的时候，可能会用到C++11、C++14、C++17、C++20等新特性，那么就需要在编译的时候在编译命令中制定出要使用哪个标准：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ g++ *.cpp -std=c++11 -o app</span><br></pre></td></tr></table></figure>
+<p>上面的例子中通过参数 -std=c++11 指定出要使用 c++11 标准编译程序，C++ 标准对应有一宏叫做 DCMAKE_CXX_STANDARD。在 CMake 中想要指定 C++ 标准有两种方式：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#增加-std=c++11</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">11</span>)</span><br><span class="line"><span class="comment">#增加-std=c++14</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">14</span>)</span><br><span class="line"><span class="comment">#增加-std=c++17</span></span><br><span class="line"><span class="keyword">set</span>(CMAKE_CXX_STANDARD <span class="number">17</span>)</span><br></pre></td></tr></table></figure>
+<p>在执行 cmake 命令的时候指定出这个宏的值</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#增加-std=c++11</span></span><br><span class="line">cmake CMakeLists.txt文件路径 -DCMAKE_CXX_STANDARD=<span class="number">11</span></span><br><span class="line"><span class="comment">#增加-std=c++14</span></span><br><span class="line">cmake CMakeLists.txt文件路径 -DCMAKE_CXX_STANDARD=<span class="number">14</span></span><br><span class="line"><span class="comment">#增加-std=c++17</span></span><br><span class="line">cmake CMakeLists.txt文件路径 -DCMAKE_CXX_STANDARD=<span class="number">17</span></span><br></pre></td></tr></table></figure>
+<blockquote>
+<p>指定输出路径</p>
+</blockquote>
+<p>在 CMake 中指定可执行程序输出的路径，也对应一个宏，叫做 EXECUTABLE_OUTPUT_PATH，它的值还是通过set命令进行设置:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span>(HOME /home/robin/Linux/Sort)</span><br><span class="line"><span class="keyword">set</span>(EXECUTABLE_OUTPUT_PATH <span class="variable">$&#123;HOME&#125;</span>/bin)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>第一行：定义一个变量用于存储一个绝对路径</li>
+<li>第二行：将拼接好的路径值设置给 XECUTABLE_OUTPUT_PATH 宏<ul>
+<li>如果这个路径中的子目录不存在，会自动生成，无需自己手动创建</li>
+</ul>
+</li>
+</ul>
+<p>由于可执行程序是基于 cmake 命令生成的 makefile 文件然后再执行 make 命令得到的，所以如果此处指定可执行程序生成路径的时候使用的是相对路径 ./xxx/xxx，那么这个路径中的 ./ 对应的就是 makefile 文件所在的那个目录。</p>
+<blockquote>
+<p>搜索文件</p>
+</blockquote>
+<p>在 Cmake 中使用 aux_source_directory 命令可以查找某个路径下的<font color=red>源文件</font>。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">aux_source_directory</span>(&lt; dir &gt; &lt; variable &gt;)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>dir：要搜索的目录</li>
+<li>variable：将从dir目录下搜索到的源文件列表存储到该变量中</li>
+</ul>
+<p>在 Cmake 中也可以使用 file 命令来查找文件。当然，除了搜索以外通过 file 还可以做其他事情。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">file</span>(GLOB/GLOB_RECURSE 变量名 要搜索的文件路径和文件类型)</span><br></pre></td></tr></table></figure>
+<p>GLOB: 将指定目录下搜索到的满足条件的所有文件名生成一个列表，并将其存储到变量中。<br>GLOB_RECURSE：递归搜索指定目录，将搜索到的满足条件的文件名生成一个列表，并将其存储到变量中。</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">file</span>(GLOB MAIN_SRC <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/src/*.cpp)</span><br><span class="line"><span class="keyword">file</span>(GLOB MAIN_HEAD <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>/*.h)</span><br></pre></td></tr></table></figure>
+<p>CMAKE_CURRENT_SOURCE_DIR 宏表示当前访问的 CMakeLists.txt 文件所在的路径。</p>
+<p>在编译项目源文件的时候，很多时候都需要将源文件对应的头文件路径指定出来，这样才能保证在编译过程中编译器能够找到这些头文件，并顺利通过编译。在CMake中设置要包含的目录也很简单，通过一个命令就可以搞定了，他就是include_directories:<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">include_directories</span>(headpath)</span><br></pre></td></tr></table></figure></p>
+<blockquote>
+<p>动态库与静态库</p>
+</blockquote>
+<p>有些时候我们编写的源代码并不需要将他们编译生成可执行程序，而是生成一些静态库或动态库提供给第三方使用</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_library</span>(库名称 STATIC/SHARED 源文件<span class="number">1</span> [源文件<span class="number">2</span>] ...) </span><br></pre></td></tr></table></figure>
+<p>在Linux中，动态库名字分为三部分：lib+库名字+.so，此处只需要指定出库的名字就可以了，另外两部分在生成该文件的时候会自动填充。</p>
+<p>在 Windows 中虽然库名和 Linux 格式不同，但也只需指定出名字即可。</p>
+<p>根据上面的目录结构，可以这样编写 CMakeLists.txt 文件:</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">cmake_minimum_required</span>(VERSION <span class="number">3.0</span>.<span class="number">0</span>)</span><br><span class="line"><span class="keyword">project</span>(HelloWorld VERSION <span class="number">0.1</span>.<span class="number">0</span>)</span><br><span class="line"><span class="keyword">file</span>(GLOB SRC_LIST <span class="variable">$&#123;CMAKE_CURRENT_SOURCE_DIR&#125;</span>/src/*.cpp)</span><br><span class="line"><span class="keyword">include_directories</span>(<span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/<span class="keyword">include</span>)</span><br><span class="line"><span class="keyword">set</span>(EXECUTABLE_OUTPUT_PATH <span class="variable">$&#123;PROJECT_SOURCE_DIR&#125;</span>/lib)</span><br><span class="line"><span class="keyword">add_library</span>(<span class="keyword">math</span> SHARED <span class="variable">$&#123;SRC_LIST&#125;</span>)</span><br></pre></td></tr></table></figure>
+<p>由于在 Linux 下生成的静态库默认不具有可执行权限，所以在指定静态库生成的路径的时候就不能使用 EXECUTABLE_OUTPUT_PATH 宏了，而应该使用 LIBRARY_OUTPUT_PATH，这个宏对应静态库文件和动态库文件都适用。</p>
+<p>在cmake中，链接静态库的命令如下：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">link_libraries</span>(&lt;static lib&gt; [&lt;static lib&gt;...])</span><br></pre></td></tr></table></figure>
+<p>用于设置全局链接库，这些库会链接到之后定义的所有目标上。</p>
+<ul>
+<li>参数1：指定出要链接的静态库的名字<ul>
+<li>可以是全名 libxxx.a</li>
+<li>也可以是掐头（lib）去尾（.a）之后的名字 xxx</li>
+</ul>
+</li>
+<li>参数2-N：要链接的其它静态库的名字</li>
+</ul>
+<p>如果该静态库不是系统提供的（自己制作或者使用第三方提供的静态库）可能出现静态库找不到的情况，此时可以将静态库的路径也指定出来：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">link_directories</span>(&lt;lib path&gt;)</span><br></pre></td></tr></table></figure>
+<p>在cmake中链接动态库的命令如下：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">target_link_libraries</span>(</span><br><span class="line">    &lt;<span class="keyword">target</span>&gt; </span><br><span class="line">    &lt;PRIVATE|PUBLIC|INTERFACE&gt; &lt;item&gt;... </span><br><span class="line">    [&lt;PRIVATE|PUBLIC|INTERFACE&gt; &lt;item&gt;...]...)</span><br></pre></td></tr></table></figure></p>
+<p>用于指定一个目标（如可执行文件或库）在编译时需要链接哪些库。它支持指定库的名称、路径以及链接库的顺序。</p>
+<ul>
+<li><p>target：指定要加载的库的文件的名字</p>
+<ul>
+<li>该文件可能是一个源文件</li>
+<li>该文件可能是一个动态库/静态库文件</li>
+<li>该文件可能是一个可执行文件</li>
+</ul>
+</li>
+<li><p>PRIVATE|PUBLIC|INTERFACE：动态库的访问权限，默认为PUBLIC</p>
+<ul>
+<li>如果各个动态库之间没有依赖关系，无需做任何设置，三者没有没有区别，一般无需指定，使用默认的 PUBLIC 即可。</li>
+<li>动态库的链接具有传递性，如果动态库 A 链接了动态库B、C，动态库D链接了动态库A，此时动态库D相当于也链接了动态库B、C，并可以使用动态库B、C中定义的方法。</li>
+<li>PUBLIC：在public后面的库会被Link到前面的target中，并且里面的符号也会被导出，提供给第三方使用。</li>
+<li>PRIVATE：在private后面的库仅被link到前面的target中，并且终结掉，第三方不能感知你调了啥库</li>
+<li>INTERFACE：在interface后面引入的库不会被链接到前面的target中，只会导出符号。</li>
+</ul>
+</li>
+</ul>
+<p>动态库的链接和静态库是完全不同的：</p>
+<ul>
+<li>静态库会在生成可执行程序的链接阶段被打包到可执行程序中，所以可执行程序启动，静态库就被加载到内存中了。</li>
+<li>动态库在生成可执行程序的链接阶段不会被打包到可执行程序中，当可执行程序被启动并且调用了动态库中的函数的时候，动态库才会被加载到内存</li>
+</ul>
+<p>因此，在cmake中指定要链接的动态库的时候，应该将命令写到生成了可执行文件之后。</p>
+<p>加载第三方动态库时，在 CMake 生成可执行程序之前，通过命令指定出要链接的动态库的位置，指定静态库位置使用的也是这个命令：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">link_directories</span>(path)</span><br></pre></td></tr></table></figure>
+<p>通过link_directories指定了动态库的路径之后，在执行生成的可执行程序的时候，就不会出现找不到动态库的问题了。</p>
+<p>target_link_libraries 用于指定一个目标（如可执行文件或库）在编译时需要链接哪些库。它支持指定库的名称、路径以及链接库的顺序。优点:</p>
+<ul>
+<li>更精确地控制目标的链接库。</li>
+<li>可以指定库的不同链接条件（如调试版本、发布版本）。</li>
+<li>支持多个目标和多个库之间的复杂关系。</li>
+<li>更加灵活和易于维护，特别是在大型项目中。</li>
+</ul>
+<p>link_libraries 用于设置全局链接库，这些库会链接到之后定义的所有目标上。它会影响所有的目标，适用于全局设置，但不如 target_link_libraries 精确。缺点:</p>
+<ul>
+<li>缺乏针对具体目标的控制，不适合复杂的项目结构。</li>
+<li>容易导致意外的依赖关系，因为它对所有目标都生效。</li>
+<li>一旦设置，全局影响可能导致难以追踪的链接问题。</li>
+</ul>
+<p>target_link_libraries 是更推荐的方式，因为它允许更精确的控制和管理链接库的依赖，特别是在大型项目中，它能够避免全局设置可能带来的问题。</p>
+<p>link_libraries 虽然简单，但在复杂的项目中可能会导致意外的问题，通常适用于简单的项目或临时设置。</p>
+<font color=red>建议在 CMake 项目中优先使用 target_link_libraries。 </font>
+
+<blockquote>
+<p>日志</p>
+</blockquote>
+<p>在CMake中可以用用户显示一条消息，该命令的名字为message：</p>
+<figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">message</span>([STATUS|WARNING|AUTHOR_WARNING|FATAL_ERROR|SEND_ERROR] <span class="string">&quot;message to display&quot;</span> ...)</span><br></pre></td></tr></table></figure>
+<ul>
+<li>(无) ：重要消息</li>
+<li>STATUS ：非重要消息</li>
+<li>WARNING：CMake 警告, 会继续执行</li>
+<li>AUTHOR_WARNING：CMake 警告 (dev), 会继续执行</li>
+<li>SEND_ERROR：CMake 错误, 继续执行，但是会跳过生成的步骤</li>
+<li>FATAL_ERROR：CMake 错误, 终止所有处理过程</li>
+</ul>
+<p>CMake 的命令行工具会在 stdout 上显示STATUS消息，在 stderr 上显示其他所有消息。CMake 的 GUI 会在它的 log 区域显示所有消息。</p>
+<p>CMake 警告和错误消息的文本显示使用的是一种简单的标记语言。文本没有缩进，超过长度的行会回卷，段落之间以新行做为分隔符。</p>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2025/03/06/cppmultithread-2/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/./img/Cpp_concurrency.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" /categories/C-C-%E5%A4%9A%E7%BA%BF%E7%A8%8B%E5%BC%80%E5%8F%91/">
+                    C/C++多线程开发
+                </a>
+            </div>
+            <h5>
+                <a href="/2025/03/06/cppmultithread-2/" class="trm-anima-link">
+                    C/C++多线程开发-2
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/03/06</li>
+                <li>18:57</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v7.2.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.2.2
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="Cmake 保姆型教程学习（Linux 平台）"><a rel="nofollow" class="trm-toc-link" href="#Cmake-保姆型教程学习（Linux-平台）"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">Cmake 保姆型教程学习（Linux 平台）</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="Cmake 引入"><a rel="nofollow" class="trm-toc-link" href="#Cmake-引入"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">Cmake 引入</span></a></li><li class="trm-toc-item trm-toc-level-2" title="Cmake 简单命令与使用"><a rel="nofollow" class="trm-toc-link" href="#Cmake-简单命令与使用"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">Cmake 简单命令与使用</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.2"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.2.2"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
