@@ -16,7 +16,7 @@
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/img/404.jpg">
 <meta property="article:published_time" content="2025-03-10T07:20:32.000Z">
-<meta property="article:modified_time" content="2025-03-11T02:06:49.863Z">
+<meta property="article:modified_time" content="2025-03-11T03:09:29.165Z">
 <meta property="article:author" content="Huhualing">
 <meta property="article:tag" content="C&#x2F;C++编程">
 <meta property="article:tag" content="Cmake">
@@ -67,7 +67,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-03-11 10:06:49"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-03-11 11:09:29"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
@@ -547,7 +547,66 @@
 </ul>
 <p>CMake 的命令行工具会在 stdout 上显示STATUS消息，在 stderr 上显示其他所有消息。CMake 的 GUI 会在它的 log 区域显示所有消息。</p>
 <p>CMake 警告和错误消息的文本显示使用的是一种简单的标记语言。文本没有缩进，超过长度的行会回卷，段落之间以新行做为分隔符。</p>
-
+<blockquote>
+<p>CMake 宏定义</p>
+</blockquote>
+<p>在进行程序测试的时候，我们可以在代码中添加一些宏定义，通过这些宏来控制这些代码是否生效：<br><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;stdio.h&gt;</span></span></span><br><span class="line"><span class="meta">#<span class="keyword">define</span> NUMBER  3</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="type">int</span> <span class="title">main</span><span class="params">()</span></span></span><br><span class="line"><span class="function"></span>&#123;</span><br><span class="line">    <span class="type">int</span> a = <span class="number">10</span>;</span><br><span class="line"><span class="meta">#<span class="keyword">ifdef</span> DEBUG</span></span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">&quot;我是一个程序猿, 我不会爬树...\n&quot;</span>);</span><br><span class="line"><span class="meta">#<span class="keyword">endif</span></span></span><br><span class="line">    <span class="keyword">for</span>(<span class="type">int</span> i=<span class="number">0</span>; i&lt;NUMBER; ++i)</span><br><span class="line">    &#123;</span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">&quot;hello, GCC!!!\n&quot;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>在程序的第七行对DEBUG宏进行了判断，如果该宏被定义了，那么第八行就会进行日志输出，如果没有定义这个宏，第八行就相当于被注释掉了，因此最终无法看到日志输入出（上述代码中并没有定义这个宏）。</p>
+<p>为了让测试更灵活，我们可以不在代码中定义这个宏，而是在测试的时候去把它定义出来，其中一种方式就是在gcc/g++命令中去指定，如下：</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ gcc test.c -DDEBUG -o app</span><br></pre></td></tr></table></figure>
+<p>在 gcc/g++ 命令中通过参数 -D指定出要定义的宏的名字，这样就相当于在代码中定义了一个宏，其名字为 DEBUG。</p>
+<p>在 CMake 中我们也可以做类似的事情，对应的命令叫做 add_definitions：<br><figure class="highlight cmake"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">add_definitions</span>(-D宏名称)</span><br></pre></td></tr></table></figure></p>
+<p>下面的列表中是 CMake 中常用的宏：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">宏名字</th>
+<th style="text-align:center">功能</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">PROJECT_SOURCE_DIR</td>
+<td style="text-align:center">使用cmake命令后紧跟的目录，一般是工程的根目录</td>
+</tr>
+<tr>
+<td style="text-align:center">PROJECT_BINARY_DIR</td>
+<td style="text-align:center">执行cmake命令的目录</td>
+</tr>
+<tr>
+<td style="text-align:center">PROJECT_SOURCE_DIR</td>
+<td style="text-align:center">使用cmake命令后紧跟的目录，一般是工程的根目录</td>
+</tr>
+<tr>
+<td style="text-align:center">CMAKE_CURRENT_BINARY_DIR</td>
+<td style="text-align:center">target 编译目录</td>
+</tr>
+<tr>
+<td style="text-align:center">EXECUTABLE_OUTPUT_PATH</td>
+<td style="text-align:center">重新定义目标二进制可执行文件的存放位置</td>
+</tr>
+<tr>
+<td style="text-align:center">LIBRARY_OUTPUT_PATH</td>
+<td style="text-align:center">重新定义目标链接库文件的存放位置</td>
+</tr>
+<tr>
+<td style="text-align:center">PROJECT_NAME</td>
+<td style="text-align:center">返回通过PROJECT指令定义的项目名称</td>
+</tr>
+<tr>
+<td style="text-align:center">CMAKE_BINARY_DIR</td>
+<td style="text-align:center">项目实际构建路径，假设在build目录进行的构建，那么得到的就是这个目录的路径</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>资料来源：爱编程的大丙（<a target="_blank" rel="noopener" href="https://subingwen.cn/cmake/CMake-primer/）">https://subingwen.cn/cmake/CMake-primer/）</a></p>
+<blockquote>
+<p>CMake 项目实战——常规复杂项目</p>
+<p>一个优秀的 C++ 项目目录结构</p>
+</blockquote>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><span class="line">项目名称/</span><br><span class="line">├── README.md              <span class="comment"># 项目简介、构建与运行说明、贡献指南等</span></span><br><span class="line">├── LICENSE                <span class="comment"># 项目许可证文件</span></span><br><span class="line">├── CMakeLists.txt         <span class="comment"># CMake构建脚本（主）</span></span><br><span class="line">├── platform/</span><br><span class="line">│   ├── common/            <span class="comment"># 平台无关代码，可被所有平台使用的通用模块</span></span><br><span class="line">│   │   ├── module1/       <span class="comment"># 模块1源文件与头文件</span></span><br><span class="line">│   │   └── ...</span><br><span class="line">│   ├── win32/             <span class="comment"># Windows平台特定代码</span></span><br><span class="line">│   │   ├── module1_win32.cpp <span class="comment"># Windows平台下模块1的实现</span></span><br><span class="line">│   │   ├── module1_win32.hpp <span class="comment"># Windows平台下模块1的接口（如有必要）</span></span><br><span class="line">│   │   └── ...</span><br><span class="line">│   ├── linux/             <span class="comment"># Linux平台特定代码</span></span><br><span class="line">│   │   ├── module1_linux.cpp <span class="comment"># Linux平台下模块1的实现</span></span><br><span class="line">│   │   ├── module1_linux.hpp <span class="comment"># Linux平台下模块1的接口（如有必要）</span></span><br><span class="line">│   │   └── ...</span><br><span class="line">│   └── macos/             <span class="comment"># macOS平台特定代码</span></span><br><span class="line">│       ├── module1_macos.cpp <span class="comment"># macOS平台下模块1的实现</span></span><br><span class="line">│       ├── module1_macos.hpp <span class="comment"># macOS平台下模块1的接口（如有必要）</span></span><br><span class="line">│       └── ...</span><br><span class="line">├── include/               <span class="comment"># 项目公共头文件，不含平台特定代码</span></span><br><span class="line">│   └── project_name/      <span class="comment"># 项目专属头文件目录，避免命名冲突</span></span><br><span class="line">├── src/                   <span class="comment"># 项目主源代码目录，不含平台特定代码</span></span><br><span class="line">│   ├── module1/           <span class="comment"># 模块1源文件</span></span><br><span class="line">│   ├── module2/           <span class="comment"># 模块2源文件</span></span><br><span class="line">│   └── main.cpp           <span class="comment"># 主程序入口文件（可能包含条件编译区分平台）</span></span><br><span class="line">├── tests/                 <span class="comment"># 测试代码目录（跨平台或按平台组织）</span></span><br><span class="line">├── samples/              <span class="comment"># 测试代码目录（可按平台组织或按模块组织， 一个平台一个CMakeLists.txt）</span></span><br><span class="line">├── docs/                  <span class="comment"># 文档目录</span></span><br><span class="line">├── scripts/               <span class="comment"># 构建与部署相关脚本</span></span><br><span class="line">├── third_party/           <span class="comment"># 第三方库（如果项目内嵌或定制化）</span></span><br><span class="line">│   ├── libA/              <span class="comment"># 第三方库A</span></span><br><span class="line">│   │   ├── src/           <span class="comment"># 库A源代码</span></span><br><span class="line">│   │   ├── include/       <span class="comment"># 库A头文件</span></span><br><span class="line">│   │   └── CMakeLists.txt <span class="comment"># 库A的CMake构建脚本（如果库自带）</span></span><br><span class="line">│   ├── libB/              <span class="comment"># 第三方库B</span></span><br><span class="line">│   │   ├── src/           <span class="comment"># 库B源代码</span></span><br><span class="line">│   │   ├── include/       <span class="comment"># 库B头文件</span></span><br><span class="line">│   │   └── CMakeLists.txt <span class="comment"># 库B的CMake构建脚本（如果库自带）</span></span><br><span class="line">│   └── ...                <span class="comment"># 其他第三方库</span></span><br><span class="line">├── toolchains/            <span class="comment"># 工具链配置目录</span></span><br><span class="line">│   ├── gcc/               <span class="comment"># GCC工具链配置</span></span><br><span class="line">│   ├── clang/             <span class="comment"># Clang工具链配置</span></span><br><span class="line">│   └── msvc/              <span class="comment"># MSVC工具链配置</span></span><br><span class="line">├── external_libs/         <span class="comment"># 已编译好的第三方库（按工具链区分）</span></span><br><span class="line">│   ├── gcc/               <span class="comment"># GCC编译的库</span></span><br><span class="line">│   ├── clang/             <span class="comment"># Clang编译的库</span></span><br><span class="line">│   └── msvc/              <span class="comment"># MSVC编译的库</span></span><br><span class="line">├── build/                 <span class="comment"># 构建输出目录（由CMake生成，一般不在版本控制中）</span></span><br><span class="line">├── install/ 			   <span class="comment"># (include bin lib)</span></span><br><span class="line">├── tools/ 			   	   <span class="comment"># 工具</span></span><br><span class="line">└── data/                  <span class="comment"># 示例数据或资源文件（如果适用）</span></span><br></pre></td></tr></table></figure>
 </article>
     
     
