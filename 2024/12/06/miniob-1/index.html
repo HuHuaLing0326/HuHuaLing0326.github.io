@@ -7,17 +7,18 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta name="description" content="miniob-1 miniob 数据库架构和开发技巧  关系型数据库架构如下所示： miniob 架构如下所示：  在 miniob 开发中，可以从 main.cpp 开始打断点进行调试，假如使用 vscode 作为开发工具，我们编写如下的代码以支持调试 launch.json123456789101112131415161718192021222324252627282930313233&amp;#12">
+<meta name="description" content="miniob-1miniob 数据库架构和开发技巧关系型数据库架构如下所示： miniob 架构如下所示：  在 miniob 开发中，可以从 main.cpp 开始打断点进行调试，假如使用 vscode 作为开发工具，我们编写如下的代码以支持调试 launch.json123456789101112131415161718192021222324252627282930313233&#123;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="miniob-1">
 <meta property="og:url" content="http://example.com/2024/12/06/miniob-1/index.html">
 <meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="miniob-1 miniob 数据库架构和开发技巧  关系型数据库架构如下所示： miniob 架构如下所示：  在 miniob 开发中，可以从 main.cpp 开始打断点进行调试，假如使用 vscode 作为开发工具，我们编写如下的代码以支持调试 launch.json123456789101112131415161718192021222324252627282930313233&amp;#12">
+<meta property="og:description" content="miniob-1miniob 数据库架构和开发技巧关系型数据库架构如下所示： miniob 架构如下所示：  在 miniob 开发中，可以从 main.cpp 开始打断点进行调试，假如使用 vscode 作为开发工具，我们编写如下的代码以支持调试 launch.json123456789101112131415161718192021222324252627282930313233&#123;">
 <meta property="og:locale">
 <meta property="og:image" content="http://example.com/img/404.jpg">
 <meta property="og:image" content="http://example.com/img/404.jpg">
+<meta property="og:image" content="http://example.com/img/404.jpg">
 <meta property="article:published_time" content="2024-12-06T02:19:48.000Z">
-<meta property="article:modified_time" content="2025-04-14T09:05:53.637Z">
+<meta property="article:modified_time" content="2025-04-16T11:02:43.257Z">
 <meta property="article:author" content="Huhualing">
 <meta property="article:tag" content="数据库">
 <meta property="article:tag" content="C&#x2F;C++编程">
@@ -69,7 +70,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-04-14 17:05:53"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-04-16 19:02:43"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
@@ -381,15 +382,118 @@
 </div>
 <div class="trm-card ">
     <article id="article-container" class="trm-publication">
-    <h2 id="miniob-1"><a href="#miniob-1" class="headerlink" title="miniob-1"></a>miniob-1</h2><blockquote>
-<p>miniob 数据库架构和开发技巧</p>
-</blockquote>
-<p>关系型数据库架构如下所示：<br><img src="/2024/12/06/miniob-1/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9E%B6%E6%9E%84.png" class="" title="数据库架构"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
+    <h1 id="miniob-1"><a href="#miniob-1" class="headerlink" title="miniob-1"></a>miniob-1</h1><h2 id="miniob-数据库架构和开发技巧"><a href="#miniob-数据库架构和开发技巧" class="headerlink" title="miniob 数据库架构和开发技巧"></a>miniob 数据库架构和开发技巧</h2><p>关系型数据库架构如下所示：<br><img src="/2024/12/06/miniob-1/%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9E%B6%E6%9E%84.png" class="" title="数据库架构"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'></p>
 <p>miniob 架构如下所示：</p>
 <img src="/2024/12/06/miniob-1/miniob%E6%95%B0%E6%8D%AE%E5%BA%93%E6%9E%B6%E6%9E%84.png" class="" title="miniob数据库架构"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
 <p>在 miniob 开发中，可以从 main.cpp 开始打断点进行调试，假如使用 vscode 作为开发工具，我们编写如下的代码以支持调试</p>
 <p><strong>launch.json</strong><br><figure class="highlight json"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><span class="line"><span class="punctuation">&#123;</span></span><br><span class="line">    <span class="comment">// 使用 IntelliSense 了解相关属性。 </span></span><br><span class="line">    <span class="comment">// 悬停以查看现有属性的描述。</span></span><br><span class="line">    <span class="comment">// 欲了解更多信息，请访问: https://go.microsoft.com/fwlink/?linkid=830387</span></span><br><span class="line">    <span class="attr">&quot;version&quot;</span><span class="punctuation">:</span> <span class="string">&quot;0.2.0&quot;</span><span class="punctuation">,</span></span><br><span class="line">    <span class="attr">&quot;configurations&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">        <span class="punctuation">&#123;</span></span><br><span class="line">            <span class="attr">&quot;name&quot;</span><span class="punctuation">:</span> <span class="string">&quot;(gdb) 启动&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;type&quot;</span><span class="punctuation">:</span> <span class="string">&quot;cppdbg&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;request&quot;</span><span class="punctuation">:</span> <span class="string">&quot;launch&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;program&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;workspaceFolder&#125;/build/bin/observer&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;args&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="string">&quot;-f&quot;</span><span class="punctuation">,</span> <span class="string">&quot;../../etc/observer.ini&quot;</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;stopAtEntry&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;cwd&quot;</span><span class="punctuation">:</span> <span class="string">&quot;$&#123;fileDirname&#125;&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;environment&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span><span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;externalConsole&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">false</span></span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;MIMode&quot;</span><span class="punctuation">:</span> <span class="string">&quot;gdb&quot;</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;setupCommands&quot;</span><span class="punctuation">:</span> <span class="punctuation">[</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span> <span class="string">&quot;为 gdb 启用整齐打印&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-enable-pretty-printing&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span><span class="punctuation">,</span></span><br><span class="line">                <span class="punctuation">&#123;</span></span><br><span class="line">                    <span class="attr">&quot;description&quot;</span><span class="punctuation">:</span>  <span class="string">&quot;将反汇编风格设置为 Intel&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;text&quot;</span><span class="punctuation">:</span> <span class="string">&quot;-gdb-set disassembly-flavor intel&quot;</span><span class="punctuation">,</span></span><br><span class="line">                    <span class="attr">&quot;ignoreFailures&quot;</span><span class="punctuation">:</span> <span class="literal"><span class="keyword">true</span></span></span><br><span class="line">                <span class="punctuation">&#125;</span></span><br><span class="line">            <span class="punctuation">]</span><span class="punctuation">,</span></span><br><span class="line">            <span class="attr">&quot;preLaunchTask&quot;</span><span class="punctuation">:</span> <span class="string">&quot;CMake Build&quot;</span></span><br><span class="line">        <span class="punctuation">&#125;</span></span><br><span class="line">    <span class="punctuation">]</span></span><br><span class="line"><span class="punctuation">&#125;</span></span><br></pre></td></tr></table></figure></p>
 <p><strong>task.json</strong><br><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">    &quot;options&quot;: &#123;</span><br><span class="line">        &quot;cwd&quot;: &quot;$&#123;workspaceFolder&#125;/build&quot;</span><br><span class="line">    &#125;,</span><br><span class="line">    &quot;tasks&quot;: [</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;label&quot;: &quot;cmake&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;cmake&quot;,</span><br><span class="line">            &quot;args&quot;: [</span><br><span class="line">                &quot;-DDEBUG=ON&quot;,</span><br><span class="line">                &quot;..&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;label&quot;: &quot;make&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;make&quot;,</span><br><span class="line">            &quot;args&quot;: [</span><br><span class="line">                &quot;-j&quot;,</span><br><span class="line">                &quot;4&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;label&quot;: &quot;make&quot;,</span><br><span class="line">            &quot;command&quot;: &quot;make&quot;</span><br><span class="line">        &#125;,</span><br><span class="line">        &#123;</span><br><span class="line">            &quot;label&quot;: &quot;CMake Build&quot;,</span><br><span class="line">            &quot;dependsOn&quot;: [</span><br><span class="line">                &quot;cmake&quot;,</span><br><span class="line">                &quot;make&quot;</span><br><span class="line">            ]</span><br><span class="line">        &#125;</span><br><span class="line">    ],</span><br><span class="line">    &quot;version&quot;: &quot;2.0.0&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<h2 id="基于-LSM-Tree-的存储引擎"><a href="#基于-LSM-Tree-的存储引擎" class="headerlink" title="基于 LSM-Tree 的存储引擎"></a>基于 LSM-Tree 的存储引擎</h2><p>LSM-Tree 全称 Log Structured Merge Tree，日志结构化合并树</p>
+<p>B+ 树与 LSM-Tree 对比：</p>
+<ul>
+<li><p>B+ 树</p>
+<ul>
+<li>B+ 树石平衡搜索树的一种，是为了搜索磁盘而诞生的</li>
+<li>一个叶子节点设定为一个磁盘块</li>
+<li>原地更新</li>
+<li>插入、删除、查询的时间复杂度都是 O(logN)</li>
+</ul>
+</li>
+<li><p>LSM-Tree</p>
+<ul>
+<li>核心思想是将离散的随机写请求转化为批量的顺序写请求</li>
+<li>Append Only，无原地更新</li>
+<li>LSM树并没有一种固定死的实现方式，更多的是一种将：“磁盘顺序写” + “多个树(状数据结构)” + “冷热（新老）数据分级” + “定期归并” + “非原地更新”这几种特性统一在一起的思想</li>
+</ul>
+</li>
+</ul>
+<font color=red>
+LSM树的定义：
+
+1. LSM 树是一个横跨内存和磁盘的，包含多颗"子树"的一个森林。
+2. LSM 树分为 Level 0，Level 1，Level 2 ... Level n 多颗子树，其中只有 Level 0 在内存中，其余 Level 1-n 在磁盘中。
+3. 内存中的 Level 0 子树一般采用排序树（红黑树/AVL树）、跳表或者 TreeMap 等这类有序的数据结构，方便后续顺序写磁盘。
+4. 磁盘中的 Level 1-n 子树，本质是数据排好序后顺序写到磁盘上的文件，只是叫做树而已。
+5. 每一层的子树都有一个阈值大小，达到阈值后会进行合并，合并结果写入下一层。
+6. 只有内存中数据允许原地更新，磁盘上数据的变更只允许追加写，不做原地更新。
+
+</font>
+
+<img src="/2024/12/06/miniob-1/LSM-Tree.png" class="" title="LSM-Tree"  data-tag='post-image' loading="lazy" onerror='this.onerror=null;this.src="/img/404.jpg"'>
+<blockquote>
+<p>LSM-Tree 插入</p>
+</blockquote>
+<p>LSM 树的插入较简单，数据直接往内存中的 Level 0 排序树中插入即可，并不关心该数据是否已经在内存或磁盘中存在。该操作复杂度为树高log(n)，n是 Level 0 树的数据量，可见代价很低，能实现极高的写吞吐量。</p>
+<blockquote>
+<p>LSM-Tree 删除</p>
+</blockquote>
+<p>LSM 树的删除操作并不是直接删除数据，而是通过一种叫“墓碑标记”的特殊数据来标识数据的删除。删除操作分为：待删除数据在内存中、待删除数据在磁盘中、该数据根本不存在。</p>
+<ul>
+<li>待删除数据在内存中：将该数据用墓碑标记覆盖</li>
+<li>待删除数据在磁盘中：向内存中的排序树插入一个墓碑标记</li>
+<li>待删除数据不存在：啥也不干</li>
+</ul>
+<p>使用墓碑标记的好处是可以避免频繁的内存分配和释放操作，提高删除操作的效率。例如，当数据在磁盘中的时候，单纯插入一个墓碑标记的耗时肯定比从磁盘查找的耗时要短很多。</p>
+<p>那么，什么时候会真正删除磁盘中的数据呢？</p>
+<p>首先，当内存中的数据达到一定的大小或满足其他条件时，会将其刷写到磁盘上，带有“墓碑标记”的数据也会被写入磁盘。随后，在进行磁盘数据的合并或压缩操作时，带有“墓碑标记”的数据不会被复制到新的，更低一级别的树中，从而实现了数据的逻辑删除。</p>
+<blockquote>
+<p>LSM-Tree 更新</p>
+</blockquote>
+<p>更新操作分为：待删除数据在内存中、待删除数据在磁盘中、该数据根本不存在。</p>
+<ul>
+<li>待删除数据在内存中：将该数据直接用新数据覆盖</li>
+<li>待删除数据在磁盘中：并不会去磁盘中的 Level 1 树上原地更新老的k数据，而是直接将新的数据插入内存中的树中</li>
+<li>待删除数据不存在：啥也不干</li>
+</ul>
+<blockquote>
+<p>LSM-Tree 查询</p>
+</blockquote>
+<p>当查询时，会先从内存中的树开始查找，因为这里的数据是最新的，读取速度也最快。如果在内存中的树中没有找到，则会按照层级顺序依次在磁盘上的各个 Level 中查找。</p>
+<p>在磁盘上每个层级 LSM 树会为每个节点维护一个布隆过滤器，在查找数据时，首先通过布隆过滤器快速判断目标键值是否可能存在于该节点中，如果布隆过滤器判断不存在，则可以直接跳过该节点的查找，减少了不必要的磁盘 I/O 操作。如果布隆过滤器判断存在，会在节点中查找，节点中的数据是有序的，所以这个查找可以通过二分查找进行，但每次二分都是一次磁盘I/O。如果没有布隆过滤器等数据结构，在不存在数据这种极端情况下，需要查询所有的树和盘块，最终返回查找失败。</p>
+<p>同时为了提高读取性能，LSM 树通常也会结合缓存机制。在内存中设置缓存，用于存储最近读取的数据块或键值对。当有读取请求时，首先检查缓存中是否存在目标数据，如果存在，则直接从缓存中返回，避免了磁盘 I/O 操作，大大提高了读取速度。</p>
+<blockquote>
+<p>LSM-Tree 磁盘中多个块的归并：</p>
+</blockquote>
+<p>当磁盘中 Level 1 层达到阈值时，对其包含的两个Block块进行归并，并将归并结果写入 Level 2 层。合并时依旧保持有序，并且带墓碑标记的数据不参加合并。</p>
+<p>综上我们可以给出LSM树的优缺点：</p>
+<ul>
+<li>优：增、删、改操作飞快，写吞吐量极大。</li>
+<li>缺：读操作性能相对被弱化；不擅长区间范围的读操作； 归并操作较耗费资源。</li>
+</ul>
+<p>LSMTree的增、删、改、查四种基本操作的时间复杂度分析如下所示：</p>
+<div class="table-container">
+<table>
+<thead>
+<tr>
+<th style="text-align:center">操作</th>
+<th style="text-align:center">平均代价</th>
+<th style="text-align:center">最坏情况代价</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">插入</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">删除</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">修改</td>
+<td style="text-align:center">1</td>
+<td style="text-align:center">1</td>
+</tr>
+<tr>
+<td style="text-align:center">查找</td>
+<td style="text-align:center">lgN</td>
+<td style="text-align:center">lgN</td>
+</tr>
+</tbody>
+</table>
+</div>
 
 </article>
     
@@ -520,7 +624,7 @@
 				</span>
       </div>
       <div class="trm-post-toc-content">
-        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-2" title="miniob-1"><a rel="nofollow" class="trm-toc-link" href="#miniob-1"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">miniob-1</span></a></li></ol>
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="miniob-1"><a rel="nofollow" class="trm-toc-link" href="#miniob-1"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">miniob-1</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="miniob 数据库架构和开发技巧"><a rel="nofollow" class="trm-toc-link" href="#miniob-数据库架构和开发技巧"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">miniob 数据库架构和开发技巧</span></a></li><li class="trm-toc-item trm-toc-level-2" title="基于 LSM-Tree 的存储引擎"><a rel="nofollow" class="trm-toc-link" href="#基于-LSM-Tree-的存储引擎"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">基于 LSM-Tree 的存储引擎</span></a></li></ol></li></ol>
       </div>
     </div>
 
