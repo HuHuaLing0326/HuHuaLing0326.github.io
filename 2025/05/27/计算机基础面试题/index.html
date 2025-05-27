@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+
+<head>
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+<meta name="x5-fullscreen" content="true">
+<meta name="full-screen" content="yes">
+<meta name="theme-color" content="#317EFB" />
+<meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
+<meta name="description" content="计算机基础面试题 大端序和小端序   通俗点讲就是数据在内存中的存放顺序。  大端序：高字节存储在内存的低地址处，低字节存储在高地址处。例如，对于16进制数0x12345678，大端序在内存中的存储方式是：12345678。 小端序：低字节存储在内存的低地址处，高字节存储在高地址处。对于同样的16进制数0x12345678，小端序在内存中的存储方式是：78563412。   进程、线程和协程">
+<meta property="og:type" content="article">
+<meta property="og:title" content="计算机基础面试题">
+<meta property="og:url" content="http://example.com/2025/05/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="计算机基础面试题 大端序和小端序   通俗点讲就是数据在内存中的存放顺序。  大端序：高字节存储在内存的低地址处，低字节存储在高地址处。例如，对于16进制数0x12345678，大端序在内存中的存储方式是：12345678。 小端序：低字节存储在内存的低地址处，高字节存储在高地址处。对于同样的16进制数0x12345678，小端序在内存中的存储方式是：78563412。   进程、线程和协程">
+<meta property="og:locale">
+<meta property="article:published_time" content="2025-05-27T04:56:25.000Z">
+<meta property="article:modified_time" content="2025-05-27T05:06:30.951Z">
+<meta property="article:author" content="Huhualing">
+<meta name="twitter:card" content="summary">
+
+
+<title >计算机基础面试题</title>
+
+<!-- Favicon -->
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='16x16' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='icon' type='image/png' sizes='32x32' ></link>
+
+
+    <link href='/biancheng.png?v=2.2.2' rel='apple-touch-icon' sizes='180x180' ></link>
+
+
+    <link href='/site.webmanifest' rel='manifest' ></link>
+
+
+<!-- Plugin -->
+
+
+
+
+    
+<link rel="stylesheet" href="/css/plugins/bootstrap.row.css">
+
+    
+<link rel="stylesheet" href="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.css">
+
+    
+    
+
+
+
+
+<!-- Icon -->
+
+    
+<link rel="stylesheet" href="/css/plugins/font-awesome.min.css">
+
+
+
+
+<!-- Variable -->
+<script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-05-27 13:06:30"};</script>
+
+<!-- Theme mode css -->
+<link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
+<script>
+    let defaultMode = ASYNC_CONFIG.theme.default !=='auto' ?  ASYNC_CONFIG.theme.default : (window.matchMedia("(prefers-color-scheme: light)").matches ? 'style-light' : 'style-dark')
+    let catchMode = localStorage.getItem('theme-mode') || defaultMode;
+    let type = catchMode === 'style-dark' ? 'add' : 'remove';
+    document.documentElement.classList[type]('dark')
+</script>
+
+<!-- CDN -->
+
+
+    
+    
+
+
+
+<!-- Site Analytics -->
+
+ 
+<meta name="generator" content="Hexo 7.2.0"></head>
+
+<body>
+
+  <!-- app wrapper -->
+  <div class="trm-app-frame">
+
+    <!-- page preloader -->
+    <div class="trm-preloader">
+    <div class="trm-holder">
+        <div class="preloader">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+</div>
+    <!-- page preloader end -->
+
+    <!-- change mode preloader -->
+    <div class="trm-mode-swich-animation-frame">
+    <div class="trm-mode-swich-animation">
+        <i class="i-sun"><i class="iconfont far fa-sun"></i></i>
+        <div class="trm-horizon"></div>
+        <i class="i-moon"><i class="iconfont far fa-moon"></i></i>
+    </div>
+</div>
+    <!-- change mode preloader end -->
+
+      <!-- scroll container -->
+      <div id="trm-dynamic-content" class="trm-swup-animation">
+        <div id="trm-scroll-container" class="trm-scroll-container" style="opacity: 0">
+            <!-- top bar -->
+            <header class="trm-top-bar">
+	<div class="container">
+		<div class="trm-left-side">
+			<!-- logo -->
+<a href="/" class="trm-logo-frame trm-anima-link">
+    
+        <img alt="logo" src="/biancheng.png">
+    
+    
+        <div class="trm-logo-text">
+            护花<span>铃</span>
+        </div>
+    
+</a>
+<!-- logo end -->
+		</div>
+		<div class="trm-right-side">
+			<!-- menu -->
+<div class="trm-menu">
+    <nav>
+        <ul>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/" target="">
+                    首页
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/categories/" target="">
+                    分类
+                </a>
+                
+            </li>
+            
+            <li class="menu-item-has-children ">
+                <a  href="/my-resume/" target="">
+                    个人简历
+                </a>
+                
+            </li>
+            
+        </ul>
+    </nav>
+</div>
+<!-- menu end -->
+			
+    <!-- mode switcher place -->
+    <div class="trm-mode-switcher-place">
+        <div class="trm-mode-switcher">
+            <i class="iconfont far fa-sun"></i>
+            <input class="tgl tgl-light" id="trm-swich" type="checkbox">
+            <label class="trm-swich" for="trm-swich"></label>
+            <i class="iconfont far fa-moon"></i>
+        </div>
+    </div>
+    <!-- mode switcher place end -->
+
+			
+		</div>
+		<div class="trm-menu-btn">
+			<span></span>
+		</div>
+	</div>
+</header>
+            <!-- top bar end -->
+
+            <!-- body -->
+            
+<div class="trm-content-start">
+    <!-- banner -->
+    <div class="trm-banner">
+    
+    <!-- banner cover -->
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
+    <!-- banner cover end -->
+    
+
+    <!-- banner content -->
+    <div class="trm-banner-content trm-overlay">
+        <div class="container">
+            <div class="row">
+                
+                <div class="col-lg-4"></div>
+                
+                <div class="col-lg-8">
+
+                    <!-- banner title -->
+                    <div class="trm-banner-text ">
+                        <div class="trm-label trm-mb-20">
+                            NEWS LETTER
+                        </div>
+                        <h1 class="trm-mb-30 trm-hsmb-font">
+                            计算机基础面试题
+                        </h1>
+
+                        
+                            <ul class="trm-breadcrumbs trm-label">
+                                <li>
+                                    <a href="/" class="trm-anima-link">Home</a>
+                                </li>
+                                <li>
+                                    <span>
+                                        2025
+                                    </span>
+                                </li>
+                            </ul>
+                        
+                    </div>
+                    <!-- banner title end -->
+
+                    <!-- scroll hint -->
+                    <span id="scroll-triger" class="trm-scroll-hint-frame">
+                        <div class="trm-scroll-hint"></div>
+                        <span class="trm-label">Scroll down</span>
+                    </span>
+                    <!-- scroll hint end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- banner content end -->
+</div>
+    <!-- banner end -->
+    <div class="container">
+        <div class="row">
+            
+                <div class="trm-page-sidebar col-lg-4 hidden-sm">
+                    <!-- main card -->
+                    <div class="trm-main-card-frame trm-sidebar">
+    <div class="trm-main-card"> 
+        <!-- card header -->
+<div class="trm-mc-header">
+    <div class="trm-avatar-frame trm-mb-20">
+        <img alt="Avatar" class="trm-avatar" src="/./img/ningguang4.jpeg">
+    </div>
+    <h5 class="trm-name trm-mb-15">
+        护花铃
+    </h5>
+    
+        <div class="trm-label">
+            护花铃的编程与足球小站
+            <span class="trm-typed-text">
+                <!-- Words for theme.user.typedText -->
+            </span>
+        </div>
+    
+</div>
+<!-- card header end -->
+        <!-- sidebar social -->
+
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<div class="trm-social">
+    
+        <a href="https://github.com/HuHuaLing0326" title="github" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-github"></i>
+        </a>
+    
+        <a href="https://gitee.com/flower-protection-bell" title="gitee" rel="nofollow" target="_blank">
+            <i class="iconfont fab fa-gitlab"></i>
+        </a>
+    
+</div>
+
+<!-- sidebar social end -->
+        <!-- info -->
+<div class="trm-divider trm-mb-40 trm-mt-40"></div>
+<ul class="trm-table trm-mb-20">
+    
+        <li>
+            <div class="trm-label">
+                职业:
+            </div>
+            <div class="trm-label trm-label-light">
+                学生
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向1:
+            </div>
+            <div class="trm-label trm-label-light">
+                隐私保护
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向2:
+            </div>
+            <div class="trm-label trm-label-light">
+                C++程序设计
+            </div>
+        </li>
+    
+        <li>
+            <div class="trm-label">
+                研究方向3:
+            </div>
+            <div class="trm-label trm-label-light">
+                足球运动
+            </div>
+        </li>
+    
+</ul>
+<!-- info end -->
+
+        
+    <div class="trm-divider trm-mb-40 trm-mt-40"></div>
+    <!-- action button -->
+    <div class="text-center">
+        <a href="mailto:huhualing0326@gmail.com" class="trm-btn">
+            联系我
+            <i class="iconfont far fa-envelope"></i>
+        </a>
+    </div>
+    <!-- action button end -->
+
+    </div>
+</div>
+                    <!-- main card end -->
+                </div>
+            
+            <div class="trm-page-content col-lg-8">
+                <div id="trm-content" class="trm-content">
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            05/27
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            12:56
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            Huhualing
+        </div>
+    </div>
+</div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="计算机基础面试题"><a href="#计算机基础面试题" class="headerlink" title="计算机基础面试题"></a>计算机基础面试题</h1><blockquote>
+<p>大端序和小端序 </p>
+</blockquote>
+<p>通俗点讲就是数据在内存中的存放顺序。</p>
+<ol>
+<li>大端序：高字节存储在内存的低地址处，低字节存储在高地址处。例如，对于16进制数0x12345678，大端序在内存中的存储方式是：12345678。</li>
+<li>小端序：低字节存储在内存的低地址处，高字节存储在高地址处。对于同样的16进制数0x12345678，小端序在内存中的存储方式是：78563412。</li>
+</ol>
+<blockquote>
+<p>进程、线程和协程</p>
+</blockquote>
+<ul>
+<li>进程（Process）是程序的一次动态执行过程，是系统进行资源分配和调度的基本单位。每个进程都有自己独立的内存空间、代码段、数据段、堆栈等资源。</li>
+<li>线程（Thread）是进程内的一个执行单元，是 CPU 调度和分派的基本单位。一个进程可以包含多个线程，这些线程共享进程的大部分资源，如内存空间、文件句柄等，但每个线程有自己的堆栈和寄存器等资源。</li>
+<li>协程（Coroutines）是一种用户态的轻量级线程，它允许程序在执行过程中暂停并在之后从暂停处继续执行。协程的调度是由程序员自己控制的，而不是由操作系统内核控制。</li>
+</ul>
+<blockquote>
+<p>进程、线程和协程的调度</p>
+</blockquote>
+<ul>
+<li>进程由操作系统内核进行调度，每个进程都有自己独立的内存空间、代码段、数据段、堆栈等资源，资源占用较大，进程的并发能力相对较低，因为进程之间的切换需要消耗较多的时间和资源，进程之间的通信需要通过进程间通信（IPC）机制，如管道、消息队列、共享内存等，适用于需要独立运行的程序或需要进行进程间通信的场景。</li>
+<li>线程既可以由操作系统内核进行调度（内核级线程），也可以由用户态的线程库进行调度（用户级线程），同一个进程内的多个线程共享大部分资源，如内存空间、文件句柄等，但每个线程有自己的堆栈和寄存器等资源，资源占用相对进程较小，线程的并发能力比进程高，因为线程之间的切换相对进程来说更快、开销更小，线程之间的通信可以直接通过共享内存进行，因为它们共享同一个进程的内存空间，适用于多线程并发执行的场景，如服务器端处理多个客户端请求等。</li>
+<li>协程由程序员自己进行调度，通常使用协程库来实现，协程的资源占用非常小，通常只有一个栈帧和一些寄存器等资源，协程的并发能力最高，可以在单线程内实现大量的协程并发执行，协程之间的通信通常通过 yield 和 send 等操作来进行数据传递，适用于高并发场景，如网络爬虫、异步 I/O 操作等，可以提高程序的效率和响应速度。</li>
+</ul>
+<blockquote>
+<p>线程崩溃进程一定崩溃吗？</p>
+</blockquote>
+<ul>
+<li>一般来说如果线程是因为非法访问内存引起的崩溃，那么进程肯定会崩溃。这主要是因为在进程中，各个线程的地址空间是共享的，既然是共享，那么某个线程对地址的非法访问就会导致内存的不确定性，进而可能会影响到其他线程，这种操作是危险的，操作系统会认为这很可能导致一系列严重的后果，于是干脆让整个进程崩溃。</li>
+</ul>
+<blockquote>
+<p>进程间通信方式</p>
+</blockquote>
+<ul>
+<li>管道：其实，所谓的管道，就是内核里面的一串缓存。从管道的一段写入的数据，实际上是缓存在内核中的，另一端读取，也就是从内核中读取这段数据。另外，管道传输的数据是无格式的流且大小受限。</li>
+<li>消息队列：消息队列是保存在内核中的消息链表，在发送数据时，会分成一个-一个独立的数据单元，也就是消息体(数据块)，消息体是用户自定义的数据类型，消息的发送方和接收方要约定好消息体的数据类型，所以每个消息体都是固定大小的存储块，不像管道是无格式的字节流数据。如果进程从消息队列中读取了消息体，内核就会把这个消息体删除。</li>
+<li>共享内存：共享内存的机制，就是拿出一块虚拟地址空间来，映射到相同的物理内存中。这样这个进程写入的东西，另外一个进程马上就能看到，大大提高了进程间通信的速度。</li>
+<li>Socket：前面提到的管道、消息队列、共享内存、信号量和信号都是在同一台主机上进行进程间通信，那要想跨网络与不同主机上的进程之间通信，就需要 Socket 通信了。</li>
+</ul>
+<blockquote>
+<p>死锁</p>
+</blockquote>
+<p>当两个线程为了保护两个不同的共享资源而使用了两个互斥锁，那么这两个互斥锁应用不当的时候，可能会造成两个线程都在等待对方释放锁，在没有外力的作用下，这些线程会一直相互等待，就没办法继续运行，这种情况就是发生了死锁。</p>
+<ul>
+<li>互斥条件是指多个线程不能同时使用同一个资源。如果线程 A已经持有的资源，不能再同时被线程B持有，如果线程 B请求获取线程 A 已经占用的资源，那线程 B只能等待，直到线程A释放了资源。</li>
+<li>持有并等待条件是指，当线程A已经持有了资源 1，又想申请资源 2，而资源2已经被线程C持有了，所以线程 A 就会处于等待状态，但是线程 A 在等待资源2 的同时并不会释放自己已经持有的资源 1。</li>
+<li>不可剥夺条件是指，当线程已经持有了资源，在自己使用完之前不能被其他线程获取，线程B如果也想使用此资源，则只能在线程 A 使用完并释放后才能获取。</li>
+<li>环路等待条件指的是，在死锁发生的时候，两个线程获取资源的顺序构成了环形链。比如，线程A已经持有资源 2，而想请求资源 1，线程B已经获取了资源 1，而想请求资源 2，这就形成资源请求等待的环形图。</li>
+</ul>
+<blockquote>
+<p>互斥锁和自旋锁</p>
+</blockquote>
+<p>互斥锁加锁失败后，线程会释放 CPU，给其他线程;自旋锁加锁失败后，线程会忙等待，直到它拿到锁;</p>
+<blockquote>
+<p>乐观锁和悲观锁</p>
+</blockquote>
+<ul>
+<li>悲观锁认为多线程同时修改共享资源的概率比较高，于是很容易出现冲突，所以访问共享资源前，先要上锁。</li>
+<li>乐观锁做事比较乐观，它假定冲突的概率很低，它的工作方式是:先修改完共享资源，再验证这段时间内有没有发生冲突，如果没有其他线程在修改资源，那么操作完成，如果发现有其他线程已经修改过这个资源，就放弃本次操作。实际上，我们常见的 SVN 和 Git 也是用了乐观锁的思想，先让用户编辑代码，然后提交的时候，通过版本号来判断是否产生了冲突，发生了冲突的地方，需要我们自己修改后，再重新提交。</li>
+</ul>
+<blockquote>
+<p>LRU缓存置换和LFU缓存置换算法</p>
+</blockquote>
+<ul>
+<li>LRU最近最少使用 ：基于数据的历史访问记录，淘汰最长时间未被访问的数据。其核心思想是认为过去一段时间内最少被使用的数据，在未来被使用的可能性也最小。维护一个记录访问时间或使用顺序的数据结构，如链表或哈希表结合链表。每当有数据被访问，就将其移到表示最近使用的位置。当需要淘汰数据时，从链表尾部取出数据，即最长时间未被访问的数据。</li>
+<li>LFU最不经常使用：基于数据的使用频率来淘汰数据，淘汰那些被访问次数最少的数据。它认为过去被访问次数越少的数据，在未来被访问的可能性也越小。需要记录每个数据的访问次数。在数据被访问时，增加其访问计数。当缓存满时，找出访问次数最少的数据进行淘汰。为了提高效率，通常会使用优先队列等数据结构来快速找到访问次数最少的数据。</li>
+<li>LRU-K的主要目的是为了解决LRU算法“缓存污染”的问题，其核心思想是将“最近使用过1次”的判断标准扩展为“最近使用过K次”。也就是说没有到达K次访问的数据并不会被缓存，这也意味着需要对于缓存数据的访问次数进行计数，并且访问记录不能无限记录，也需要使用替换算法进行替换。当需要淘汰数据时，LRU-K会淘汰第K次访问时间距当前时间最大的数据。当访问次数达到K次后，将数据索引从历史队列移到缓存队列中（缓存队列时间降序）；缓存数据队列中被访问后重新排序；需要淘汰数据时，淘汰缓存队列中排在末尾的数据。</li>
+</ul>
+<blockquote>
+<p>物理内存和虚拟内存</p>
+</blockquote>
+<ul>
+<li>物理内存是指计算机硬件中实际存在的内存。</li>
+<li>虚拟内存是由操作系统提供的一种内存管理技术，它通过将硬盘空间的一部分模拟成内存来使用。虚拟内存的大小通常可以由用户或操作系统进行设置，它为每个进程提供了一个独立的、连续的地址空间，这个地址空间可能远远大于计算机实际的物理内存大小。</li>
+</ul>
+<blockquote>
+<p>TCP 三次握手过程是怎样的?</p>
+</blockquote>
+<ol>
+<li>一开始，客户端和服务端都处于CLOSE状态。先是服务端主动监听某个端口，处于LISTEN状态</li>
+<li>客户端会随机初始化序号(client_isn)，将此序号置于 TCP 首部的「序号」字段中，同时把 SYN标志位置为 1 ，表示 SYN 报文。接着把第一个 SYN 报文发送给服务端，表示向服务端发起连接,该报文不包含应用层数据，之后客户端处于SYN-SENT 状态。</li>
+<li>服务端收到客户端的 SYN 报文后，首先服务端也随机初始化自己的序号(server_isn)，将此序号填入 TCP 首部的「序号」字段中，其次把 TCP 首部的「确认应答号」字段填入 client_isn+1,接着把 SYN 和 ACK标志位置为 1。最后把该报文发给客户端，该报文也不包含应用层数据，之后服务端处于 SYN-RCVD 状态。</li>
+<li>客户端收到服务端报文后，还要向服务端回应最后一个应答报文，首先该应答报文 TCP 首部 ACK 标志位置为 1，其次「确认应答号」字段填入server_isn+1，最后把报文发送给服务端，这次报文可以携带客户到服务端的数据，之后客户端处于 ESTABLISHED 状态</li>
+</ol>
+<p>第三次握手可以携带数据，前两次不行。</p>
+<blockquote>
+<p>为什么TCP 需要三次握手？</p>
+</blockquote>
+<ul>
+<li>三次握手才可以阻止重复历史连接的初始化(主要原因)：主要是因为在两次握手的情况下，服务端没有中间状态给客户端来阻止历史连接，导致服务端可能建立一个历史连接，造成资源浪费。</li>
+<li>三次握手才可以同步双方的初始序列号：当客户端发送携带「初始序列号」的 SYN 报文的时候，需要服务端回一个 ACK应答报文，表示客户端的 SYN 报文已被服务端成功接收</li>
+<li>三次握手才可以避免资源浪费：如果只有「两次握手」，当客户端发生的 SYN报文在网络中阻塞，客户端没有接收到 ACK报文，就会重新发送 SYN，由于没有第三次握手，服务端不清楚客户端是否收到了自己回复的服务端每收到一个 SYN就只能先主动建立一个连接。重复发送多次 SYN 报文，那么服务端在收到请求后就会建立多个冗余的无效链接，造成不必要的资源浪费。</li>
+</ul>
+<blockquote>
+<p>TCP 四次挥手过程是怎样的?</p>
+</blockquote>
+<ol>
+<li>客户端打算关闭连接，此时会发送一个TCP 首部 FIN 标志位被置为 1的报文，也即 FIN 报文，之后客户端进入 FIN_WAIT _1 状态。</li>
+<li>服务端收到该报文后，就向客户端发送 ACK应答报文，接着服务端进入 CLOSE_WAIT 状态。</li>
+<li>客户端收到服务端的 ACK 应答报文后，之后进入FIN_WAIT2 状态。<br>等待服务端处理完数据后，也向客户端发送FIN报文，之后服务端进入 LAST_ACK 状态。</li>
+<li>客户端收到服务端的 FIN 报文后，回一个ACK应答报文，之后进入TIME_WAIT 状态</li>
+<li>服务端收到了 ACK应答报文后，就进入了 CLOSE状态，至此服务端已经完成连接的关闭。</li>
+</ol>
+<blockquote>
+<p>为什么挥手需要四次?</p>
+</blockquote>
+<ul>
+<li>关闭连接时，客户端向服务端发送 FIN时，仅仅表示客户端不再发送数据了但是还能接收数据。</li>
+<li>服务端收到客户端的 FIN 报文时，先回一个 ACK应答报文，而服务端可能还有数据需要处理和发送，等服务端不再发送数据时，才发送 FIN报文给客户端来表示同意现在关闭连接。</li>
+<li>从上面过程可知，服务端通常需要等待完成数据的发送和处理，所以服务端的ACK和FIN一般都会分开发送，因此是需要四次挥手。</li>
+<li>当被动关闭方(上图的服务端)在 TCP 挥手过程中,「没有数据要发送」并且「开启了 TCP 延迟确认机制」，那么第二和第三次挥手就会合并传输，这样就出现了三次挥手。</li>
+</ul>
+<blockquote>
+<p>linux有哪几种基本设备类型</p>
+</blockquote>
+<ul>
+<li>字符设备是一种可以按字符（字节）进行数据读写的设备。这意味着数据以一个字符一个字符的形式进行传输，如键盘、鼠标、串行端口、摄像头。字符设备的特点是支持序列化的数据流，适用于需要逐字节处理数据的场合<ul>
+<li>顺序访问：数据以连续流的形式进行读写。</li>
+<li>非缓存：操作直接影响设备，没有中间缓存。</li>
+<li>适用于文本数据或小量数据的快速传输。</li>
+</ul>
+</li>
+<li>块设备允许存储和检索固定大小的数据块，如硬盘、SSD或USB驱动器。它们是构建文件系统的基石，可以随机访问存储在设备上的任何数据块<ul>
+<li>随机访问：可以直接访问任何数据块，不需要按顺序。</li>
+<li>缓存操作：通常操作系统会缓存块设备操作，提高数据处理效率。</li>
+<li>适用于大量数据的存储和检索。</li>
+</ul>
+</li>
+<li>网络设备负责处理数据包的发送和接收，如网卡或虚拟网络接口。这类设备使得计算机能够加入网络，与其他计算机或设备通信</li>
+<li>伪设备不对应任何物理硬件，它们完全在软件中实现，如 /dev/null 或 /dev/random。这些设备提供了操作系统的特殊功能</li>
+</ul>
+<blockquote>
+<p>调度算法有哪些，有了解吗</p>
+</blockquote>
+<ul>
+<li>先来先服务（First-Come-First-Served，FCFS）是最基本的调度算法，它按照进程到达的顺序进行调度。这种算法实现简单，但可能导致短进程需要等待长进程执行完毕，从而增加了等待时间和响应时间1。</li>
+<li>短作业优先（Shortest-Job-First，SJF）算法选择预计执行时间最短的进程进行调度。这种算法可以提高系统的吞吐量，但可能导致长作业饥饿，即长时间得不到调度2。</li>
+<li>优先级调度算法根据进程的优先级进行调度。系统总是选择优先级最高的进程执行。优先级可以是静态的，也可以是动态的，动态优先级会随着时间的推移或其他因素而变化。这种算法可能会导致低优先级进程饥饿1。</li>
+<li>最高响应比优先（Highest Response Ratio Next，HRRN）算法结合了FCFS和SJF的优点，通过计算响应比来进行调度。响应比是等待时间和服务时间的比值，这种算法既考虑了进程的等待时间，也考虑了服务时间2。</li>
+<li>轮转（Round Robin，RR）算法为每个进程分配一个固定的时间片，然后按顺序轮流执行。这种算法适用于分时系统，可以提供较好的响应时间，但如果时间片设置不当，可能会导致频繁的上下文切换，增加系统开销。</li>
+</ul>
+<blockquote>
+<p>kill 与 kill -9 的区别</p>
+</blockquote>
+<ul>
+<li>kill命令默认的信号就是 15，也就是 kill -15 ,被称为优雅的退出。当使用 kill -15 时，系统会发送一个 SIGTERM 的信号给对应的程序。当程序接收到该信号后，具体要如何处理是自己可以决定的。这时候，应用程序可以选择：<ul>
+<li>1、立即停止程序</li>
+<li>2、释放响应资源后停止程序</li>
+<li>3、忽略该信号，继续执行程序。</li>
+</ul>
+</li>
+<li>因为kill -15信号只是通知对应的进程要进行”安全、干净的退出”，程序接到信号之后，退出前一般会进行一些”准备工作”。</li>
+<li>kill -9就相对强硬一点，系统会发出SIGKILL信号，他要求接收到该信号的程序应该立即结束运行，不能被阻塞或者忽略。</li>
+</ul>
+
+</article>
+    
+    
+
+</div>
+<div class="trm-post-next-prev row">
+    <div class="col-lg-12">
+        <!-- title -->
+        <h5 class="trm-title-with-divider">
+            其他文章
+            <span data-number="02"></span>
+        </h5>
+    </div>
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2025/05/27/CPP%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="trm-cover-frame trm-anima-link">
+            
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    未分类
+                </a>
+            </div>
+            <h5>
+                <a href="/2025/05/27/CPP%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="trm-anima-link">
+                    CPP基础面试题
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/05/27</li>
+                <li>12:33</li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+    
+</div>
+
+    
+
+
+
+                    <div class="trm-divider footer-divider"></div>
+
+                    <!-- footer -->
+                    <footer class="trm-footer-card trm-scroll-animation">
+
+    
+
+    
+
+    
+        <div class="trm-footer-item">
+            <span>
+                由 <a href="https://hexo.io" target="_blank" rel="noopener">Hexo</a> 驱动 v7.2.0
+            </span>
+            <span class="footer-separator" data-separator=" | "></span>
+            <span> 
+                主题 - 
+                <a rel="noopener" href='https://github.com/MaLuns/hexo-theme-async' target='_blank'>Async</a>
+                v2.2.2
+            </span>
+        </div>
+      
+
+     
+
+     
+</footer>
+                    <!-- footer end -->
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+            <!-- body end -->
+
+            
+
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="计算机基础面试题"><a rel="nofollow" class="trm-toc-link" href="#计算机基础面试题"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">计算机基础面试题</span></a></li></ol>
+      </div>
+    </div>
+
+            
+<div class="trm-fixed-container">
+    
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
+    
+    
+    <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
+        <i class="iconfont fas fa-arrow-up"></i>
+    </div>
+</div>
+        </div>
+      </div>
+      <!-- scroll container end -->
+  </div>
+  <!-- app wrapper end -->
+
+  
+  <!-- Plugin -->
+
+
+
+
+    
+    
+<script src="https://npm.elemecdn.com/@fancyapps/ui@4.0/dist/fancybox.umd.js"></script>
+
+    
+
+    
+        <script src="/js/plugins/typing.js?v=2.2.2"></script>
+    
+
+    
+
+    <!-- 数学公式 -->
+    
+
+    <!-- 评论插件 -->
+    
+        
+
+        
+    
+
+		
+
+
+
+
+    <!-- Service Worker -->
+    
+    <!-- baidu push -->
+    
+
+
+<script id="async-script" src="/js/main.js?v=2.2.2"></script>
+
+<!-- CDN -->
+
+
+    
+
+    
+
+    
+
+
+
+<script type="text/x-mathjax-config">
+    MathJax.Hub.Config({
+        tex2jax: {
+            inlineMath: [ ["$","$"], ["\\(","\\)"] ],
+            skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code'],
+            processEscapes: true
+        }
+    });
+    MathJax.Hub.Queue(function() {
+        var all = MathJax.Hub.getAllJax();
+        for (var i = 0; i < all.length; ++i)
+            all[i].SourceElement().parentNode.className += ' has-jax';
+    });
+</script>
+<script src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script>
+</body>
+
+</html>
