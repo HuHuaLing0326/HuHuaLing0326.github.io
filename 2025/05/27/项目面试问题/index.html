@@ -7,16 +7,20 @@
 <meta name="full-screen" content="yes">
 <meta name="theme-color" content="#317EFB" />
 <meta content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=0" name="viewport">
-<meta property="og:type" content="website">
-<meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://example.com/archives/page/3/index.html">
+<meta name="description" content="项目面试问题MyMuduo 网络库该项目是本人前段时间出于个人学习、找工作的目的用C++11重构了muduo库中核心的Reactor架构。项目采用主从 Reactor 模型，MainReactor 只负责监听派发新连接，在 MainReactor 中通过 Acceptor 接收新连接并轮询派发给 SubReactor，SubReactor 负责此连接的读写事件。 具体细分有以下几个模块：  网络相">
+<meta property="og:type" content="article">
+<meta property="og:title" content="项目面试问题">
+<meta property="og:url" content="http://example.com/2025/05/27/%E9%A1%B9%E7%9B%AE%E9%9D%A2%E8%AF%95%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="项目面试问题MyMuduo 网络库该项目是本人前段时间出于个人学习、找工作的目的用C++11重构了muduo库中核心的Reactor架构。项目采用主从 Reactor 模型，MainReactor 只负责监听派发新连接，在 MainReactor 中通过 Acceptor 接收新连接并轮询派发给 SubReactor，SubReactor 负责此连接的读写事件。 具体细分有以下几个模块：  网络相">
 <meta property="og:locale">
+<meta property="article:published_time" content="2025-05-27T05:07:59.000Z">
+<meta property="article:modified_time" content="2025-05-27T05:13:34.706Z">
 <meta property="article:author" content="Huhualing">
 <meta name="twitter:card" content="summary">
 
 
-<title >Hexo</title>
+<title >项目面试问题</title>
 
 <!-- Favicon -->
 
@@ -59,7 +63,7 @@
 
 <!-- Variable -->
 <script>window.ASYNC_CONFIG = {"hostname":"example.com","author":"Huhualing","root":"/","typed_text":["不定期本人更新在计算机科学以及足球领域的见闻感想，欢迎来玩。"],"theme_version":"2.2.2","theme":{"switch":true,"default":"style-light"},"favicon":{"logo":"biancheng.png","icon16":"biancheng.png","icon32":"biancheng.png","apple_touch_icon":"biancheng.png","webmanifest":"/site.webmanifest","visibilitychange":true,"hidden":"failure.ico","show_text":"(/≧▽≦/)咦！又好了！","hide_text":"(●—●)喔哟，崩溃啦！"},"i18n":{"placeholder":"搜索文章...","empty":"找不到您查询的内容: ${query}","hits":"找到 ${hits} 条结果","hits_time":"找到 ${hits} 条结果（用时 ${time} 毫秒）","author":"本文作者：","copyright_link":"本文链接：","copyright_license_title":"版权声明：","copyright_license_content":"本博客所有文章除特别声明外，均默认采用 undefined 许可协议。","copy_success":"复制成功","copy_failure":"复制失败","open_read_mode":"进入阅读模式","exit_read_mode":"退出阅读模式","notice_outdate_message":"距离上次更新已经 undefined 天了, 文章内容可能已经过时。","sticky":"置顶","just":"刚刚","min":"分钟前","hour":"小时前","day":"天前","month":"个月前"},"swup":false,"plugin":{"flickr_justified_gallery":"https://npm.elemecdn.com/flickr-justified-gallery@latest/dist/fjGallery.min.js"},"icons":{"sun":"far fa-sun","moon":"far fa-moon","play":"fas fa-play","email":"far fa-envelope","next":"fas fa-arrow-right","calendar":"far fa-calendar-alt","clock":"far fa-clock","user":"far fa-user","back_top":"fas fa-arrow-up","close":"fas fa-times","search":"fas fa-search","reward":"fas fa-hand-holding-usd","user_tag":"fas fa-user-alt","toc_tag":"fas fa-th-list","read":"fas fa-book-reader","arrows":"fas fa-arrows-alt-h","double_arrows":"fas fa-angle-double-down","copy":"fas fa-copy"},"icontype":"font","highlight":{"plugin":"highlighjs","theme":true,"copy":true,"lang":true,"title":"default","height_limit":false},"toc":{"post_title":false},"live_time":{"start_time":"","prefix":"博客已萌萌哒运行 undefined 天"},"danmu":{"enable":false,"el":".trm-banner"}};</script>
-<script id="async-page-config">window.PAGE_CONFIG = {"isPost":false,"isHome":false,"postUpdate":"2025-05-27 13:13:39"};</script>
+<script id="async-page-config">window.PAGE_CONFIG = {"isPost":true,"isHome":false,"postUpdate":"2025-05-27 13:13:34"};</script>
 
 <!-- Theme mode css -->
 <link data-swup-theme rel="stylesheet" href="/css/index.css?v=2.2.2" id="trm-switch-style">
@@ -196,7 +200,7 @@
     <div class="trm-banner">
     
     <!-- banner cover -->
-    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/./img/ningguang2.jpeg">
+    <img style="object-position:top;object-fit:cover;" alt="banner" class="trm-banner-cover" src="/img/banner.png">
     <!-- banner cover end -->
     
 
@@ -212,10 +216,10 @@
                     <!-- banner title -->
                     <div class="trm-banner-text ">
                         <div class="trm-label trm-mb-20">
-                            THE ARTICLE ARCHIVE
+                            NEWS LETTER
                         </div>
                         <h1 class="trm-mb-30 trm-hsmb-font">
-                            云间连下榻，<br>天上接行杯。
+                            项目面试问题
                         </h1>
 
                         
@@ -225,7 +229,7 @@
                                 </li>
                                 <li>
                                     <span>
-                                        archives
+                                        2025
                                     </span>
                                 </li>
                             </ul>
@@ -349,125 +353,139 @@
             
             <div class="trm-page-content col-lg-8">
                 <div id="trm-content" class="trm-content">
-                    <div class="row">
-    <div class="col-lg-12">
-        <div class="trm-card">
-            <div style="padding: 0 20px;">
-                
-                    <ul class="trm-tag-list"><li class="trm-tag-list-item"><a class="archive-list-link" href="/archives/2025/">2025</a><span class="archive-list-count">（9）</span></li><li class="trm-tag-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">（14）</span></li></ul>
-                
-            </div>
+                    <div class="trm-post-info row hidden-sm">
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-calendar-alt trm-icon"></i><br>
+            05/27
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-clock trm-icon"></i><br>
+            13:07
+        </div>
+    </div>
+    <div class="col-sm-4">
+        <div id="post-author" class="trm-card trm-label trm-label-light text-center">
+            <i class="iconfont far fa-user trm-icon"></i><br>
+            Huhualing
         </div>
     </div>
 </div>
+<div class="trm-card ">
+    <article id="article-container" class="trm-publication">
+    <h1 id="项目面试问题"><a href="#项目面试问题" class="headerlink" title="项目面试问题"></a>项目面试问题</h1><h2 id="MyMuduo-网络库"><a href="#MyMuduo-网络库" class="headerlink" title="MyMuduo 网络库"></a>MyMuduo 网络库</h2><p>该项目是本人前段时间出于个人学习、找工作的目的用C++11重构了muduo库中核心的Reactor架构。项目采用主从 Reactor 模型，MainReactor 只负责监听派发新连接，在 MainReactor 中通过 Acceptor 接收新连接并轮询派发给 SubReactor，SubReactor 负责此连接的读写事件。</p>
+<p>具体细分有以下几个模块：</p>
+<ul>
+<li>网络相关模块：如Socket、InetAddress、TcpConnection、Acceptor、TcpServer等</li>
+<li>事件循环相关模块：如EventLoop、Channel、Poller、EPollPoller等</li>
+<li>线程相关模块：如Thread、EventLoopThread、EventLoopThreadPool等</li>
+<li>基础模块：如用户态缓冲区Buffer、时间戳Timestamp、日志类Logger等</li>
+</ul>
+<blockquote>
+<p>什么是I/O多路复用</p>
+</blockquote>
+<p>I/O 多路复用就是通过一个进程可以监视多个描述符，一旦某个描述符就绪（一般是读就绪或者写就绪），能够通知程序进行相应的读写操作的一种机制。IO 多路复用技术的最大优势是系统开销小，系统不必创建进程或线程，也不必维护这些进程，从而大大减小了系统的开销。</p>
+<blockquote>
+<p>Select</p>
+</blockquote>
+<p>select 函数监视的文件描述符分三类，分别是 writefds、readfds 和 exceptfds。select 调用过程如下：</p>
+<ol>
+<li>用户进程需要监控某些资源 fds，在调用 select 函数后会阻塞，操作系统会将用户线程加入这些资源的等待队列中。</li>
+<li>直到有描述符就绪（有数据可读、可写或有 except）或超时（timeout 指定等待时间，如果立即返回设为 null 即可），函数返回。</li>
+<li>select 函数返回后，中断程序唤起用户线程。用户可以遍历 fds，通过 FD_ISSET 判断具体哪个 fd 收到数据，并做出相应处理。</li>
+</ol>
+<p>select 函数优点明显：实现起来简单有效，且几乎所有操作系统都有对应的实现。</p>
+<p>缺点是：</p>
+<ul>
+<li>每次调用 select 都需要将进程加入到所有监视 fd 的等待队列，每次唤醒都需要从每个队列中移除</li>
+<li>当函数返回时，系统会将就绪描述符写入 fd_set 中，并将其拷贝到用户空间。进程被唤醒后，用户线程并不知道哪些 fd 收到数据，还需要遍历一次。</li>
+<li>此外受 fd_set 的大小限制，32 位系统最多能监听 1024 个 fd，64 位最多监听 2048 个。</li>
+</ul>
+<blockquote>
+<p>Poll</p>
+</blockquote>
+<p>poll 函数与 select 原理相似，都需要来回拷贝全部监听的文件描述符，不同的是：</p>
+<ol>
+<li>poll 函数采用链表的方式替代原来 select 中 fd_set 结构，因此可监听文件描述符数量不受限。</li>
+<li>poll 函数返回后，可以通过 pollfd 结构中的内容进行处理就绪文件描述符，相比 select 效率要高。</li>
+<li>新增水平触发：也就是通知程序 fd 就绪后，这次没有被处理，那么下次 poll 的时候会再次通知同个 fd 已经就绪。</li>
+</ol>
+<blockquote>
+<p>Epoll</p>
+</blockquote>
+<p>epoll 使用一个文件描述符管理多个描述符，将用户进程监控的文件描述符的事件存放到内核的一个事件表中，这样在用户空间和内核空间只需拷贝一次。主要有如下三个函数：</p>
+<ul>
+<li>epoll_create创建一个 epoll 的句柄，参数 size 并非限制了 epoll 所能监听的描述符最大个数，只是对内核初始分配内部数据结构的一个建议。当 epoll 句柄创建后，它就会占用一个 fd 值</li>
+<li>epoll_ctl事件注册函数，将需要监听的事件和需要监听的 fd 交给 epoll 对象。通过 epoll_ctl 函数添加进来的事件都会被放在红黑树的某个节点内。</li>
+<li>epoll_wait等待 epfd 上的 io 事件，最多返回 maxevents 个事件。</li>
+</ul>
+<blockquote>
+<p>Epoll为何高效?</p>
+</blockquote>
+<ol>
+<li>epoll 使用了 3 个方法来实现 select 方法要做的事，分清了频繁调用和不频繁调用的操作。epoll_ctrl 是不太频繁调用的，而 epoll_wait 是非常频繁调用的。而 epoll_wait 却几乎没有入参，这比 select 的效率高出一大截，而且，它也不会随着并发连接的增加使得入参越发多起来，导致内核执行效率下降。</li>
+<li>mmap 的引入，将用户空间的一块地址和内核空间的一块地址同时映射到相同的一块物理内存地址</li>
+<li>红黑树将存储 epoll 所监听的 FD。高效的数据结构，本身插入和删除性能比较好</li>
+</ol>
+<blockquote>
+<p>LT 和 ET 工作模式</p>
+</blockquote>
+<ul>
+<li>LT（level triggered）模式：也是默认模式，即当 epoll_wait 检测到描述符事件发生并将此事件通知应用程序，应用程序可以不立即处理该事件，并且下次调用 epoll_wait 时，会再次响应应用程序并通知此事件。</li>
+<li>ET（edge-triggered）模式：当 epoll_wait 检测到描述符事件发生并将此事件通知应用程序，应用程序必须立即处理该事件。如果不处理，下次调用epoll_wait时，不会再次响应应用程序并通知此事件。ET 是一种高速工作方式，很大程度上减少了 epoll 事件被重复触发的次数。<font color=red>epoll 工作在 ET 模式的时候，必须使用非阻塞套接口，以避免由于一个文件句柄的阻塞读/阻塞写操作把处理多个文件描符的任务饿死。</font></li>
+</ul>
+<h2 id="CMU15445-2023Fall"><a href="#CMU15445-2023Fall" class="headerlink" title="CMU15445 2023Fall"></a>CMU15445 2023Fall</h2>
+</article>
+    
+    
 
-<!-- history -->
-
-<div class="row">
+</div>
+<div class="trm-post-next-prev row">
     <div class="col-lg-12">
         <!-- title -->
         <h5 class="trm-title-with-divider">
-            
-                所有归档
-            
-            <span data-number="01"></span>
+            其他文章
+            <span data-number="02"></span>
         </h5>
     </div>
-    <div class="col-lg-12">
-        <!-- timeline -->
-        <div class="trm-timeline">
+    
+    
+        <div class="col-lg-6">
+    <div class="trm-blog-card trm-scroll-animation">
+        <a href="/2025/05/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="trm-cover-frame trm-anima-link">
             
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/06/29/CMU15445-2023-Project0/" class="trm-anima-link">
-                                        CMU15445-2023-Project0
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">06/29</li>
-                                        <li class="trm-accent-color">08:53</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
+            
+                <img alt="cover" class="no-fancybox" src="/img/block.jpg">
+            
+        </a>
+        
+        <div class="trm-card-descr">
+            <div class="trm-label trm-category trm-mb-20">
+                <a href=" #.">
+                    未分类
+                </a>
             </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/06/27/CMU15445-environment/" class="trm-anima-link">
-                                        CMU15445-environment
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">06/27</li>
-                                        <li class="trm-accent-color">09:30</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
-            <div class="trm-timeline-item trm-scroll-animation">
-                <div class="trm-timeline-mark-light"></div>
-                <div class="trm-timeline-mark"></div>
-                <div class="trm-timeline-content more">
-                    
-                        <div class="trm-card-header">
-                            <div class="trm-left-side">
-                                <h6>
-                                    <a href="/2024/06/26/hexo-environment/" class="trm-anima-link">
-                                        Hexo博客搭建教程
-                                    </a>
-                                </h6>
-                                <div class="trm-text-sm trm-accent-color trm-mt-15">
-                                    <ul class="trm-card-data trm-label ">
-                                        <li class="trm-accent-color">06/26</li>
-                                        <li class="trm-accent-color">10:04</li>
-                                        
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        
-                    
-                </div>
-            </div>
-            
+            <h5>
+                <a href="/2025/05/27/%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E7%A1%80%E9%9D%A2%E8%AF%95%E9%A2%98/" class="trm-anima-link">
+                    计算机基础面试题
+                </a>
+            </h5>
+            <div class="trm-divider trm-mb-20 trm-mt-20"></div>
+            <ul class="trm-card-data trm-label">
+                <li>25/05/27</li>
+                <li>12:56</li>
+                
+                
+            </ul>
         </div>
-        <!-- timeline end -->
     </div>
 </div>
+    
+</div>
 
-<!-- history end -->
-
-
-    <div class="trm-pagination">
-        <a class="page-number" href="/archives/">1</a><a class="page-number" href="/archives/page/2/">2</a><span class="page-number current">3</span>
-    </div>
-
-
+    
 
 
 
@@ -509,9 +527,29 @@
 
             
 
+    <div id="post-toc" class="trm-post-toc">
+      <div class="trm-post-toc-header">
+        目录导航
+				<span id="post-toc-top">
+					置顶
+				</span>
+      </div>
+      <div class="trm-post-toc-content">
+        <ol class="trm-toc"><li class="trm-toc-item trm-toc-level-1" title="项目面试问题"><a rel="nofollow" class="trm-toc-link" href="#项目面试问题"><span class="trm-toc-number">1.</span> <span class="trm-toc-text">项目面试问题</span></a><ol class="trm-toc-child"><li class="trm-toc-item trm-toc-level-2" title="MyMuduo 网络库"><a rel="nofollow" class="trm-toc-link" href="#MyMuduo-网络库"><span class="trm-toc-number">1.1.</span> <span class="trm-toc-text">MyMuduo 网络库</span></a></li><li class="trm-toc-item trm-toc-level-2" title="CMU15445 2023Fall"><a rel="nofollow" class="trm-toc-link" href="#CMU15445-2023Fall"><span class="trm-toc-number">1.2.</span> <span class="trm-toc-text">CMU15445 2023Fall</span></a></li></ol></li></ol>
+      </div>
+    </div>
+
             
 <div class="trm-fixed-container">
     
+        <div class="trm-fixed-btn post-toc-btn" data-title="目录">
+            <i class="iconfont fas fa-th-list"></i>
+        </div>
+    
+    
+        <div class="trm-fixed-btn" data-title="阅读模式" onclick="asyncFun.switchReadMode()">
+            <i class="iconfont fas fa-book-reader"></i>
+        </div>
     
     
     <div id="trm-back-top" class="trm-fixed-btn" data-title="回到顶部">
@@ -546,6 +584,10 @@
     
 
     <!-- 评论插件 -->
+    
+        
+
+        
     
 
 		
